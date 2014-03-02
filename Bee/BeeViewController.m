@@ -10,7 +10,6 @@
 #import "BeeAddSecretViewController.h"
 #import "BeeSecretViewController.h"
 #import "BeeTableViewCell.h"
-#import "BeeAPIClient.h"
 
 #define CELL_CONTENT_WIDTH 320.0f
 #define CELL_CONTENT_MARGIN 10.0f
@@ -22,17 +21,22 @@
 #define LABEL_MAXIMUM_HEIGHT 280.0f
 #define DEFAULT_LABEL_SIZE() CGSizeMake(280.0,90.0)
 
-@interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate>
+@interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate, BeeSecretViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *secrets;
 @end
 
-@implementation BeeViewController
+@implementation BeeViewController {
+    dispatch_once_t onceToken;
+    NSMutableDictionary *rowHeightCache;
+    BeeTableViewCell *sizingCell;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    rowHeightCache = [NSMutableDictionary dictionary];
     [[BeeAPIClient sharedClient] GETSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
         int i = 0;
@@ -61,15 +65,25 @@
         avc.delegate = self;
     } else if ([[segue identifier] isEqualToString:@"Secret Show Segue"]) {
         BeeSecretViewController *bvc = (BeeSecretViewController *)[segue destinationViewController];
-        bvc.secret = (NSDictionary *)sender;
-        //bvc.delegate = self;
+        bvc.secret = (Secret *)sender;
+        bvc.delegate = self;
     }
+}
+
+#pragma mark - Bee Secret View Controller Delegate
+
+- (void)dismissBeeSecretViewController:(BeeSecretViewController *)vc {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Bee Add Secret View Controller Delegate
 
 - (void)cancelPublication {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)publishSecret:(NSDictionary *)secret {
@@ -80,37 +94,56 @@
 
 #pragma mark - Table View data source
 
+- (NSString *)cellIdentifier {
+    static NSString *CellIdentifier = @"BeeTableViewCell";
+    return CellIdentifier;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.secrets.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"BeeTableViewCell";
-    BeeTableViewCell *cell = (BeeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    BeeTableViewCell *cell = (BeeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
     Secret *secret = self.secrets[indexPath.row];
     cell.secret = secret;
+    [cell setNeedsLayout];
+    [cell layoutIfNeeded];
     return cell;
 }
 
 
 #pragma mark - Table View delegate
-/*
+
+- (void)adjustSizingCellWidthToTableWidth {
+    sizingCell.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 0);
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSStringDrawingContext *ctx = [NSStringDrawingContext new];
-    CGRect textRect = [self.secrets[indexPath.row][@"content"] boundingRectWithSize:DEFAULT_LABEL_SIZE() options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:FONT_SIZE]} context:ctx];
-    if (textRect.size.height < LABEL_MINIMUM_HEIGHT) {
-        textRect.size.height = LABEL_MINIMUM_HEIGHT;
-    } else if (textRect.size.height > LABEL_MAXIMUM_HEIGHT) {
-        textRect.size.height = LABEL_MAXIMUM_HEIGHT;
+    dispatch_once(&onceToken, ^{
+        sizingCell = (BeeTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:[self cellIdentifier]];
+        [self adjustSizingCellWidthToTableWidth];
+    });
+    
+    NSString *index = [NSString stringWithFormat:@"%i",indexPath.row];
+    
+    if (rowHeightCache[index] == nil) {
+        sizingCell.secret = self.secrets[indexPath.row];
+        CGFloat rowHeight = sizingCell.requiredCellHeight;
+        [sizingCell setNeedsLayout];
+        [sizingCell layoutIfNeeded];
+        rowHeightCache[index] = @(rowHeight);
     }
-
-    CGFloat rowHeight = 20.0f + textRect.size.height + 30.0f + 6.0f + 8.0f;
-    return rowHeight;
+    
+    return [rowHeightCache[index] floatValue];
 }
-*/
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"Secret Show Segue" sender:self.secrets[indexPath.row]];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 @end

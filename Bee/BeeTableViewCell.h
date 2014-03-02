@@ -16,5 +16,6 @@
 @property (nonatomic, weak) IBOutlet UIButton *likeButton;
 
 @property (nonatomic, strong) Secret *secret;
+@property (nonatomic) CGFloat requiredCellHeight;
 
 @end

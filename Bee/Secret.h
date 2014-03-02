@@ -12,13 +12,16 @@
 
 - (instancetype)initWithDictionary:(NSDictionary *)secret;
 
+@property (nonatomic, strong) NSString *secretID;
 @property (nonatomic, strong) NSString *content;
 @property (nonatomic, strong) NSString *mediaURL;
 @property (nonatomic, strong) NSString *about;
 @property (nonatomic, strong) NSArray *comments;
+@property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic) NSInteger commentsCount;
 @property (nonatomic) NSInteger likesCount;
 @property (nonatomic) BOOL iAmAuthor;
 @property (nonatomic) BOOL friendIsAuthor;
+@property (nonatomic) BOOL iLikeIt;
 
 @end

@@ -13,14 +13,17 @@
 - (instancetype)initWithDictionary:(NSDictionary *)secret {
     self = [super init];
     if (self) {
+        NSDictionary *secret_id = secret[@"id"];
+        self.secretID = secret_id[[[secret_id allKeys] firstObject]];
         self.content = secret[@"content"];
         self.mediaURL = secret[@"mediaURL"];
-        //self.comments = secret[@"comments"];
+        self.comments = @[];
         self.about = secret[@"about"];
         self.commentsCount = [secret[@"comments_count"] integerValue];
         self.likesCount = [secret[@"likes_count"] integerValue];
         self.iAmAuthor = [secret[@"i_am_author"] boolValue];
-        self.friendIsAuthor = [secret[@"friend_is_author"] boolValue];
+        self.friendIsAuthor = [secret[@"author_is_friend"] boolValue];
+        self.iLikeIt = [secret[@"i_like_it"] boolValue];
     }
     return self;
 }

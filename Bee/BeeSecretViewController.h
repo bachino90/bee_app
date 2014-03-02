@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class BeeSecretViewController;
+@protocol BeeSecretViewControllerDelegate <NSObject>
+- (void)dismissBeeSecretViewController:(BeeSecretViewController *)vc;
+@end
+
 @interface BeeSecretViewController : UIViewController
-@property (nonatomic, strong) NSDictionary *secret;
+@property (nonatomic, weak) id <BeeSecretViewControllerDelegate> delegate;
+@property (nonatomic, strong) Secret *secret;
 @end

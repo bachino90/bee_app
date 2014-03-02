@@ -10,9 +10,8 @@
 
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 280.0f
-#define LABEL_MINIMUM_HEIGHT 40.0f
-#define LABEL_MAXIMUM_HEIGHT 280.0f
-#define DEFAULT_LABEL_SIZE() CGSizeMake(280.0,90.0)
+#define LABEL_MINIMUM_HEIGHT 50.0f
+#define LABEL_MAXIMUM_HEIGHT 340.0f
 
 @interface BeeTableViewCell ()
 @end
@@ -35,31 +34,36 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)likeSecret:(UIButton *)sender {
+    if (self.secret.iLikeIt) {
+        [[BeeAPIClient sharedClient]DELETELikeOnSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
+            self.secret.likesCount--;
+            self.secret.iLikeIt = NO;
+            self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",self.secret.likesCount];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+        }];
+    } else {
+        [[BeeAPIClient sharedClient]PUTLikeOnSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
+            self.secret.likesCount++;
+            self.secret.iLikeIt = YES;
+            self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",self.secret.likesCount];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+        }];
+    }
+    
+}
+
+- (IBAction)commentSecret:(UIButton *)sender {
+}
+
 - (void)setSecret:(Secret *)secret {
     _secret = secret;
     NSString *content = _secret.content;
     self.secretLabel.text = content;
-    //self.secretLabel.frame = CGRectZero;
-    //self.secretLabel.lineBreakMode = NSLineBreakByWordWrapping;//UILineBreakModeWordWrap;
-    //[self.secretLabel setNumberOfLines:0];
-    //[self.secretLabel setFont:[UIFont systemFontOfSize:FONT_SIZE]];
-    //[self.secretLabel setTag:1];
     self.secretLabel.backgroundColor = [UIColor yellowColor];
-    
-    NSStringDrawingContext *ctx = [NSStringDrawingContext new];
-    CGRect textRect = [self.secretLabel.text boundingRectWithSize:DEFAULT_LABEL_SIZE() options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.secretLabel.font} context:ctx];
-    textRect.origin.y = 20;
-    textRect.origin.x = 20;
-    textRect.size.width = LABEL_WIDTH;
-    if (textRect.size.height < LABEL_MINIMUM_HEIGHT) {
-        textRect.size.height = LABEL_MINIMUM_HEIGHT;
-    } else if (textRect.size.height > LABEL_MAXIMUM_HEIGHT) {
-        textRect.size.height = LABEL_MAXIMUM_HEIGHT;
-    }
-    self.secretLabel.frame = textRect;
-    //CGFloat rowHeight = 20.0f + textRect.size.height + 30.0f + 6.0f + 8.0f;
-    //self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, rowHeight);
-    
+
     if (_secret.friendIsAuthor) {
         self.isFriendLabel.text = @"F";
     } else {
@@ -67,6 +71,23 @@
     }
     self.commentButton.titleLabel.text = [NSString stringWithFormat:@"C%i",_secret.commentsCount];
     self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",_secret.likesCount];
+    
+    [self layoutSubviews];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGSize maxSize = CGSizeMake(LABEL_WIDTH, LABEL_MAXIMUM_HEIGHT);
+    CGSize requiredSize = [self.secretLabel sizeThatFits:maxSize];
+    requiredSize.width = LABEL_WIDTH;
+    if (requiredSize.height < LABEL_MINIMUM_HEIGHT) {
+        requiredSize.height = LABEL_MINIMUM_HEIGHT;
+    } else if (requiredSize.height > LABEL_MAXIMUM_HEIGHT) {
+        requiredSize.height = LABEL_MAXIMUM_HEIGHT;
+    }
+    self.secretLabel.frame = CGRectMake(self.secretLabel.frame.origin.x, self.secretLabel.frame.origin.y, requiredSize.width, requiredSize.height);
+    self.requiredCellHeight = 20.0f + requiredSize.height + 30.0f + 6.0f + 8.0f;
 }
 
 @end
