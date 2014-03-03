@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB00DAED18C3E464001B17CB /* AMScrollingNavbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */; };
+		EB00DAF218C3EF98001B17CB /* JZRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */; };
+		EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */; };
 		EB260CBD18C1895C00AB6CB9 /* BeeCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */; };
 		EB34D0EF18C23CF200637B90 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0EE18C23CF200637B90 /* Comment.m */; };
 		EB34D0F218C240E500637B90 /* BeeAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F118C240E500637B90 /* BeeAvatarView.m */; };
@@ -63,6 +66,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB00DAEB18C3E464001B17CB /* AMScrollingNavbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScrollingNavbarViewController.h; sourceTree = "<group>"; };
+		EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScrollingNavbarViewController.m; sourceTree = "<group>"; };
+		EB00DAF018C3EF98001B17CB /* JZRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZRefreshControl.h; sourceTree = "<group>"; };
+		EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZRefreshControl.m; sourceTree = "<group>"; };
+		EB00DAF318C3F262001B17CB /* BeeRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeRefreshControl.h; path = ../BeeRefreshControl.h; sourceTree = "<group>"; };
+		EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeRefreshControl.m; path = ../BeeRefreshControl.m; sourceTree = "<group>"; };
 		EB260CBB18C1895C00AB6CB9 /* BeeCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentTableViewCell.h; sourceTree = "<group>"; };
 		EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentTableViewCell.m; sourceTree = "<group>"; };
 		EB34D0ED18C23CF200637B90 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -168,6 +177,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB00DAEE18C3E46D001B17CB /* AMScrollingNavbarViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EB00DAEB18C3E464001B17CB /* AMScrollingNavbarViewController.h */,
+				EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */,
+			);
+			name = AMScrollingNavbarViewController;
+			sourceTree = "<group>";
+		};
+		EB00DAEF18C3EF98001B17CB /* JZRefreshControl */ = {
+			isa = PBXGroup;
+			children = (
+				EB00DAF318C3F262001B17CB /* BeeRefreshControl.h */,
+				EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */,
+				EB00DAF018C3EF98001B17CB /* JZRefreshControl.h */,
+				EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */,
+			);
+			path = JZRefreshControl;
+			sourceTree = "<group>";
+		};
 		EB260CC118C18D1200AB6CB9 /* TableView Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +248,8 @@
 		EB693BF818BFA7F400CCDF1F /* Bee */ = {
 			isa = PBXGroup;
 			children = (
+				EB00DAEF18C3EF98001B17CB /* JZRefreshControl */,
+				EB00DAEE18C3E46D001B17CB /* AMScrollingNavbarViewController */,
 				EB693C6418BFC57600CCDF1F /* AFNetworking */,
 				EB693C7818BFC57600CCDF1F /* UIKit+AFNetworking */,
 				EB693C0118BFA7F400CCDF1F /* BeeAppDelegate.h */,
@@ -430,6 +461,7 @@
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
 				EB693C9818BFC57600CCDF1F /* UIProgressView+AFNetworking.m in Sources */,
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
+				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
 				EB693C9018BFC57600CCDF1F /* AFURLRequestSerialization.m in Sources */,
 				EB693C2918BFA85400CCDF1F /* BeeTableViewCell.m in Sources */,
 				EB693C9918BFC57600CCDF1F /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -442,6 +474,8 @@
 				EB693C9518BFC57600CCDF1F /* UIAlertView+AFNetworking.m in Sources */,
 				EB693C8B18BFC57600CCDF1F /* AFHTTPRequestOperationManager.m in Sources */,
 				EB693C8E18BFC57600CCDF1F /* AFSecurityPolicy.m in Sources */,
+				EB00DAED18C3E464001B17CB /* AMScrollingNavbarViewController.m in Sources */,
+				EB00DAF218C3EF98001B17CB /* JZRefreshControl.m in Sources */,
 				EB693C9A18BFC57600CCDF1F /* UIWebView+AFNetworking.m in Sources */,
 				EB693C0918BFA7F400CCDF1F /* BeeViewController.m in Sources */,
 				EB693C0318BFA7F400CCDF1F /* BeeAppDelegate.m in Sources */,

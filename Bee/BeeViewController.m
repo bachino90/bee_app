@@ -10,20 +10,18 @@
 #import "BeeAddSecretViewController.h"
 #import "BeeSecretViewController.h"
 #import "BeeTableViewCell.h"
-
-#define CELL_CONTENT_WIDTH 320.0f
-#define CELL_CONTENT_MARGIN 10.0f
-#define FONT_SIZE 18.0f
-
-#define FONT_SIZE 18.0f
-#define LABEL_WIDTH 280.0f
-#define LABEL_MINIMUM_HEIGHT 40.0f
-#define LABEL_MAXIMUM_HEIGHT 280.0f
-#define DEFAULT_LABEL_SIZE() CGSizeMake(280.0,90.0)
+#import "BeeRefreshControl.h"
 
 @interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate, BeeSecretViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *secrets;
+@property (strong, nonatomic) JZRefreshControl *refreshControl;
+@property (nonatomic) NSUInteger actualPage;
+
+@property (nonatomic) BOOL isLoadingOldSecrets;
+@property (nonatomic) BOOL isLoadingNewSecrets;
+@property (nonatomic) BOOL loadedAllSecrets;
+
 @end
 
 @implementation BeeViewController {
@@ -37,18 +35,39 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     rowHeightCache = [NSMutableDictionary dictionary];
-    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
-        int i = 0;
-        for (NSDictionary *secret in (NSArray *)responseObject) {
-            mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
-            i++;
-        }
-        self.secrets = [mutableSecrets copy];
-        [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    
+    [self followScrollView:self.tableView];
+    self.actualPage = 1;
+    self.refreshControl = [[BeeRefreshControl alloc]initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, [BeeRefreshControl height])];
+    self.refreshControl.tableView = self.tableView;
+    __weak BeeViewController *weakSelf = self;
+    
+    self.isLoadingOldSecrets = YES;
+    self.loadedAllSecrets = NO;
+    
+    self.refreshControl.refreshBlock = ^{
+        weakSelf.isLoadingNewSecrets = YES;
+        [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:weakSelf.actualPage friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
+            int i = 0;
+            for (NSDictionary *secret in (NSArray *)responseObject) {
+                mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
+                i++;
+            }
+            weakSelf.secrets = [mutableSecrets copy];
+            [weakSelf.tableView reloadData];
+            [weakSelf.refreshControl endRefreshing];
+            weakSelf.isLoadingNewSecrets = NO;
+            weakSelf.isLoadingOldSecrets = NO;
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
-    }];
+        }];
+    };
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self.refreshControl beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,6 +75,56 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)loadOldSecrets {
+    if (self.isLoadingOldSecrets || self.isLoadingNewSecrets || self.loadedAllSecrets) {
+        return;
+    }
+    NSUInteger nextPage = self.actualPage + 1;
+    self.isLoadingOldSecrets = YES;
+    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:nextPage friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
+        int i = 0;
+        for (NSDictionary *secret in (NSArray *)responseObject) {
+            mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
+            i++;
+        }
+        self.secrets = [self.secrets arrayByAddingObjectsFromArray:mutableSecrets];//[mutableSecrets copy];
+        [self.tableView reloadData];
+        self.actualPage++;
+        self.isLoadingOldSecrets = NO;
+        if (mutableSecrets.count == 0) {
+            self.loadedAllSecrets = YES;
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        self.isLoadingOldSecrets = NO;
+    }];
+
+}
+
+#pragma mark - Scroll View Delegate
+
+- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
+    [self showNavbar];
+    return YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self.refreshControl scrollViewDidScroll:scrollView];
+    
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    
+    if (maximumOffset - currentOffset <= 100.0) {
+        [self loadOldSecrets];
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    [self.refreshControl scrollViewWillEndDragging:scrollView withVelocity:velocity targetContentOffset:targetContentOffset];
+}
+
+#pragma mark - Prepare for Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].

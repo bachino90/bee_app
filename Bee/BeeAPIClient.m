@@ -41,11 +41,12 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 #pragma mark - SECRETS
 
 - (void)GETSecretsAbout:(NSString *)about
+                   page:(NSUInteger)page
                 friends:(BOOL)friendsSecrets
                 success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                 failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     
-    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets",self.userID];
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets?page=%i", self.userID, page];
     [self GET:endPoint parameters:nil success:success failure:failure];
 }
 

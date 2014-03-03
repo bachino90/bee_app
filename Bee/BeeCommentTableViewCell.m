@@ -38,7 +38,10 @@
     if (_comment.friendIsAuthor) {
         self.howIsLabel.text = @"F";
     } else {
-        self.howIsLabel.text = @"NF";
+        if (_comment.iAmAuthor)
+            self.howIsLabel.text = @"";
+        else
+            self.howIsLabel.text = @"NF";
     }
     [self layoutSubviews];
 }

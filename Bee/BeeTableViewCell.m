@@ -67,7 +67,10 @@
     if (_secret.friendIsAuthor) {
         self.isFriendLabel.text = @"F";
     } else {
-        self.isFriendLabel.text = @"NF";
+        if (_secret.iAmAuthor)
+            self.isFriendLabel.text = @"";
+        else
+            self.isFriendLabel.text = @"NF";
     }
     self.commentButton.titleLabel.text = [NSString stringWithFormat:@"C%i",_secret.commentsCount];
     self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",_secret.likesCount];

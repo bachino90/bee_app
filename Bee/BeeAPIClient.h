@@ -16,6 +16,7 @@
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
 - (void)GETSecretsAbout:(NSString *)about
+                   page:(NSUInteger)page
                 friends:(BOOL)friendsSecrets
                 success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                 failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
