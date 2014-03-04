@@ -62,8 +62,9 @@
     _secret = secret;
     NSString *content = _secret.content;
     self.secretLabel.text = content;
-    self.secretLabel.backgroundColor = [UIColor yellowColor];
-
+    self.secretLabel.textAlignment = NSTextAlignmentCenter;
+    self.secretLabel.layer.borderWidth = 1.0f;
+    self.secretLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     if (_secret.friendIsAuthor) {
         self.isFriendLabel.text = @"F";
     } else {

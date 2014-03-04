@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BeeSlideOutViewController.h"
 
 @interface BeeAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) BeeSlideOutViewController *viewController;
 
 @end

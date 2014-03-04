@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BeeSecretView : UIView
-
+- (instancetype)initWithSecret:(Secret *)secret;
 @end

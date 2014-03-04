@@ -9,19 +9,20 @@
 #import "BeeViewController.h"
 #import "BeeAddSecretViewController.h"
 #import "BeeSecretViewController.h"
+#import "BeeNavigationController.h"
+
 #import "BeeTableViewCell.h"
 #import "BeeRefreshControl.h"
 
 @interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate, BeeSecretViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *secrets;
-@property (strong, nonatomic) JZRefreshControl *refreshControl;
+@property (strong, nonatomic) BeeRefreshControl *refreshControl;
 @property (nonatomic) NSUInteger actualPage;
 
 @property (nonatomic) BOOL isLoadingOldSecrets;
 @property (nonatomic) BOOL isLoadingNewSecrets;
 @property (nonatomic) BOOL loadedAllSecrets;
-
 @end
 
 @implementation BeeViewController {
@@ -36,18 +37,18 @@
 	// Do any additional setup after loading the view, typically from a nib.
     rowHeightCache = [NSMutableDictionary dictionary];
     
-    [self followScrollView:self.tableView];
+    self.leftButton.tag = 1;
     self.actualPage = 1;
     self.refreshControl = [[BeeRefreshControl alloc]initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, [BeeRefreshControl height])];
     self.refreshControl.tableView = self.tableView;
     __weak BeeViewController *weakSelf = self;
-    
+
     self.isLoadingOldSecrets = YES;
     self.loadedAllSecrets = NO;
     
     self.refreshControl.refreshBlock = ^{
         weakSelf.isLoadingNewSecrets = YES;
-        [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:weakSelf.actualPage friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
             NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
             int i = 0;
             for (NSDictionary *secret in (NSArray *)responseObject) {
@@ -63,17 +64,55 @@
         
         }];
     };
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     [self.refreshControl beginRefreshing];
+    
+    //[self followScrollView:self.tableView];
+    //UIRefreshControl *rc = [[UIRefreshControl alloc]init];
+    //rc.attributedTitle = [[NSAttributedString alloc]initWithString:@"Loading..."];
+    //[self.tableView addSubview:rc];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)movePanel:(UIBarButtonItem *)sender {
+    switch (sender.tag) {
+        case 0: {
+            [((BeeNavigationController *)self.navigationController).navDelegate movePanelToOriginalPosition];
+            break;
+        }
+            
+        case 1: {
+            [((BeeNavigationController *)self.navigationController).navDelegate movePanelRight];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - Refresh Secrets
+
+- (void)loadNewSecrets {
+    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
+        int i = 0;
+        for (NSDictionary *secret in (NSArray *)responseObject) {
+            mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
+            i++;
+        }
+        self.secrets = [mutableSecrets copy];
+        [self.tableView reloadData];
+        //[self endRefreshing];
+        self.isLoadingNewSecrets = NO;
+        self.isLoadingOldSecrets = NO;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
 }
 
 - (void)loadOldSecrets {
@@ -99,15 +138,9 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         self.isLoadingOldSecrets = NO;
     }];
-
 }
 
 #pragma mark - Scroll View Delegate
-
-- (BOOL)scrollViewShouldScrollToTop:(UIScrollView *)scrollView {
-    [self showNavbar];
-    return YES;
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self.refreshControl scrollViewDidScroll:scrollView];

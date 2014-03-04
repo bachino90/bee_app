@@ -24,4 +24,17 @@
     return self;
 }
 
+- (instancetype)initWithContent:(NSString *)content {
+    self = [super init];
+    if (self) {
+        self.commentID = @"";
+        self.avatarID = @"";//secret[@"avatar_id"];
+        self.content = content;
+        self.likesCount = 0;
+        self.iAmAuthor = YES;
+        self.friendIsAuthor = NO;
+    }
+    return self;
+}
+
 @end

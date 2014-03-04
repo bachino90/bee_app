@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AMScrollingNavbarViewController.h"
 
-@interface BeeViewController : AMScrollingNavbarViewController
+@interface BeeViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 
 @end

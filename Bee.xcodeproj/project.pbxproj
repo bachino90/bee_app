@@ -10,7 +10,13 @@
 		EB00DAED18C3E464001B17CB /* AMScrollingNavbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */; };
 		EB00DAF218C3EF98001B17CB /* JZRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */; };
 		EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */; };
+		EB15966818C6557D00722F93 /* AMScrollingNavbarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */; };
+		EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967318C66EE900722F93 /* BeeSlideOutViewController.m */; };
+		EB15967718C66F1B00722F93 /* BeeNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */; };
+		EB15967A18C6819B00722F93 /* BeeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967918C6819B00722F93 /* BeeNavigationController.m */; };
 		EB260CBD18C1895C00AB6CB9 /* BeeCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */; };
+		EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F424718C4E0B1000B7049 /* BeeCommentView.m */; };
+		EB2F424A18C5005D000B7049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2F424918C5005D000B7049 /* QuartzCore.framework */; };
 		EB34D0EF18C23CF200637B90 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0EE18C23CF200637B90 /* Comment.m */; };
 		EB34D0F218C240E500637B90 /* BeeAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F118C240E500637B90 /* BeeAvatarView.m */; };
 		EB34D0F518C2679500637B90 /* BeeSecretView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F418C2679500637B90 /* BeeSecretView.m */; };
@@ -72,8 +78,19 @@
 		EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZRefreshControl.m; sourceTree = "<group>"; };
 		EB00DAF318C3F262001B17CB /* BeeRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeRefreshControl.h; path = ../BeeRefreshControl.h; sourceTree = "<group>"; };
 		EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeRefreshControl.m; path = ../BeeRefreshControl.m; sourceTree = "<group>"; };
+		EB15966618C6557D00722F93 /* AMScrollingNavbarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScrollingNavbarTableViewController.h; sourceTree = "<group>"; };
+		EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScrollingNavbarTableViewController.m; sourceTree = "<group>"; };
+		EB15967218C66EE900722F93 /* BeeSlideOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSlideOutViewController.h; sourceTree = "<group>"; };
+		EB15967318C66EE900722F93 /* BeeSlideOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSlideOutViewController.m; sourceTree = "<group>"; };
+		EB15967518C66F1B00722F93 /* BeeNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationsViewController.h; sourceTree = "<group>"; };
+		EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationsViewController.m; sourceTree = "<group>"; };
+		EB15967818C6819B00722F93 /* BeeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNavigationController.h; sourceTree = "<group>"; };
+		EB15967918C6819B00722F93 /* BeeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNavigationController.m; sourceTree = "<group>"; };
 		EB260CBB18C1895C00AB6CB9 /* BeeCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentTableViewCell.h; sourceTree = "<group>"; };
 		EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentTableViewCell.m; sourceTree = "<group>"; };
+		EB2F424618C4E0B1000B7049 /* BeeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentView.h; sourceTree = "<group>"; };
+		EB2F424718C4E0B1000B7049 /* BeeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentView.m; sourceTree = "<group>"; };
+		EB2F424918C5005D000B7049 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EB34D0ED18C23CF200637B90 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		EB34D0EE18C23CF200637B90 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		EB34D0F018C240E500637B90 /* BeeAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeAvatarView.h; sourceTree = "<group>"; };
@@ -155,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB2F424A18C5005D000B7049 /* QuartzCore.framework in Frameworks */,
 				EB693CA018BFC5AF00CCDF1F /* MobileCoreServices.framework in Frameworks */,
 				EB693C9E18BFC5A200CCDF1F /* SystemConfiguration.framework in Frameworks */,
 				EB693C9C18BFC59000CCDF1F /* Security.framework in Frameworks */,
@@ -182,6 +200,8 @@
 			children = (
 				EB00DAEB18C3E464001B17CB /* AMScrollingNavbarViewController.h */,
 				EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */,
+				EB15966618C6557D00722F93 /* AMScrollingNavbarTableViewController.h */,
+				EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */,
 			);
 			name = AMScrollingNavbarViewController;
 			sourceTree = "<group>";
@@ -195,6 +215,34 @@
 				EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */,
 			);
 			path = JZRefreshControl;
+			sourceTree = "<group>";
+		};
+		EB15967B18C68A7300722F93 /* Bee Slide Out Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EB15967218C66EE900722F93 /* BeeSlideOutViewController.h */,
+				EB15967318C66EE900722F93 /* BeeSlideOutViewController.m */,
+				EB15967818C6819B00722F93 /* BeeNavigationController.h */,
+				EB15967918C6819B00722F93 /* BeeNavigationController.m */,
+				EB15967518C66F1B00722F93 /* BeeNotificationsViewController.h */,
+				EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */,
+				EB693C0718BFA7F400CCDF1F /* BeeViewController.h */,
+				EB693C0818BFA7F400CCDF1F /* BeeViewController.m */,
+			);
+			name = "Bee Slide Out Controllers";
+			sourceTree = "<group>";
+		};
+		EB15967C18C68A8800722F93 /* Bee Secret Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EB693CA118C0F5A000CCDF1F /* BeeAddSecretViewController.h */,
+				EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */,
+				EB693CA418C1140700CCDF1F /* BeeSecretViewController.h */,
+				EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */,
+				EB2F424618C4E0B1000B7049 /* BeeCommentView.h */,
+				EB2F424718C4E0B1000B7049 /* BeeCommentView.m */,
+			);
+			name = "Bee Secret Controller";
 			sourceTree = "<group>";
 		};
 		EB260CC118C18D1200AB6CB9 /* TableView Cell */ = {
@@ -234,6 +282,7 @@
 		EB693BF118BFA7F400CCDF1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB2F424918C5005D000B7049 /* QuartzCore.framework */,
 				EB693C9F18BFC5AF00CCDF1F /* MobileCoreServices.framework */,
 				EB693C9D18BFC5A200CCDF1F /* SystemConfiguration.framework */,
 				EB693C9B18BFC59000CCDF1F /* Security.framework */,
@@ -255,12 +304,8 @@
 				EB693C0118BFA7F400CCDF1F /* BeeAppDelegate.h */,
 				EB693C0218BFA7F400CCDF1F /* BeeAppDelegate.m */,
 				EB693C0418BFA7F400CCDF1F /* Main.storyboard */,
-				EB693C0718BFA7F400CCDF1F /* BeeViewController.h */,
-				EB693C0818BFA7F400CCDF1F /* BeeViewController.m */,
-				EB693CA118C0F5A000CCDF1F /* BeeAddSecretViewController.h */,
-				EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */,
-				EB693CA418C1140700CCDF1F /* BeeSecretViewController.h */,
-				EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */,
+				EB15967B18C68A7300722F93 /* Bee Slide Out Controllers */,
+				EB15967C18C68A8800722F93 /* Bee Secret Controller */,
 				EB260CC118C18D1200AB6CB9 /* TableView Cell */,
 				EB693CA718C148C000CCDF1F /* Secret.h */,
 				EB693CA818C148C000CCDF1F /* Secret.m */,
@@ -451,6 +496,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB15967A18C6819B00722F93 /* BeeNavigationController.m in Sources */,
+				EB15967718C66F1B00722F93 /* BeeNotificationsViewController.m in Sources */,
 				EB34D0F518C2679500637B90 /* BeeSecretView.m in Sources */,
 				EB693C8F18BFC57600CCDF1F /* AFURLConnectionOperation.m in Sources */,
 				EB693C8A18BFC57600CCDF1F /* AFHTTPRequestOperation.m in Sources */,
@@ -459,6 +506,7 @@
 				EB693C9618BFC57600CCDF1F /* UIButton+AFNetworking.m in Sources */,
 				EB693C8D18BFC57600CCDF1F /* AFNetworkReachabilityManager.m in Sources */,
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
+				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
 				EB693C9818BFC57600CCDF1F /* UIProgressView+AFNetworking.m in Sources */,
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
@@ -466,6 +514,7 @@
 				EB693C2918BFA85400CCDF1F /* BeeTableViewCell.m in Sources */,
 				EB693C9918BFC57600CCDF1F /* UIRefreshControl+AFNetworking.m in Sources */,
 				EB693C9118BFC57600CCDF1F /* AFURLResponseSerialization.m in Sources */,
+				EB15966818C6557D00722F93 /* AMScrollingNavbarTableViewController.m in Sources */,
 				EB693BFF18BFA7F400CCDF1F /* main.m in Sources */,
 				EB693C9718BFC57600CCDF1F /* UIImageView+AFNetworking.m in Sources */,
 				EB693C6318BFBF0800CCDF1F /* BeeAPIClient.m in Sources */,
@@ -483,6 +532,7 @@
 				EB693C8C18BFC57600CCDF1F /* AFHTTPSessionManager.m in Sources */,
 				EB693C9418BFC57600CCDF1F /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				EB693C9318BFC57600CCDF1F /* AFNetworkActivityIndicatorManager.m in Sources */,
+				EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

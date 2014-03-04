@@ -11,6 +11,7 @@
 @interface Comment : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)secret;
+- (instancetype)initWithContent:(NSString *)content;
 
 @property (nonatomic, strong) NSString *commentID;
 @property (nonatomic, strong) NSString *avatarID;

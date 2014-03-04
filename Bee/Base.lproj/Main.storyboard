@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="v8W-u3-YiX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0qr-7y-o5x">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Bee View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="BeeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="BeeViewController" id="vXZ-lx-hvc" customClass="BeeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="n06-QC-I8T"/>
                         <viewControllerLayoutGuide type="bottom" id="4g1-cz-WE5"/>
@@ -95,9 +95,13 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="Yw3-Cq-Fvh"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whz-BQ-OTu">
-                                <rect key="frame" x="135" y="395" width="50" height="84"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Whz-BQ-OTu">
+                                <rect key="frame" x="135" y="410" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="s8X-Xb-PD3"/>
+                                    <constraint firstAttribute="width" constant="50" id="zPk-jr-bE1"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <state key="normal" title="+">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -108,16 +112,28 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Whz-BQ-OTu" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="135" id="2G2-fP-w2b"/>
+                            <constraint firstItem="4g1-cz-WE5" firstAttribute="top" secondItem="Whz-BQ-OTu" secondAttribute="bottom" constant="20" id="cJ6-e6-4Ob"/>
+                            <constraint firstAttribute="trailing" secondItem="Whz-BQ-OTu" secondAttribute="trailing" constant="135" id="wl1-8h-biL"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="UaG-jN-eCF"/>
+                    <navigationItem key="navigationItem" id="UaG-jN-eCF">
+                        <barButtonItem key="leftBarButtonItem" systemItem="organize" id="Wp5-lj-Yqg">
+                            <connections>
+                                <action selector="movePanel:" destination="vXZ-lx-hvc" id="j5W-wm-E8M"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="tableView" destination="jRR-Qb-cUn" id="y6c-6n-QI3"/>
+                        <outlet property="leftButton" destination="Wp5-lj-Yqg" id="mc2-g8-uUh"/>
+                        <outlet property="tableView" destination="jRR-Qb-cUn" id="Bzq-Dd-b6k"/>
                         <segue destination="baf-Tj-rLP" kind="modal" identifier="Secret Show Segue" id="fNd-fl-cwK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="516" y="-30"/>
+            <point key="canvasLocation" x="1042" y="-30"/>
         </scene>
         <!--Bee Secret View Controller-->
         <scene sceneID="ng7-Qm-q9s">
@@ -132,11 +148,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ldn-NF-sQn">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeeCommentTableViewCell" rowHeight="65" id="ofl-Lg-Ttd" customClass="BeeCommentTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BeeCommentTableViewCell" rowHeight="65" id="ofl-Lg-Ttd" customClass="BeeCommentTableViewCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ofl-Lg-Ttd" id="mSc-9q-lMZ">
@@ -190,7 +206,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="egv-KK-DvE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="889" y="-30"/>
+            <point key="canvasLocation" x="1517" y="-30"/>
         </scene>
         <!--Bee Add Secret View Controller-->
         <scene sceneID="Jn6-NS-X8Q">
@@ -204,11 +220,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Y4-h8-Prm">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Y4-h8-Prm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="233"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="5tY-eg-41a" id="LcX-z5-9om"/>
@@ -223,7 +239,7 @@
                                 <action selector="cancelBtn:" destination="5tY-eg-41a" id="DZY-lc-uUy"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Publicar" id="Ygz-sW-gok">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Ygz-sW-gok">
                             <connections>
                                 <action selector="publicBtn:" destination="5tY-eg-41a" id="09r-CQ-kJ2"/>
                             </connections>
@@ -237,7 +253,43 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnZ-W3-js0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="739" y="553"/>
+            <point key="canvasLocation" x="1517" y="594"/>
+        </scene>
+        <!--Bee Slide Out View Controller-->
+        <scene sceneID="gml-t3-zUz">
+            <objects>
+                <viewController storyboardIdentifier="BeeSlideOutViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BFw-PX-4O1" customClass="BeeSlideOutViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PuD-ZK-DDQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="6ZV-Vg-sHK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="isc-Lw-RV5">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="klF-Ta-J9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128" y="-30"/>
+        </scene>
+        <!--Bee Notifications View Controller-->
+        <scene sceneID="5NQ-bX-eHE">
+            <objects>
+                <viewController storyboardIdentifier="BeeNotificationsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zjy-Ni-Amg" customClass="BeeNotificationsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tZP-3T-Otx"/>
+                        <viewControllerLayoutGuide type="bottom" id="j2C-rY-qo1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Qoj-P6-bKM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tJD-hy-bSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128" y="594"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xQi-TK-f1y">
@@ -255,25 +307,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DXq-OT-kOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="363" y="553"/>
+            <point key="canvasLocation" x="1042" y="594"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="A8W-TT-b80">
+        <!--Bee Navigation Controller-->
+        <scene sceneID="TvK-Qt-rh4">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="v8W-u3-YiX" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="BeeNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0qr-7y-o5x" customClass="BeeNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DNn-m2-eIo">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Aza-7n-Tls">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="zI9-wd-2B1"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="ugf-of-47e"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pkS-1h-HHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UIg-15-vf7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-10" y="-30"/>
+            <point key="canvasLocation" x="624" y="-30"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
