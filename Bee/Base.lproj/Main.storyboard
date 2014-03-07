@@ -255,6 +255,66 @@
             </objects>
             <point key="canvasLocation" x="1517" y="594"/>
         </scene>
+        <!--Bee Login View Controller-->
+        <scene sceneID="ZO9-Nq-kIU">
+            <objects>
+                <viewController storyboardIdentifier="BeeLoginViewController" id="fqM-ik-Uth" customClass="BeeLoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tbo-RM-qwT"/>
+                        <viewControllerLayoutGuide type="bottom" id="zMm-ei-lMC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ar7-U1-pFG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lf4-Ig-jHh">
+                                <rect key="frame" x="86" y="358" width="148" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.2448498943081302" green="0.40853634788468635" blue="0.90739639945652173" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Log in with Facebook">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookLoginTouched:" destination="fqM-ik-Uth" eventType="touchUpInside" id="Spg-D3-EGm"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jPZ-aa-SKA">
+                                <rect key="frame" x="20" y="57" width="181" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XRX-N8-kR9">
+                                <rect key="frame" x="20" y="108" width="181" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJk-0d-XS2">
+                                <rect key="frame" x="87" y="169" width="45" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="sign in">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInTouched:" destination="fqM-ik-Uth" eventType="touchUpInside" id="U0B-fD-8od"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="facebookLoginBtn" destination="Lf4-Ig-jHh" id="dxq-MS-hsz"/>
+                        <outlet property="passwordTextField" destination="XRX-N8-kR9" id="QLV-ZV-nPT"/>
+                        <outlet property="signInBtn" destination="iJk-0d-XS2" id="5jg-wd-0S4"/>
+                        <outlet property="userTextField" destination="jPZ-aa-SKA" id="8ye-x0-kD5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wyh-J9-978" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="128" y="-630"/>
+        </scene>
         <!--Bee Slide Out View Controller-->
         <scene sceneID="gml-t3-zUz">
             <objects>

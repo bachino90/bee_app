@@ -59,6 +59,9 @@
 		EB693CA318C0F5A000CCDF1F /* BeeAddSecretViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */; };
 		EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */; };
 		EB693CA918C148C000CCDF1F /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA818C148C000CCDF1F /* Secret.m */; };
+		EB762C1D18C76E71003E9E96 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */; };
+		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
+		EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEFB2B018C9002B00DDBA53 /* BeeUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +168,11 @@
 		EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSecretViewController.m; sourceTree = "<group>"; };
 		EB693CA718C148C000CCDF1F /* Secret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
 		EB693CA818C148C000CCDF1F /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
+		EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLoginViewController.h; sourceTree = "<group>"; };
+		EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLoginViewController.m; sourceTree = "<group>"; };
+		EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeUser.h; sourceTree = "<group>"; };
+		EBEFB2B018C9002B00DDBA53 /* BeeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +185,7 @@
 				EB693C9E18BFC5A200CCDF1F /* SystemConfiguration.framework in Frameworks */,
 				EB693C9C18BFC59000CCDF1F /* Security.framework in Frameworks */,
 				EB693BF518BFA7F400CCDF1F /* CoreGraphics.framework in Frameworks */,
+				EB762C1D18C76E71003E9E96 /* FacebookSDK.framework in Frameworks */,
 				EB693BF718BFA7F400CCDF1F /* UIKit.framework in Frameworks */,
 				EB693BF318BFA7F400CCDF1F /* Foundation.framework in Frameworks */,
 			);
@@ -282,6 +291,7 @@
 		EB693BF118BFA7F400CCDF1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */,
 				EB2F424918C5005D000B7049 /* QuartzCore.framework */,
 				EB693C9F18BFC5AF00CCDF1F /* MobileCoreServices.framework */,
 				EB693C9D18BFC5A200CCDF1F /* SystemConfiguration.framework */,
@@ -303,7 +313,11 @@
 				EB693C7818BFC57600CCDF1F /* UIKit+AFNetworking */,
 				EB693C0118BFA7F400CCDF1F /* BeeAppDelegate.h */,
 				EB693C0218BFA7F400CCDF1F /* BeeAppDelegate.m */,
+				EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */,
+				EBEFB2B018C9002B00DDBA53 /* BeeUser.m */,
 				EB693C0418BFA7F400CCDF1F /* Main.storyboard */,
+				EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */,
+				EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */,
 				EB15967B18C68A7300722F93 /* Bee Slide Out Controllers */,
 				EB15967C18C68A8800722F93 /* Bee Secret Controller */,
 				EB260CC118C18D1200AB6CB9 /* TableView Cell */,
@@ -503,10 +517,12 @@
 				EB693C8A18BFC57600CCDF1F /* AFHTTPRequestOperation.m in Sources */,
 				EB260CBD18C1895C00AB6CB9 /* BeeCommentTableViewCell.m in Sources */,
 				EB693CA318C0F5A000CCDF1F /* BeeAddSecretViewController.m in Sources */,
+				EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */,
 				EB693C9618BFC57600CCDF1F /* UIButton+AFNetworking.m in Sources */,
 				EB693C8D18BFC57600CCDF1F /* AFNetworkReachabilityManager.m in Sources */,
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
 				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
+				EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */,
 				EB693C9818BFC57600CCDF1F /* UIProgressView+AFNetworking.m in Sources */,
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
@@ -659,6 +675,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/emilianobivachi/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bee/Bee-Prefix.pch";
 				INFOPLIST_FILE = "Bee/Bee-Info.plist";
@@ -672,6 +692,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/emilianobivachi/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bee/Bee-Prefix.pch";
 				INFOPLIST_FILE = "Bee/Bee-Info.plist";

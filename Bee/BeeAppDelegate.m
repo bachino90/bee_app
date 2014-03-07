@@ -7,18 +7,24 @@
 //
 
 #import "BeeAppDelegate.h"
+#import "BeeUser.h"
 
 @implementation BeeAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [FBLoginView class];
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
     //self.viewController = [[BeeSlideOutViewController alloc] initWithNibName:@"BeeSlideOutViewController" bundle:nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeSlideOutViewController"];
+    if ([BeeUser isLoggedin]) {
+        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeSlideOutViewController"];
+    } else {
+        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeLoginViewController"];
+    }
     
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];

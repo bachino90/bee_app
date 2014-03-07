@@ -22,7 +22,11 @@ static NSString * const kBeeAPIKey = @"API_KEY";
     static dispatch_once_t once;
     static BeeAPIClient *sharedInstance;
     dispatch_once(&once, ^{
-        sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBeeAPIBaseURLString]];
+        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
+        sessionConfig.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain;
+        sessionConfig.HTTPShouldSetCookies = YES;
+        sessionConfig.HTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBeeAPIBaseURLString] sessionConfiguration:sessionConfig];
         sharedInstance.responseSerializer = [AFJSONResponseSerializer serializer];
         sharedInstance.requestSerializer = [AFHTTPRequestSerializer serializer];
         sharedInstance.userID = @"53128d1d4d61631257000000";
@@ -31,6 +35,20 @@ static NSString * const kBeeAPIKey = @"API_KEY";
     });
     return sharedInstance;
 }
+
+- (void)signupUserWithData:(NSDictionary *)signup
+                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    
+}
+
+- (void)loginUserWithData:(NSDictionary *)session
+                  success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                  failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSString *endPoint = [NSString stringWithFormat:@"sessions"];
+    [self POST:endPoint parameters:session success:success failure:failure];
+}
+
 
 - (void)GETUserInfoSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {

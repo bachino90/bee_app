@@ -12,6 +12,18 @@
 
 + (BeeAPIClient *)sharedClient;
 
+- (void)signupUserWithData:(NSDictionary *)session
+                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
+- (void)loginUserWithData:(NSDictionary *)session
+                     success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                     failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
+- (void)POSTUserWithFacebookData:(NSDictionary *)facebookData
+                         success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                         failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
 - (void)GETUserInfoSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
