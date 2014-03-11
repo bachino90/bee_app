@@ -7,6 +7,7 @@
 //
 
 #import "BeeSlideOutViewController.h"
+#import "BeeLoginViewController.h"
 #import "BeeNotificationsViewController.h"
 #import "BeeNavigationController.h"
 #import "BeeViewController.h"
@@ -18,7 +19,7 @@
 #define CENTER_TAG 101
 #define LEFT_PANEL_TAG 102
 
-@interface BeeSlideOutViewController () <BeeViewControllerDelegate, UIGestureRecognizerDelegate>
+@interface BeeSlideOutViewController () <BeeViewControllerDelegate, BeeLoginViewControllerDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) BeeNavigationController *centerViewController;
 @property (nonatomic, assign) BOOL showingCenterPanel;
 
@@ -71,6 +72,25 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
+}
+
+#pragma mark - Prepare for Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"Login Segue"]) {
+        BeeLoginViewController *avc = (BeeLoginViewController *)[segue destinationViewController];
+        avc.delegate = self;
+    }
+}
+
+#pragma mark - Bee Login View Controller Delegate
+
+- (void)finishSuccessLogin {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.centerViewController refreshSecrets];
+    }];
 }
 
 #pragma mark -

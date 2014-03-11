@@ -13,6 +13,8 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
 @interface BeeUser ()
 @property (nonatomic, strong) NSDictionary *facebookSession;
 @property (nonatomic, strong) NSDictionary *userData;
+@property (nonatomic, readwrite) NSString *userID;
+@property (nonatomic, readwrite) NSString *sessionToken;
 @end
 
 @implementation BeeUser
@@ -24,6 +26,14 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
         sharedInstance = [[BeeUser alloc] init];
     });
     return sharedInstance;
+}
+
+- (void)setNewSession:(NSDictionary *)response {
+    NSDictionary *user_id = response[@"user_id"];
+    [BeeUser sharedUser].userID = user_id[[[user_id allKeys] firstObject]];
+    [BeeUser sharedUser].sessionToken = response[@"token"];
+    [[BeeAPIClient sharedClient].requestSerializer setValue:response[@"token"] forHTTPHeaderField:@"HTTP_AUTHORIZATION"];
+    [[BeeAPIClient sharedClient].requestSerializer setAuthorizationHeaderFieldWithToken:response[@"token"]];
 }
 
 + (NSString *)userInfoFilePath {

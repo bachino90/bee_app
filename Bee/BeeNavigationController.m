@@ -40,4 +40,8 @@
     return ((BeeViewController *)self.topViewController).leftButton;
 }
 
+- (void)refreshSecrets {
+    [((BeeViewController *)self.topViewController) refreshSecrets];
+}
+
 @end

@@ -78,6 +78,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refreshSecrets {
+    self.isLoadingNewSecrets = YES;
+    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
+        int i = 0;
+        for (NSDictionary *secret in (NSArray *)responseObject) {
+            mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
+            i++;
+        }
+        self.secrets = [mutableSecrets copy];
+        [self.tableView reloadData];
+        [self.refreshControl endRefreshing];
+        self.isLoadingNewSecrets = NO;
+        self.isLoadingOldSecrets = NO;
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+
 - (IBAction)movePanel:(UIBarButtonItem *)sender {
     switch (sender.tag) {
         case 0: {

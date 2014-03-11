@@ -13,4 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *leftButton;
 
+- (void)refreshSecrets;
+
 @end

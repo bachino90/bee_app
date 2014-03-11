@@ -8,6 +8,7 @@
 
 #import "BeeAppDelegate.h"
 #import "BeeUser.h"
+#import "BeeLoginViewController.h"
 
 @implementation BeeAppDelegate
 
@@ -20,14 +21,14 @@
     
     //self.viewController = [[BeeSlideOutViewController alloc] initWithNibName:@"BeeSlideOutViewController" bundle:nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if ([BeeUser isLoggedin]) {
-        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeSlideOutViewController"];
-    } else {
-        self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeLoginViewController"];
-    }
-    
+    self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeSlideOutViewController"];
+    //self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeNavigationController"];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    if (![BeeUser isLoggedin]) {
+        [self.viewController performSegueWithIdentifier:@"Login Segue" sender:nil];
+    }
     return YES;
 }
 							

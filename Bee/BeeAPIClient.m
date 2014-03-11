@@ -7,13 +7,15 @@
 //
 
 #import "BeeAPIClient.h"
+#import "BeeUser.h"
 
 static NSString * const kBeeAPIBaseURLString = @"http://localhost:3000/api/v1/";
 
 static NSString * const kBeeAPIKey = @"API_KEY";
 
 @interface BeeAPIClient ()
-@property (nonatomic, strong) NSString *userID;
+@property (nonatomic, readonly) NSString *userID;
+@property (nonatomic, strong) NSString *deviceID;
 @end
 
 @implementation BeeAPIClient
@@ -22,18 +24,24 @@ static NSString * const kBeeAPIKey = @"API_KEY";
     static dispatch_once_t once;
     static BeeAPIClient *sharedInstance;
     dispatch_once(&once, ^{
-        NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-        sessionConfig.HTTPCookieAcceptPolicy = NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain;
-        sessionConfig.HTTPShouldSetCookies = YES;
-        sessionConfig.HTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-        sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBeeAPIBaseURLString] sessionConfiguration:sessionConfig];
+        sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBeeAPIBaseURLString]];
         sharedInstance.responseSerializer = [AFJSONResponseSerializer serializer];
         sharedInstance.requestSerializer = [AFHTTPRequestSerializer serializer];
-        sharedInstance.userID = @"53128d1d4d61631257000000";
-        //[sharedInstance.requestSerializer setAuthorizationHeaderFieldWithToken:@""];
         //[sharedInstance.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
     });
     return sharedInstance;
+}
+
+- (NSString *)deviceID {
+    if (_deviceID) {
+        return _deviceID;
+    }
+    _deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    return _deviceID;
+}
+
+- (NSString *)userID {
+    return [BeeUser sharedUser].userID;
 }
 
 - (void)signupUserWithData:(NSDictionary *)signup
@@ -42,11 +50,13 @@ static NSString * const kBeeAPIKey = @"API_KEY";
     
 }
 
-- (void)loginUserWithData:(NSDictionary *)session
+- (void)loginUserWithData:(NSDictionary *)sessionParams
                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"sessions"];
-    [self POST:endPoint parameters:session success:success failure:failure];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:sessionParams, @"session",
+                                                                       self.deviceID, @"device_id", nil];
+    [self POST:endPoint parameters:parameters success:success failure:failure];
 }
 
 
@@ -63,7 +73,7 @@ static NSString * const kBeeAPIKey = @"API_KEY";
                 friends:(BOOL)friendsSecrets
                 success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                 failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
-    
+    NSLog(@"%@",self.requestSerializer.HTTPRequestHeaders);
     NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets?page=%i", self.userID, page];
     [self GET:endPoint parameters:nil success:success failure:failure];
 }

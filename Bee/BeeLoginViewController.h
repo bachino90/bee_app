@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BeeLoginViewController : UIViewController
+@protocol BeeLoginViewControllerDelegate <NSObject>
+- (void)finishSuccessLogin;
+@end
 
+@interface BeeLoginViewController : UIViewController
+@property (nonatomic, weak) id <BeeLoginViewControllerDelegate> delegate;
 @end

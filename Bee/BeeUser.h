@@ -11,10 +11,15 @@
 
 @interface BeeUser : NSObject
 
+@property (nonatomic, readonly) NSString *userID;
+@property (nonatomic, readonly) NSString *sessionToken;
+
 + (BeeUser *)sharedUser;
 
 + (BOOL)isLoggedin;
 + (NSArray *)basicPermissions;
+
+- (void)setNewSession:(NSDictionary *)response;
 
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
 

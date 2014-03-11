@@ -313,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wyh-J9-978" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="128" y="-630"/>
+            <point key="canvasLocation" x="549" y="-644"/>
         </scene>
         <!--Bee Slide Out View Controller-->
         <scene sceneID="gml-t3-zUz">
@@ -328,6 +328,9 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="fqM-ik-Uth" kind="modal" identifier="Login Segue" modalTransitionStyle="coverVertical" animates="NO" id="WOn-fq-Hvc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="klF-Ta-J9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -374,6 +377,7 @@
             <objects>
                 <navigationController storyboardIdentifier="BeeNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0qr-7y-o5x" customClass="BeeNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="ua2-Vl-lpB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Aza-7n-Tls">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

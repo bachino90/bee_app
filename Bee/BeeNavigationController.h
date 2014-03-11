@@ -21,4 +21,6 @@
 @property (nonatomic, weak) id <BeeViewControllerDelegate> navDelegate;
 @property (nonatomic, readonly) UIBarButtonItem *leftButton;
 
+- (void)refreshSecrets;
+
 @end

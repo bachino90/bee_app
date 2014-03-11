@@ -40,22 +40,26 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"Login Success Segue"]) {
+       
+    }
+}
+
 - (IBAction)signInTouched:(UIButton *)sender {
     if (self.userTextField.text.length > 0  &&
         self.passwordTextField.text.length > 0) {
         //mandar el sign in
-        NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        NSDictionary *loginParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userTextField.text, @"user_id",
-                                                                               self.passwordTextField.text, @"password",
-                                                                               deviceID, @"device_id", nil];
-        NSDictionary *sessionDict = [NSDictionary dictionaryWithObjectsAndKeys:loginParams, @"session", nil];
-        [[BeeAPIClient sharedClient]loginUserWithData:sessionDict success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary *loginParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userTextField.text, @"email",
+                                                                               self.passwordTextField.text, @"password", nil];
+        [[BeeAPIClient sharedClient]loginUserWithData:loginParams success:^(NSURLSessionDataTask *task, id responseObject) {
             NSHTTPURLResponse *resp = (NSHTTPURLResponse *)[task response];
             NSLog(@"%@",[resp allHeaderFields]);
+            NSLog(@"%@",(NSDictionary *)responseObject);
+            
+            [[BeeUser sharedUser] setNewSession:(NSDictionary *)responseObject];
+            [self.delegate finishSuccessLogin];
 
-            //NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:[resp allHeaderFields] forURL:resp.URL];
-            //[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:NSHTTPCookie co
-            NSLog(@"%@",[NSHTTPCookieStorage sharedHTTPCookieStorage].cookies);
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             NSLog(@"fail");
         }];
