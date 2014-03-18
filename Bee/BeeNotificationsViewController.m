@@ -7,6 +7,7 @@
 //
 
 #import "BeeNotificationsViewController.h"
+#import "BeeUser.h"
 
 @interface BeeNotificationsViewController ()
 
@@ -27,6 +28,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+}
+
+- (IBAction)signOut:(UIButton *)sender {
+    [[BeeUser sharedUser] userSignOut];
 }
 
 - (void)didReceiveMemoryWarning

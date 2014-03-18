@@ -19,14 +19,13 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    //self.viewController = [[BeeSlideOutViewController alloc] initWithNibName:@"BeeSlideOutViewController" bundle:nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeSlideOutViewController"];
     //self.viewController = [storyboard instantiateViewControllerWithIdentifier:@"BeeNavigationController"];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
-    if (![BeeUser isLoggedin]) {
+    if (![[BeeUser sharedUser] isLoggedin]) {
         [self.viewController performSegueWithIdentifier:@"Login Segue" sender:nil];
     }
     return YES;

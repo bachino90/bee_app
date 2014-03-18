@@ -46,13 +46,17 @@
     }
 }
 
+- (IBAction)signUpTouched:(id)sender {
+    [self.delegate signUpTouched];
+}
+
 - (IBAction)signInTouched:(UIButton *)sender {
     if (self.userTextField.text.length > 0  &&
         self.passwordTextField.text.length > 0) {
         //mandar el sign in
         NSDictionary *loginParams = [NSDictionary dictionaryWithObjectsAndKeys:self.userTextField.text, @"email",
                                                                                self.passwordTextField.text, @"password", nil];
-        [[BeeAPIClient sharedClient]loginUserWithData:loginParams success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[BeeAPIClient sharedClient]signinUserWithData:loginParams success:^(NSURLSessionDataTask *task, id responseObject) {
             NSHTTPURLResponse *resp = (NSHTTPURLResponse *)[task response];
             NSLog(@"%@",[resp allHeaderFields]);
             NSLog(@"%@",(NSDictionary *)responseObject);

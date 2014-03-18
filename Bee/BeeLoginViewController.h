@@ -10,6 +10,7 @@
 
 @protocol BeeLoginViewControllerDelegate <NSObject>
 - (void)finishSuccessLogin;
+- (void)signUpTouched;
 @end
 
 @interface BeeLoginViewController : UIViewController

@@ -9,18 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
 
+@class BeeUser;
+@protocol BeeUserDelegate <NSObject>
+- (void)userSignOut;
+@end
+
 @interface BeeUser : NSObject
 
+@property (nonatomic, weak) id <BeeUserDelegate> delegate;
 @property (nonatomic, readonly) NSString *userID;
 @property (nonatomic, readonly) NSString *sessionToken;
 
 + (BeeUser *)sharedUser;
 
-+ (BOOL)isLoggedin;
-+ (NSArray *)basicPermissions;
-
+- (BOOL)isLoggedin;
 - (void)setNewSession:(NSDictionary *)response;
+- (void)userSignOut;
 
+
++ (NSArray *)basicPermissions;
 - (void)facebookSessionStateChanged:(FBSession *)session state:(FBSessionState)state error:(NSError *)error;
 
 @end

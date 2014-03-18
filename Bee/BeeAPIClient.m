@@ -27,7 +27,6 @@ static NSString * const kBeeAPIKey = @"API_KEY";
         sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kBeeAPIBaseURLString]];
         sharedInstance.responseSerializer = [AFJSONResponseSerializer serializer];
         sharedInstance.requestSerializer = [AFHTTPRequestSerializer serializer];
-        //[sharedInstance.requestSerializer setAuthorizationHeaderFieldWithUsername:@"" password:@""];
     });
     return sharedInstance;
 }
@@ -47,16 +46,27 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 - (void)signupUserWithData:(NSDictionary *)signup
                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
-    
+    NSString *endPoint = [NSString stringWithFormat:@"users"];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:signup, @"user",
+                                                                          self.deviceID, @"device_id", nil];
+    [self POST:endPoint parameters:parameters success:success failure:failure];
+    NSLog(@"%@",self.requestSerializer.HTTPRequestHeaders);
 }
 
-- (void)loginUserWithData:(NSDictionary *)sessionParams
+- (void)signinUserWithData:(NSDictionary *)sessionParams
                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"sessions"];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:sessionParams, @"session",
                                                                        self.deviceID, @"device_id", nil];
     [self POST:endPoint parameters:parameters success:success failure:failure];
+}
+
+- (void)signOutUserWithData:(NSDictionary *)session
+                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSString *endPoint = [NSString stringWithFormat:@"signout"];
+    [self DELETE:endPoint parameters:nil success:success failure:failure];
 }
 
 

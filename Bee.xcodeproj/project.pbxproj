@@ -20,6 +20,9 @@
 		EB34D0EF18C23CF200637B90 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0EE18C23CF200637B90 /* Comment.m */; };
 		EB34D0F218C240E500637B90 /* BeeAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F118C240E500637B90 /* BeeAvatarView.m */; };
 		EB34D0F518C2679500637B90 /* BeeSecretView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F418C2679500637B90 /* BeeSecretView.m */; };
+		EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF418D7555E00695353 /* BeeSignUpViewController.m */; };
+		EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF718D7556C00695353 /* BeeSignInViewController.m */; };
+		EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */; };
 		EB693BF318BFA7F400CCDF1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF218BFA7F400CCDF1F /* Foundation.framework */; };
 		EB693BF518BFA7F400CCDF1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */; };
 		EB693BF718BFA7F400CCDF1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF618BFA7F400CCDF1F /* UIKit.framework */; };
@@ -61,6 +64,7 @@
 		EB693CA918C148C000CCDF1F /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA818C148C000CCDF1F /* Secret.m */; };
 		EB762C1D18C76E71003E9E96 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */; };
 		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
+		EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8272818D50D6500CCD99B /* KeychainWrapper.m */; };
 		EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEFB2B018C9002B00DDBA53 /* BeeUser.m */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +104,12 @@
 		EB34D0F118C240E500637B90 /* BeeAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeAvatarView.m; sourceTree = "<group>"; };
 		EB34D0F318C2679500637B90 /* BeeSecretView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSecretView.h; sourceTree = "<group>"; };
 		EB34D0F418C2679500637B90 /* BeeSecretView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSecretView.m; sourceTree = "<group>"; };
+		EB416EF318D7555E00695353 /* BeeSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSignUpViewController.h; sourceTree = "<group>"; };
+		EB416EF418D7555E00695353 /* BeeSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSignUpViewController.m; sourceTree = "<group>"; };
+		EB416EF618D7556C00695353 /* BeeSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSignInViewController.h; sourceTree = "<group>"; };
+		EB416EF718D7556C00695353 /* BeeSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSignInViewController.m; sourceTree = "<group>"; };
+		EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeTableViewController.h; sourceTree = "<group>"; };
+		EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeTableViewController.m; sourceTree = "<group>"; };
 		EB693BEF18BFA7F400CCDF1F /* Bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB693BF218BFA7F400CCDF1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -171,6 +181,8 @@
 		EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLoginViewController.h; sourceTree = "<group>"; };
 		EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLoginViewController.m; sourceTree = "<group>"; };
+		EBB8272718D50D6500CCD99B /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		EBB8272818D50D6500CCD99B /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeUser.h; sourceTree = "<group>"; };
 		EBEFB2B018C9002B00DDBA53 /* BeeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeUser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -237,6 +249,8 @@
 				EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */,
 				EB693C0718BFA7F400CCDF1F /* BeeViewController.h */,
 				EB693C0818BFA7F400CCDF1F /* BeeViewController.m */,
+				EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */,
+				EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */,
 			);
 			name = "Bee Slide Out Controllers";
 			sourceTree = "<group>";
@@ -267,6 +281,19 @@
 				EB34D0F418C2679500637B90 /* BeeSecretView.m */,
 			);
 			name = "TableView Cell";
+			sourceTree = "<group>";
+		};
+		EB4A5B6218D7D83300B2C3A6 /* Bee Login */ = {
+			isa = PBXGroup;
+			children = (
+				EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */,
+				EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */,
+				EB416EF318D7555E00695353 /* BeeSignUpViewController.h */,
+				EB416EF418D7555E00695353 /* BeeSignUpViewController.m */,
+				EB416EF618D7556C00695353 /* BeeSignInViewController.h */,
+				EB416EF718D7556C00695353 /* BeeSignInViewController.m */,
+			);
+			name = "Bee Login";
 			sourceTree = "<group>";
 		};
 		EB693BE618BFA7F400CCDF1F = {
@@ -315,9 +342,10 @@
 				EB693C0218BFA7F400CCDF1F /* BeeAppDelegate.m */,
 				EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */,
 				EBEFB2B018C9002B00DDBA53 /* BeeUser.m */,
+				EBB8272718D50D6500CCD99B /* KeychainWrapper.h */,
+				EBB8272818D50D6500CCD99B /* KeychainWrapper.m */,
 				EB693C0418BFA7F400CCDF1F /* Main.storyboard */,
-				EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */,
-				EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */,
+				EB4A5B6218D7D83300B2C3A6 /* Bee Login */,
 				EB15967B18C68A7300722F93 /* Bee Slide Out Controllers */,
 				EB15967C18C68A8800722F93 /* Bee Secret Controller */,
 				EB260CC118C18D1200AB6CB9 /* TableView Cell */,
@@ -457,7 +485,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Bee;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Emiliano Bivachi";
 				TargetAttributes = {
 					EB693C0F18BFA7F400CCDF1F = {
@@ -519,10 +547,14 @@
 				EB693CA318C0F5A000CCDF1F /* BeeAddSecretViewController.m in Sources */,
 				EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */,
 				EB693C9618BFC57600CCDF1F /* UIButton+AFNetworking.m in Sources */,
+				EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */,
 				EB693C8D18BFC57600CCDF1F /* AFNetworkReachabilityManager.m in Sources */,
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
 				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
+				EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */,
+				EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */,
 				EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */,
+				EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */,
 				EB693C9818BFC57600CCDF1F /* UIProgressView+AFNetworking.m in Sources */,
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
@@ -602,7 +634,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -641,7 +672,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -707,7 +737,6 @@
 		EB693C2518BFA7F500CCDF1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Bee.app/Bee";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -730,7 +759,6 @@
 		EB693C2618BFA7F500CCDF1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Bee.app/Bee";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

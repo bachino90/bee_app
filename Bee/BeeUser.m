@@ -7,14 +7,20 @@
 //
 
 #import "BeeUser.h"
+#import "KeychainWrapper.h"
+
+#define PASSWORD_KEY (__bridge id)kSecValueData
+#define USER_KEY (__bridge id)kSecAttrAccount
 
 static NSString *kUserInfoFilename = @"UserInfo.plist";
 
 @interface BeeUser ()
 @property (nonatomic, strong) NSDictionary *facebookSession;
 @property (nonatomic, strong) NSDictionary *userData;
-@property (nonatomic, readwrite) NSString *userID;
-@property (nonatomic, readwrite) NSString *sessionToken;
+
+@property (nonatomic, strong) KeychainWrapper *tokenWrapper;
+@property (nonatomic, readonly) NSString *userPassword;
+@property (nonatomic, readonly) NSString *userEmail;
 @end
 
 @implementation BeeUser
@@ -24,28 +30,65 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
     static BeeUser *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[BeeUser alloc] init];
+        sharedInstance.tokenWrapper = [[KeychainWrapper alloc] init];
+        if ([sharedInstance isLoggedin]) {
+            [sharedInstance setAuthorizationHeader];
+        }
     });
     return sharedInstance;
 }
 
+- (void)clearData {
+    if ([self isLoggedin]) {
+        [self.tokenWrapper resetKeychainItem];
+    }
+}
+
+- (void)userSignOut {
+    [[BeeAPIClient sharedClient] signOutUserWithData:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    [self clearData];
+    [self.delegate userSignOut];
+}
+
+- (NSString *)userID {
+    if (![[self.tokenWrapper myObjectForKey:USER_KEY] isEqualToString:@""]) {
+        return [self.tokenWrapper myObjectForKey:USER_KEY];
+    }
+    else return nil;
+}
+
+- (NSString *)sessionToken {
+    if (![[self.tokenWrapper myObjectForKey:PASSWORD_KEY] isEqualToString:@""]) {
+        return [self.tokenWrapper myObjectForKey:PASSWORD_KEY];
+    }
+    else return nil;
+}
+
 - (void)setNewSession:(NSDictionary *)response {
-    NSDictionary *user_id = response[@"user_id"];
-    [BeeUser sharedUser].userID = user_id[[[user_id allKeys] firstObject]];
-    [BeeUser sharedUser].sessionToken = response[@"token"];
-    [[BeeAPIClient sharedClient].requestSerializer setValue:response[@"token"] forHTTPHeaderField:@"HTTP_AUTHORIZATION"];
-    [[BeeAPIClient sharedClient].requestSerializer setAuthorizationHeaderFieldWithToken:response[@"token"]];
+    [self.tokenWrapper mySetObject:response[@"user_id"] forKey:USER_KEY];
+    [self.tokenWrapper mySetObject:response[@"token"] forKey:PASSWORD_KEY];
+    [self setAuthorizationHeader];
 }
 
-+ (NSString *)userInfoFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths lastObject];
-    return [documentsDirectory stringByAppendingString:kUserInfoFilename];
+- (void)setAuthorizationHeader {
+    NSString *token = [self.tokenWrapper myObjectForKey:PASSWORD_KEY];
+    [[BeeAPIClient sharedClient].requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
 }
 
-+ (BOOL)isLoggedin {
-    NSString *userInfoFilename = [BeeUser userInfoFilePath];
-    return [[NSFileManager defaultManager] fileExistsAtPath:userInfoFilename];
+- (BOOL)isLoggedin {
+    if (![[self.tokenWrapper myObjectForKey:USER_KEY] isEqualToString:@""] &&
+        ![[self.tokenWrapper myObjectForKey:PASSWORD_KEY] isEqualToString:@""]) {
+        return YES;
+    }
+    return NO;
 }
+
+#pragma mark - Facebook things
 
 + (NSArray *)basicPermissions {
     return @[@"basic_info",@"email"];
@@ -96,7 +139,7 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
     [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
             self.facebookSession = (NSDictionary *)result;
-            if ([BeeUser isLoggedin]) {
+            if ([self isLoggedin]) {
                 [self requestForMyFriends];
             } else {
                 [[BeeAPIClient sharedClient] POSTUserWithFacebookData:result success:^(NSURLSessionDataTask *task, id responseObject) {

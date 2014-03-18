@@ -16,9 +16,13 @@
                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
-- (void)loginUserWithData:(NSDictionary *)session
+- (void)signinUserWithData:(NSDictionary *)session
                      success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                      failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
+- (void)signOutUserWithData:(NSDictionary *)session
+                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
 - (void)POSTUserWithFacebookData:(NSDictionary *)facebookData
                          success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success

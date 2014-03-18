@@ -12,6 +12,7 @@
 #import "BeeNavigationController.h"
 
 #import "BeeTableViewCell.h"
+#import "JZRefreshControl.h"
 #import "BeeRefreshControl.h"
 
 @interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate, BeeSecretViewControllerDelegate>
@@ -39,7 +40,7 @@
     
     self.leftButton.tag = 1;
     self.actualPage = 1;
-    self.refreshControl = [[BeeRefreshControl alloc]initWithFrame:CGRectMake(0.0, 0.0, self.tableView.frame.size.width, [BeeRefreshControl height])];
+    self.refreshControl = [[BeeRefreshControl alloc]initWithFrame:CGRectMake(0.0, self.tableView.frame.origin.y, self.tableView.frame.size.width, [BeeRefreshControl height])];
     self.refreshControl.tableView = self.tableView;
     __weak BeeViewController *weakSelf = self;
 
@@ -66,10 +67,13 @@
     };
     [self.refreshControl beginRefreshing];
     
+    
     //[self followScrollView:self.tableView];
     //UIRefreshControl *rc = [[UIRefreshControl alloc]init];
     //rc.attributedTitle = [[NSAttributedString alloc]initWithString:@"Loading..."];
     //[self.tableView addSubview:rc];
+    
+    //[self refreshSecrets];
 }
 
 - (void)didReceiveMemoryWarning
