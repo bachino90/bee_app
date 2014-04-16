@@ -15,7 +15,7 @@
 #import "BeeUser.h"
 
 #define SLIDE_TIMING .3
-#define PANEL_WIDTH 200
+#define PANEL_WIDTH 215
 #define SCALE_FACTOR 0.9
 
 #define CENTER_TAG 101
@@ -91,6 +91,7 @@
 
 - (void)userSignOut {
     [self performSegueWithIdentifier:@"Login Segue" sender:nil];
+    [self movePanelToOriginalPosition];
 }
 
 
@@ -126,7 +127,7 @@
     if (value)
     {
         [_centerViewController.view.layer setShadowColor:[UIColor blackColor].CGColor];
-        [_centerViewController.view.layer setShadowOpacity:0.5];
+        [_centerViewController.view.layer setShadowOpacity:0.25];
         [_centerViewController.view.layer setShadowOffset:CGSizeMake(offset, offset)];
         
     }
@@ -178,7 +179,7 @@
     self.showingLeftPanel = YES;
     
     // set up view shadows
-    [self showCenterViewWithShadow:YES withOffset:-2];
+    [self showCenterViewWithShadow:YES withOffset:-1];
     
     UIView *view = self.leftPanelViewController.view;
     return view;

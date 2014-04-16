@@ -10,6 +10,9 @@
 
 @interface Secret : NSObject
 
++ (NSArray *)colors;
++ (NSArray *)fonts;
+
 - (instancetype)initWithDictionary:(NSDictionary *)secret;
 
 @property (nonatomic, strong) NSString *secretID;
@@ -20,8 +23,9 @@
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic) NSInteger commentsCount;
 @property (nonatomic) NSInteger likesCount;
-@property (nonatomic) BOOL iAmAuthor;
-@property (nonatomic) BOOL friendIsAuthor;
+@property (nonatomic) NSInteger author;
 @property (nonatomic) BOOL iLikeIt;
+@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) UIFont *font;
 
 @end

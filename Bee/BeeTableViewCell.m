@@ -14,6 +14,8 @@
 #define LABEL_MAXIMUM_HEIGHT 340.0f
 
 @interface BeeTableViewCell ()
+@property (nonatomic, strong) UIColor *darkColor;
+@property (nonatomic, strong) UIColor *color;
 @end
 
 @implementation BeeTableViewCell
@@ -27,11 +29,15 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setDarkColor:(UIColor *)color {
+    CGFloat hue;
+    CGFloat saturation;
+    CGFloat brightness;
+    CGFloat alpha;
+    [color getHue:&hue saturation:&saturation brightness:&brightness alpha:&alpha];
+    saturation += 0.2;
+    brightness -= 0.2;
+    _darkColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:alpha];
 }
 
 - (IBAction)likeSecret:(UIButton *)sender {
@@ -63,25 +69,41 @@
     NSString *content = _secret.content;
     self.secretLabel.text = content;
     self.secretLabel.textAlignment = NSTextAlignmentCenter;
-    self.secretLabel.layer.borderWidth = 1.0f;
-    self.secretLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    if (_secret.friendIsAuthor) {
-        self.isFriendLabel.text = @"F";
-    } else {
-        if (_secret.iAmAuthor)
+    self.secretLabel.textColor = [UIColor whiteColor];
+    //self.secretLabel.layer.borderWidth = 1.0f;
+    //self.secretLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    switch (_secret.author) {
+        case 0:
             self.isFriendLabel.text = @"";
-        else
-            self.isFriendLabel.text = @"NF";
+            break;
+        case 1:
+            self.isFriendLabel.text = @"";
+            break;
+        case 2:
+            self.isFriendLabel.text = @"F";
+            break;
+        case 3:
+            self.isFriendLabel.text = @"FoF";
+            break;
+        default:
+            self.isFriendLabel.text = @"";
+            break;
     }
     self.commentButton.titleLabel.text = [NSString stringWithFormat:@"C%i",_secret.commentsCount];
     self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",_secret.likesCount];
+    self.backgroundColor = secret.color;
+    self.secretLabel.font = secret.font;
     
+    [self setDarkColor:secret.color];
+    [self setColor:secret.color];
+    self.bottomBorder.backgroundColor = self.darkColor;
+    [self setNeedsLayout];
     [self layoutSubviews];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+    /*
     CGSize maxSize = CGSizeMake(LABEL_WIDTH, LABEL_MAXIMUM_HEIGHT);
     CGSize requiredSize = [self.secretLabel sizeThatFits:maxSize];
     requiredSize.width = LABEL_WIDTH;
@@ -92,6 +114,7 @@
     }
     self.secretLabel.frame = CGRectMake(self.secretLabel.frame.origin.x, self.secretLabel.frame.origin.y, requiredSize.width, requiredSize.height);
     self.requiredCellHeight = 20.0f + requiredSize.height + 30.0f + 6.0f + 8.0f;
+     */
 }
 
 @end

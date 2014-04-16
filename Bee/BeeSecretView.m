@@ -9,7 +9,7 @@
 #import "BeeSecretView.h"
 #define LABEL_WIDTH 280.0f
 #define LABEL_MARGIN_X 20.0f
-#define LABEL_MARGIN_TOP_Y 50.0f
+#define LABEL_MARGIN_TOP_Y 20.0f
 #define LABEL_MARGIN_BOTTOM_Y 40.0f
 
 @interface BeeSecretView ()
@@ -31,17 +31,21 @@
     self = [self initWithFrame:CGRectZero];
     if (self) {
         self.secret = secret;
+        self.backgroundColor = secret.color;
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
         label.text = secret.content;
         label.textAlignment = NSTextAlignmentCenter;
-        CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 2*LABEL_MARGIN_X, CGFLOAT_MAX);
-        CGSize requiredSize = [label sizeThatFits:maxSize];
-        requiredSize.width = SCREEN_WIDTH - 2*LABEL_MARGIN_X;
-        
-        label.frame = CGRectMake(LABEL_MARGIN_X, LABEL_MARGIN_TOP_Y, requiredSize.width, requiredSize.height);
+        label.textColor = [UIColor whiteColor];
+        label.numberOfLines = 20;
+        label.font = secret.font;
+        //CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 2*LABEL_MARGIN_X, CGFLOAT_MAX);
+        //CGSize requiredSize = [label sizeThatFits:maxSize];
+        //requiredSize.width = SCREEN_WIDTH - 2*LABEL_MARGIN_X;
+        //label.frame = CGRectMake(LABEL_MARGIN_X, LABEL_MARGIN_TOP_Y, requiredSize.width, requiredSize.height);
+        label.frame = CGRectMake(LABEL_MARGIN_X, LABEL_MARGIN_TOP_Y, SCREEN_WIDTH - 2*LABEL_MARGIN_X, SECRET_WIDTH - LABEL_MARGIN_TOP_Y);
         [self addSubview:label];
         
-        self.frame = CGRectMake(0.0, 0.0, SCREEN_WIDTH, LABEL_MARGIN_TOP_Y + requiredSize.height + LABEL_MARGIN_BOTTOM_Y);
+        self.frame = CGRectMake(0.0, 0.0, SCREEN_WIDTH, SECRET_WIDTH);
     }
     return self;
 }

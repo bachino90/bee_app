@@ -11,22 +11,20 @@
 #import "BeeSecretView.h"
 #import "Comment.h"
 #import "BeeCommentView.h"
+#import "Reachability.h"
 
 #define HEADER_HEIGHT 50.0f
 
 @interface BeeSecretViewController () <UITableViewDataSource, UITableViewDelegate, BeeCommentViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) BeeCommentView *commentView;
+@property (nonatomic, strong) Reachability *internetReachability;
 @end
 
 @implementation BeeSecretViewController {
     dispatch_once_t onceToken;
     NSMutableDictionary *rowHeightCache;
     BeeCommentTableViewCell *sizingCell;
-}
-
-- (BOOL)prefersStatusBarHidden {
-    return YES;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,12 +36,23 @@
     return self;
 }
 
+- (void)registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+}
+
+- (void)unregisterForNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+- (void)dealloc {
+    [self unregisterForNotifications];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     rowHeightCache = [NSMutableDictionary dictionary];
-    
     [[BeeAPIClient sharedClient]GETCommentsForSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableComments = [[NSMutableArray alloc]init];
         int i = 0;
@@ -63,6 +72,11 @@
     self.commentView = [[BeeCommentView alloc]init];
     self.commentView.delegate = self;
     [self.view addSubview:self.commentView];
+    
+    [self registerForNotifications];
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    [self updateInterfaceWithReachability:self.internetReachability];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,6 +87,27 @@
 
 - (IBAction)cancelBtn:(UIButton *)sender {
     [self.delegate dismissBeeSecretViewController:self];
+}
+
+- (void)updateInterfaceWithReachability:(Reachability *)reach {
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    //BOOL connectionRequired = [reach connectionRequired];
+    switch (netStatus) {
+        case NotReachable:
+            [self.commentView setEnablePost:NO];
+            break;
+        default:
+            [self.commentView setEnablePost:YES];
+            break;
+    }
+}
+
+#pragma mark - Reachability Notifications
+
+- (void)reachabilityChanged:(NSNotification *)note {
+    Reachability *reach = note.object;
+    NSParameterAssert([reach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:reach];
 }
 
 #pragma mark - Comment View delegate
@@ -101,7 +136,7 @@
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:comment, @"content", nil];
     NSDictionary *dictComment = [NSDictionary dictionaryWithObjectsAndKeys:params, @"comment", nil];
-    [[BeeAPIClient sharedClient]POSTComment:dictComment forSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient]POSTComment:dictComment inSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

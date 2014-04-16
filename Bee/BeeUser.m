@@ -16,6 +16,7 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
 
 @interface BeeUser ()
 @property (nonatomic, strong) NSDictionary *facebookSession;
+@property (nonatomic, strong) NSArray *facebookFriendsList;
 @property (nonatomic, strong) NSDictionary *userData;
 
 @property (nonatomic, strong) KeychainWrapper *tokenWrapper;
@@ -45,12 +46,13 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
 }
 
 - (void)userSignOut {
-    [[BeeAPIClient sharedClient] signOutUserWithData:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient] signoutUserWithData:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
     
+    [self facebookUserLogOut];
     [self clearData];
     [self.delegate userSignOut];
 }
@@ -102,7 +104,7 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
     if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed) {
         
         //borrar los datos de usuarios
-        [self facebookUserLoggedOut];
+        [self facebookUserLogOut];
     }
     
     if (error) {
@@ -131,7 +133,14 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
         }
         
         //borrar los datos de usuarios
-        [self facebookUserLoggedOut];
+        [self facebookUserLogOut];
+    }
+}
+
+- (void)facebookUserLogOut {
+    if (FBSession.activeSession.state == FBSessionStateOpen ||
+        FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+        [FBSession.activeSession closeAndClearTokenInformation];
     }
 }
 
@@ -142,7 +151,7 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
             if ([self isLoggedin]) {
                 [self requestForMyFriends];
             } else {
-                [[BeeAPIClient sharedClient] POSTUserWithFacebookData:result success:^(NSURLSessionDataTask *task, id responseObject) {
+                [[BeeAPIClient sharedClient] signinWithFacebookData:result success:^(NSURLSessionDataTask *task, id responseObject) {
                     self.userData = (NSDictionary *)responseObject;
                     [self requestForMyFriends];
                 } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -154,14 +163,27 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
     }];
 }
 
-- (void)facebookUserLoggedOut {
-    [FBSession.activeSession closeAndClearTokenInformation];
-}
-
 - (void)requestForMyFriends {
-    [[FBRequest requestForMyFriends] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+    [[FBRequest requestForGraphPath:@"me/friends?fields=installed"] startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
             //put friends in database
+            NSLog(@"%@",result);
+            self.facebookFriendsList = [(NSDictionary *)result objectForKey:@"data"];
+            if (self.facebookFriendsList.count > 0) {
+                NSMutableArray *friendList = [NSMutableArray array];
+                for (NSDictionary *dict in self.facebookFriendsList) {
+                    if ([[dict allKeys] containsObject:@"installed"]) {
+                        [friendList addObject:dict[@"installed"]];
+                    }
+                }
+                if (friendList.count > 0) {
+                    [[BeeAPIClient sharedClient] updateFriendsList:friendList success:^(NSURLSessionDataTask *task, id responseObject) {
+                        
+                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                        
+                    }];
+                }
+            }
         }
     }];
 }

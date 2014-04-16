@@ -10,11 +10,43 @@
 		EB00DAED18C3E464001B17CB /* AMScrollingNavbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAEC18C3E464001B17CB /* AMScrollingNavbarViewController.m */; };
 		EB00DAF218C3EF98001B17CB /* JZRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */; };
 		EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */; };
+		EB0B7A0518FA06EA00F34F1E /* UIFont+Bee.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0B7A0418FA06EA00F34F1E /* UIFont+Bee.m */; };
+		EB0B7A0818FA07C000F34F1E /* Airstream.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A0718FA07C000F34F1E /* Airstream.ttf */; };
+		EB0B7A0A18FA07D000F34F1E /* AlexBrush-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A0918FA07D000F34F1E /* AlexBrush-Regular.ttf */; };
+		EB0B7A0C18FA07E900F34F1E /* BPscript.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A0B18FA07E900F34F1E /* BPscript.otf */; };
+		EB0B7A0E18FA07F600F34F1E /* Capsuula.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A0D18FA07F600F34F1E /* Capsuula.ttf */; };
+		EB0B7A1018FA080500F34F1E /* Comfortaa_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A0F18FA080500F34F1E /* Comfortaa_Regular.ttf */; };
+		EB0B7A1218FA080D00F34F1E /* Comfortaa_Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1118FA080D00F34F1E /* Comfortaa_Thin.ttf */; };
+		EB0B7A1418FA081700F34F1E /* DAYPBL__.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1318FA081700F34F1E /* DAYPBL__.ttf */; };
+		EB0B7A1618FA082E00F34F1E /* DEFTONE.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1518FA082E00F34F1E /* DEFTONE.ttf */; };
+		EB0B7A1818FA084100F34F1E /* Diner-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1718FA084100F34F1E /* Diner-Regular.ttf */; };
+		EB0B7A1A18FA085700F34F1E /* Dosis-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1918FA085700F34F1E /* Dosis-Light.otf */; };
+		EB0B7A1C18FA08A700F34F1E /* Dosis-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1B18FA08A700F34F1E /* Dosis-ExtraLight.otf */; };
+		EB0B7A1E18FA08B100F34F1E /* DymaxionScript.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1D18FA08B100F34F1E /* DymaxionScript.ttf */; };
+		EB0B7A2018FA08C000F34F1E /* FingerPaint-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A1F18FA08C000F34F1E /* FingerPaint-Regular.ttf */; };
+		EB0B7A2218FA08D300F34F1E /* FrenteH1-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2118FA08D300F34F1E /* FrenteH1-Regular.otf */; };
+		EB0B7A2418FA08E200F34F1E /* idolwild.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2318FA08E200F34F1E /* idolwild.ttf */; };
+		EB0B7A2618FA08EE00F34F1E /* Impact_Label_Reversed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2518FA08EE00F34F1E /* Impact_Label_Reversed.ttf */; };
+		EB0B7A2818FA08FF00F34F1E /* Impact_Label.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2718FA08FF00F34F1E /* Impact_Label.ttf */; };
+		EB0B7A2A18FA092400F34F1E /* KomikaTitle-Kaps.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2918FA092400F34F1E /* KomikaTitle-Kaps.ttf */; };
+		EB0B7A2C18FA093900F34F1E /* New_Cicle_Semi.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2B18FA093900F34F1E /* New_Cicle_Semi.ttf */; };
+		EB0B7A2E18FA094800F34F1E /* OpenSans-CondLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2D18FA094800F34F1E /* OpenSans-CondLight.ttf */; };
+		EB0B7A3018FA095300F34F1E /* Ostrich_Sans_Inline-regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A2F18FA095300F34F1E /* Ostrich_Sans_Inline-regular.otf */; };
+		EB0B7A3218FA095E00F34F1E /* porter-sans-inline-block.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3118FA095E00F34F1E /* porter-sans-inline-block.otf */; };
+		EB0B7A3418FA097100F34F1E /* PrintBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3318FA097100F34F1E /* PrintBold.otf */; };
+		EB0B7A3618FA097700F34F1E /* PrintClearly.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3518FA097700F34F1E /* PrintClearly.otf */; };
+		EB0B7A3818FA099000F34F1E /* Quicksand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3718FA099000F34F1E /* Quicksand-Regular.otf */; };
+		EB0B7A3A18FA09AD00F34F1E /* Sevillana-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3918FA09AD00F34F1E /* Sevillana-Regular.ttf */; };
+		EB0B7A3C18FA09C500F34F1E /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3B18FA09C500F34F1E /* Walkway_SemiBold.ttf */; };
+		EB14AC7C18EFBC880084C37B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EB14AC7B18EFBC880084C37B /* Reachability.m */; };
 		EB15966818C6557D00722F93 /* AMScrollingNavbarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */; };
 		EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967318C66EE900722F93 /* BeeSlideOutViewController.m */; };
 		EB15967718C66F1B00722F93 /* BeeNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */; };
 		EB15967A18C6819B00722F93 /* BeeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15967918C6819B00722F93 /* BeeNavigationController.m */; };
+		EB1F08AF18ECF1F800BB31B3 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1F08AE18ECF1F800BB31B3 /* SettingsViewController.m */; };
+		EB25A48018DB80FD0098D4E3 /* BeeLastTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB25A47F18DB80FD0098D4E3 /* BeeLastTableViewCell.m */; };
 		EB260CBD18C1895C00AB6CB9 /* BeeCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */; };
+		EB2994AD18F86374007FFAEC /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2994AC18F86374007FFAEC /* UIColor+FlatUI.m */; };
 		EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F424718C4E0B1000B7049 /* BeeCommentView.m */; };
 		EB2F424A18C5005D000B7049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2F424918C5005D000B7049 /* QuartzCore.framework */; };
 		EB34D0EF18C23CF200637B90 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0EE18C23CF200637B90 /* Comment.m */; };
@@ -23,6 +55,7 @@
 		EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF418D7555E00695353 /* BeeSignUpViewController.m */; };
 		EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF718D7556C00695353 /* BeeSignInViewController.m */; };
 		EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */; };
+		EB59B9AB18D8DCF20023B129 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = EB59B9AA18D8DCF20023B129 /* Notification.m */; };
 		EB693BF318BFA7F400CCDF1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF218BFA7F400CCDF1F /* Foundation.framework */; };
 		EB693BF518BFA7F400CCDF1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */; };
 		EB693BF718BFA7F400CCDF1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF618BFA7F400CCDF1F /* UIKit.framework */; };
@@ -66,6 +99,7 @@
 		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
 		EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8272818D50D6500CCD99B /* KeychainWrapper.m */; };
 		EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEFB2B018C9002B00DDBA53 /* BeeUser.m */; };
+		EBF50A5D18D8667300A49C25 /* BeeNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +119,37 @@
 		EB00DAF118C3EF98001B17CB /* JZRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JZRefreshControl.m; sourceTree = "<group>"; };
 		EB00DAF318C3F262001B17CB /* BeeRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeeRefreshControl.h; path = ../BeeRefreshControl.h; sourceTree = "<group>"; };
 		EB00DAF418C3F262001B17CB /* BeeRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BeeRefreshControl.m; path = ../BeeRefreshControl.m; sourceTree = "<group>"; };
+		EB0B7A0318FA06EA00F34F1E /* UIFont+Bee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Bee.h"; sourceTree = "<group>"; };
+		EB0B7A0418FA06EA00F34F1E /* UIFont+Bee.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Bee.m"; sourceTree = "<group>"; };
+		EB0B7A0718FA07C000F34F1E /* Airstream.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Airstream.ttf; sourceTree = "<group>"; };
+		EB0B7A0918FA07D000F34F1E /* AlexBrush-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AlexBrush-Regular.ttf"; sourceTree = "<group>"; };
+		EB0B7A0B18FA07E900F34F1E /* BPscript.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPscript.otf; sourceTree = "<group>"; };
+		EB0B7A0D18FA07F600F34F1E /* Capsuula.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Capsuula.ttf; sourceTree = "<group>"; };
+		EB0B7A0F18FA080500F34F1E /* Comfortaa_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comfortaa_Regular.ttf; sourceTree = "<group>"; };
+		EB0B7A1118FA080D00F34F1E /* Comfortaa_Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Comfortaa_Thin.ttf; sourceTree = "<group>"; };
+		EB0B7A1318FA081700F34F1E /* DAYPBL__.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DAYPBL__.ttf; sourceTree = "<group>"; };
+		EB0B7A1518FA082E00F34F1E /* DEFTONE.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DEFTONE.ttf; sourceTree = "<group>"; };
+		EB0B7A1718FA084100F34F1E /* Diner-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Diner-Regular.ttf"; sourceTree = "<group>"; };
+		EB0B7A1918FA085700F34F1E /* Dosis-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Light.otf"; sourceTree = "<group>"; };
+		EB0B7A1B18FA08A700F34F1E /* Dosis-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraLight.otf"; sourceTree = "<group>"; };
+		EB0B7A1D18FA08B100F34F1E /* DymaxionScript.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DymaxionScript.ttf; sourceTree = "<group>"; };
+		EB0B7A1F18FA08C000F34F1E /* FingerPaint-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FingerPaint-Regular.ttf"; sourceTree = "<group>"; };
+		EB0B7A2118FA08D300F34F1E /* FrenteH1-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FrenteH1-Regular.otf"; sourceTree = "<group>"; };
+		EB0B7A2318FA08E200F34F1E /* idolwild.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = idolwild.ttf; sourceTree = "<group>"; };
+		EB0B7A2518FA08EE00F34F1E /* Impact_Label_Reversed.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Impact_Label_Reversed.ttf; sourceTree = "<group>"; };
+		EB0B7A2718FA08FF00F34F1E /* Impact_Label.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Impact_Label.ttf; sourceTree = "<group>"; };
+		EB0B7A2918FA092400F34F1E /* KomikaTitle-Kaps.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KomikaTitle-Kaps.ttf"; sourceTree = "<group>"; };
+		EB0B7A2B18FA093900F34F1E /* New_Cicle_Semi.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = New_Cicle_Semi.ttf; sourceTree = "<group>"; };
+		EB0B7A2D18FA094800F34F1E /* OpenSans-CondLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-CondLight.ttf"; sourceTree = "<group>"; };
+		EB0B7A2F18FA095300F34F1E /* Ostrich_Sans_Inline-regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ostrich_Sans_Inline-regular.otf"; sourceTree = "<group>"; };
+		EB0B7A3118FA095E00F34F1E /* porter-sans-inline-block.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "porter-sans-inline-block.otf"; sourceTree = "<group>"; };
+		EB0B7A3318FA097100F34F1E /* PrintBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrintBold.otf; sourceTree = "<group>"; };
+		EB0B7A3518FA097700F34F1E /* PrintClearly.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PrintClearly.otf; sourceTree = "<group>"; };
+		EB0B7A3718FA099000F34F1E /* Quicksand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.otf"; sourceTree = "<group>"; };
+		EB0B7A3918FA09AD00F34F1E /* Sevillana-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sevillana-Regular.ttf"; sourceTree = "<group>"; };
+		EB0B7A3B18FA09C500F34F1E /* Walkway_SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walkway_SemiBold.ttf; sourceTree = "<group>"; };
+		EB14AC7A18EFBC880084C37B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		EB14AC7B18EFBC880084C37B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		EB15966618C6557D00722F93 /* AMScrollingNavbarTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMScrollingNavbarTableViewController.h; sourceTree = "<group>"; };
 		EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMScrollingNavbarTableViewController.m; sourceTree = "<group>"; };
 		EB15967218C66EE900722F93 /* BeeSlideOutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSlideOutViewController.h; sourceTree = "<group>"; };
@@ -93,8 +158,14 @@
 		EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationsViewController.m; sourceTree = "<group>"; };
 		EB15967818C6819B00722F93 /* BeeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNavigationController.h; sourceTree = "<group>"; };
 		EB15967918C6819B00722F93 /* BeeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNavigationController.m; sourceTree = "<group>"; };
+		EB1F08AD18ECF1F800BB31B3 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		EB1F08AE18ECF1F800BB31B3 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		EB25A47E18DB80FD0098D4E3 /* BeeLastTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLastTableViewCell.h; sourceTree = "<group>"; };
+		EB25A47F18DB80FD0098D4E3 /* BeeLastTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLastTableViewCell.m; sourceTree = "<group>"; };
 		EB260CBB18C1895C00AB6CB9 /* BeeCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentTableViewCell.h; sourceTree = "<group>"; };
 		EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentTableViewCell.m; sourceTree = "<group>"; };
+		EB2994AB18F86374007FFAEC /* UIColor+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatUI.h"; sourceTree = "<group>"; };
+		EB2994AC18F86374007FFAEC /* UIColor+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+FlatUI.m"; sourceTree = "<group>"; };
 		EB2F424618C4E0B1000B7049 /* BeeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentView.h; sourceTree = "<group>"; };
 		EB2F424718C4E0B1000B7049 /* BeeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentView.m; sourceTree = "<group>"; };
 		EB2F424918C5005D000B7049 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -110,6 +181,8 @@
 		EB416EF718D7556C00695353 /* BeeSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSignInViewController.m; sourceTree = "<group>"; };
 		EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeTableViewController.h; sourceTree = "<group>"; };
 		EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeTableViewController.m; sourceTree = "<group>"; };
+		EB59B9A918D8DCF20023B129 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		EB59B9AA18D8DCF20023B129 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		EB693BEF18BFA7F400CCDF1F /* Bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB693BF218BFA7F400CCDF1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -185,6 +258,8 @@
 		EBB8272818D50D6500CCD99B /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeUser.h; sourceTree = "<group>"; };
 		EBEFB2B018C9002B00DDBA53 /* BeeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeUser.m; sourceTree = "<group>"; };
+		EBF50A5B18D8667300A49C25 /* BeeNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationTableViewCell.h; sourceTree = "<group>"; };
+		EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +313,58 @@
 			path = JZRefreshControl;
 			sourceTree = "<group>";
 		};
+		EB0B7A0618FA06F700F34F1E /* Bee+UIFont */ = {
+			isa = PBXGroup;
+			children = (
+				EB0B7A0318FA06EA00F34F1E /* UIFont+Bee.h */,
+				EB0B7A0418FA06EA00F34F1E /* UIFont+Bee.m */,
+			);
+			name = "Bee+UIFont";
+			sourceTree = "<group>";
+		};
+		EB0B7A3D18FA09D200F34F1E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				EB0B7A0718FA07C000F34F1E /* Airstream.ttf */,
+				EB0B7A0918FA07D000F34F1E /* AlexBrush-Regular.ttf */,
+				EB0B7A0B18FA07E900F34F1E /* BPscript.otf */,
+				EB0B7A0D18FA07F600F34F1E /* Capsuula.ttf */,
+				EB0B7A0F18FA080500F34F1E /* Comfortaa_Regular.ttf */,
+				EB0B7A1118FA080D00F34F1E /* Comfortaa_Thin.ttf */,
+				EB0B7A1318FA081700F34F1E /* DAYPBL__.ttf */,
+				EB0B7A1518FA082E00F34F1E /* DEFTONE.ttf */,
+				EB0B7A1718FA084100F34F1E /* Diner-Regular.ttf */,
+				EB0B7A1B18FA08A700F34F1E /* Dosis-ExtraLight.otf */,
+				EB0B7A1918FA085700F34F1E /* Dosis-Light.otf */,
+				EB0B7A1D18FA08B100F34F1E /* DymaxionScript.ttf */,
+				EB0B7A1F18FA08C000F34F1E /* FingerPaint-Regular.ttf */,
+				EB0B7A2118FA08D300F34F1E /* FrenteH1-Regular.otf */,
+				EB0B7A2318FA08E200F34F1E /* idolwild.ttf */,
+				EB0B7A2518FA08EE00F34F1E /* Impact_Label_Reversed.ttf */,
+				EB0B7A2718FA08FF00F34F1E /* Impact_Label.ttf */,
+				EB0B7A2918FA092400F34F1E /* KomikaTitle-Kaps.ttf */,
+				EB0B7A2B18FA093900F34F1E /* New_Cicle_Semi.ttf */,
+				EB0B7A2D18FA094800F34F1E /* OpenSans-CondLight.ttf */,
+				EB0B7A2F18FA095300F34F1E /* Ostrich_Sans_Inline-regular.otf */,
+				EB0B7A3118FA095E00F34F1E /* porter-sans-inline-block.otf */,
+				EB0B7A3318FA097100F34F1E /* PrintBold.otf */,
+				EB0B7A3518FA097700F34F1E /* PrintClearly.otf */,
+				EB0B7A3718FA099000F34F1E /* Quicksand-Regular.otf */,
+				EB0B7A3918FA09AD00F34F1E /* Sevillana-Regular.ttf */,
+				EB0B7A3B18FA09C500F34F1E /* Walkway_SemiBold.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		EB14AC7D18EFBC8F0084C37B /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				EB14AC7A18EFBC880084C37B /* Reachability.h */,
+				EB14AC7B18EFBC880084C37B /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
 		EB15967B18C68A7300722F93 /* Bee Slide Out Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,6 +400,10 @@
 			children = (
 				EB693C2718BFA85400CCDF1F /* BeeTableViewCell.h */,
 				EB693C2818BFA85400CCDF1F /* BeeTableViewCell.m */,
+				EB25A47E18DB80FD0098D4E3 /* BeeLastTableViewCell.h */,
+				EB25A47F18DB80FD0098D4E3 /* BeeLastTableViewCell.m */,
+				EBF50A5B18D8667300A49C25 /* BeeNotificationTableViewCell.h */,
+				EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */,
 				EB260CBB18C1895C00AB6CB9 /* BeeCommentTableViewCell.h */,
 				EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */,
 				EB34D0F018C240E500637B90 /* BeeAvatarView.h */,
@@ -281,6 +412,15 @@
 				EB34D0F418C2679500637B90 /* BeeSecretView.m */,
 			);
 			name = "TableView Cell";
+			sourceTree = "<group>";
+		};
+		EB2994AE18F86379007FFAEC /* FlatUI */ = {
+			isa = PBXGroup;
+			children = (
+				EB2994AB18F86374007FFAEC /* UIColor+FlatUI.h */,
+				EB2994AC18F86374007FFAEC /* UIColor+FlatUI.m */,
+			);
+			name = FlatUI;
 			sourceTree = "<group>";
 		};
 		EB4A5B6218D7D83300B2C3A6 /* Bee Login */ = {
@@ -292,6 +432,8 @@
 				EB416EF418D7555E00695353 /* BeeSignUpViewController.m */,
 				EB416EF618D7556C00695353 /* BeeSignInViewController.h */,
 				EB416EF718D7556C00695353 /* BeeSignInViewController.m */,
+				EB1F08AD18ECF1F800BB31B3 /* SettingsViewController.h */,
+				EB1F08AE18ECF1F800BB31B3 /* SettingsViewController.m */,
 			);
 			name = "Bee Login";
 			sourceTree = "<group>";
@@ -334,6 +476,9 @@
 		EB693BF818BFA7F400CCDF1F /* Bee */ = {
 			isa = PBXGroup;
 			children = (
+				EB0B7A0618FA06F700F34F1E /* Bee+UIFont */,
+				EB2994AE18F86379007FFAEC /* FlatUI */,
+				EB14AC7D18EFBC8F0084C37B /* Reachability */,
 				EB00DAEF18C3EF98001B17CB /* JZRefreshControl */,
 				EB00DAEE18C3E46D001B17CB /* AMScrollingNavbarViewController */,
 				EB693C6418BFC57600CCDF1F /* AFNetworking */,
@@ -353,9 +498,12 @@
 				EB693CA818C148C000CCDF1F /* Secret.m */,
 				EB34D0ED18C23CF200637B90 /* Comment.h */,
 				EB34D0EE18C23CF200637B90 /* Comment.m */,
+				EB59B9A918D8DCF20023B129 /* Notification.h */,
+				EB59B9AA18D8DCF20023B129 /* Notification.m */,
 				EB693C6118BFBF0800CCDF1F /* BeeAPIClient.h */,
 				EB693C6218BFBF0800CCDF1F /* BeeAPIClient.m */,
 				EB693C0A18BFA7F400CCDF1F /* Images.xcassets */,
+				EB0B7A3D18FA09D200F34F1E /* Fonts */,
 				EB693BF918BFA7F400CCDF1F /* Supporting Files */,
 			);
 			path = Bee;
@@ -517,8 +665,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB0B7A3418FA097100F34F1E /* PrintBold.otf in Resources */,
+				EB0B7A3A18FA09AD00F34F1E /* Sevillana-Regular.ttf in Resources */,
 				EB693C0B18BFA7F400CCDF1F /* Images.xcassets in Resources */,
+				EB0B7A2618FA08EE00F34F1E /* Impact_Label_Reversed.ttf in Resources */,
+				EB0B7A2C18FA093900F34F1E /* New_Cicle_Semi.ttf in Resources */,
+				EB0B7A0818FA07C000F34F1E /* Airstream.ttf in Resources */,
+				EB0B7A0E18FA07F600F34F1E /* Capsuula.ttf in Resources */,
+				EB0B7A0A18FA07D000F34F1E /* AlexBrush-Regular.ttf in Resources */,
+				EB0B7A2A18FA092400F34F1E /* KomikaTitle-Kaps.ttf in Resources */,
+				EB0B7A2818FA08FF00F34F1E /* Impact_Label.ttf in Resources */,
+				EB0B7A1418FA081700F34F1E /* DAYPBL__.ttf in Resources */,
+				EB0B7A2218FA08D300F34F1E /* FrenteH1-Regular.otf in Resources */,
+				EB0B7A2E18FA094800F34F1E /* OpenSans-CondLight.ttf in Resources */,
 				EB693BFD18BFA7F400CCDF1F /* InfoPlist.strings in Resources */,
+				EB0B7A3C18FA09C500F34F1E /* Walkway_SemiBold.ttf in Resources */,
+				EB0B7A1818FA084100F34F1E /* Diner-Regular.ttf in Resources */,
+				EB0B7A2418FA08E200F34F1E /* idolwild.ttf in Resources */,
+				EB0B7A3218FA095E00F34F1E /* porter-sans-inline-block.otf in Resources */,
+				EB0B7A0C18FA07E900F34F1E /* BPscript.otf in Resources */,
+				EB0B7A3618FA097700F34F1E /* PrintClearly.otf in Resources */,
+				EB0B7A3818FA099000F34F1E /* Quicksand-Regular.otf in Resources */,
+				EB0B7A1E18FA08B100F34F1E /* DymaxionScript.ttf in Resources */,
+				EB0B7A2018FA08C000F34F1E /* FingerPaint-Regular.ttf in Resources */,
+				EB0B7A1C18FA08A700F34F1E /* Dosis-ExtraLight.otf in Resources */,
+				EB0B7A1A18FA085700F34F1E /* Dosis-Light.otf in Resources */,
+				EB0B7A3018FA095300F34F1E /* Ostrich_Sans_Inline-regular.otf in Resources */,
+				EB0B7A1618FA082E00F34F1E /* DEFTONE.ttf in Resources */,
+				EB0B7A1018FA080500F34F1E /* Comfortaa_Regular.ttf in Resources */,
+				EB0B7A1218FA080D00F34F1E /* Comfortaa_Thin.ttf in Resources */,
 				EB693C0618BFA7F400CCDF1F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -548,16 +723,22 @@
 				EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */,
 				EB693C9618BFC57600CCDF1F /* UIButton+AFNetworking.m in Sources */,
 				EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */,
+				EB2994AD18F86374007FFAEC /* UIColor+FlatUI.m in Sources */,
+				EB14AC7C18EFBC880084C37B /* Reachability.m in Sources */,
 				EB693C8D18BFC57600CCDF1F /* AFNetworkReachabilityManager.m in Sources */,
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
+				EB59B9AB18D8DCF20023B129 /* Notification.m in Sources */,
 				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
 				EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */,
 				EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */,
 				EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */,
 				EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */,
+				EB1F08AF18ECF1F800BB31B3 /* SettingsViewController.m in Sources */,
+				EB25A48018DB80FD0098D4E3 /* BeeLastTableViewCell.m in Sources */,
 				EB693C9818BFC57600CCDF1F /* UIProgressView+AFNetworking.m in Sources */,
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
+				EB0B7A0518FA06EA00F34F1E /* UIFont+Bee.m in Sources */,
 				EB693C9018BFC57600CCDF1F /* AFURLRequestSerialization.m in Sources */,
 				EB693C2918BFA85400CCDF1F /* BeeTableViewCell.m in Sources */,
 				EB693C9918BFC57600CCDF1F /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -581,6 +762,7 @@
 				EB693C9418BFC57600CCDF1F /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				EB693C9318BFC57600CCDF1F /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */,
+				EBF50A5D18D8667300A49C25 /* BeeNotificationTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

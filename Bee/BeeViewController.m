@@ -7,11 +7,13 @@
 //
 
 #import "BeeViewController.h"
+#import "Reachability.h"
 #import "BeeAddSecretViewController.h"
 #import "BeeSecretViewController.h"
 #import "BeeNavigationController.h"
 
 #import "BeeTableViewCell.h"
+#import "BeeLastTableViewCell.h"
 #import "JZRefreshControl.h"
 #import "BeeRefreshControl.h"
 
@@ -19,8 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *secrets;
 @property (strong, nonatomic) BeeRefreshControl *refreshControl;
-@property (nonatomic) NSUInteger actualPage;
 
+@property (nonatomic, strong) Reachability *internetReachability;
 @property (nonatomic) BOOL isLoadingOldSecrets;
 @property (nonatomic) BOOL isLoadingNewSecrets;
 @property (nonatomic) BOOL loadedAllSecrets;
@@ -32,14 +34,30 @@
     BeeTableViewCell *sizingCell;
 }
 
+- (void)registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+}
+
+- (void)unregisterForNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+- (void)dealloc {
+    [self unregisterForNotifications];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     rowHeightCache = [NSMutableDictionary dictionary];
     
+    [self registerForNotifications];
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    [self updateInterfaceWithReachability:self.internetReachability];
+    
     self.leftButton.tag = 1;
-    self.actualPage = 1;
     self.refreshControl = [[BeeRefreshControl alloc]initWithFrame:CGRectMake(0.0, self.tableView.frame.origin.y, self.tableView.frame.size.width, [BeeRefreshControl height])];
     self.refreshControl.tableView = self.tableView;
     __weak BeeViewController *weakSelf = self;
@@ -49,15 +67,25 @@
     
     self.refreshControl.refreshBlock = ^{
         weakSelf.isLoadingNewSecrets = YES;
-        [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+        [[BeeAPIClient sharedClient] GETRecentSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
             NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
             int i = 0;
             for (NSDictionary *secret in (NSArray *)responseObject) {
                 mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
                 i++;
             }
-            weakSelf.secrets = [mutableSecrets copy];
-            [weakSelf.tableView reloadData];
+            
+            [BeeAPIClient sharedClient].secretRecentUpdate = ((Secret *)mutableSecrets.firstObject).createdAt;
+            if ([BeeAPIClient sharedClient].secretLastUpdate == nil) {
+                [BeeAPIClient sharedClient].secretLastUpdate = ((Secret *)mutableSecrets.lastObject).createdAt;
+            }
+            if (mutableSecrets.count > 0) {
+                if (weakSelf.secrets.count > 0 && [((Secret *)mutableSecrets.lastObject).secretID isEqualToString:((Secret *)weakSelf.secrets.firstObject).secretID]) {
+                    [mutableSecrets removeLastObject];
+                }
+                weakSelf.secrets = [mutableSecrets arrayByAddingObjectsFromArray:weakSelf.secrets];
+                [weakSelf.tableView reloadData];
+            }
             [weakSelf.refreshControl endRefreshing];
             weakSelf.isLoadingNewSecrets = NO;
             weakSelf.isLoadingOldSecrets = NO;
@@ -67,6 +95,8 @@
     };
     [self.refreshControl beginRefreshing];
     
+    CGFloat tableViewHeight = SCREEN_HEIGHT - self.tableView.frame.origin.y;
+    self.tableView.frame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width, tableViewHeight);
     
     //[self followScrollView:self.tableView];
     //UIRefreshControl *rc = [[UIRefreshControl alloc]init];
@@ -84,14 +114,18 @@
 
 - (void)refreshSecrets {
     self.isLoadingNewSecrets = YES;
-    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient] GETRecentSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
         int i = 0;
         for (NSDictionary *secret in (NSArray *)responseObject) {
             mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
             i++;
         }
-        self.secrets = [mutableSecrets copy];
+        
+        [BeeAPIClient sharedClient].secretRecentUpdate = ((Secret *)mutableSecrets.firstObject).createdAt;
+        [BeeAPIClient sharedClient].secretLastUpdate = ((Secret *)mutableSecrets.lastObject).createdAt;
+        
+        self.secrets = [mutableSecrets arrayByAddingObjectsFromArray:self.secrets];
         [self.tableView reloadData];
         [self.refreshControl endRefreshing];
         self.isLoadingNewSecrets = NO;
@@ -118,19 +152,46 @@
     }
 }
 
+- (void)updateInterfaceWithReachability:(Reachability *)reach {
+    NetworkStatus netStatus = [reach currentReachabilityStatus];
+    //BOOL connectionRequired = [reach connectionRequired];
+    switch (netStatus) {
+        case NotReachable:
+            //[self.commentView setEnablePost:NO];
+            break;
+        default:
+            //[self.commentView setEnablePost:YES];
+            break;
+    }
+}
+
+#pragma mark - Reachability Notifications
+
+- (void)reachabilityChanged:(NSNotification *)note {
+    Reachability *reach = note.object;
+    NSParameterAssert([reach isKindOfClass:[Reachability class]]);
+    [self updateInterfaceWithReachability:reach];
+}
+
 #pragma mark - Refresh Secrets
 
 - (void)loadNewSecrets {
-    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:1 friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient] GETRecentSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
         int i = 0;
         for (NSDictionary *secret in (NSArray *)responseObject) {
             mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
             i++;
         }
-        self.secrets = [mutableSecrets copy];
+        
+        [BeeAPIClient sharedClient].secretRecentUpdate = ((Secret *)mutableSecrets.firstObject).createdAt;
+        if ([BeeAPIClient sharedClient].secretLastUpdate == nil) {
+            [BeeAPIClient sharedClient].secretLastUpdate = ((Secret *)mutableSecrets.lastObject).createdAt;
+        }
+        if (mutableSecrets.count > 0) {
+            self.secrets = [mutableSecrets arrayByAddingObjectsFromArray:self.secrets];
+        }
         [self.tableView reloadData];
-        //[self endRefreshing];
         self.isLoadingNewSecrets = NO;
         self.isLoadingOldSecrets = NO;
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -142,18 +203,20 @@
     if (self.isLoadingOldSecrets || self.isLoadingNewSecrets || self.loadedAllSecrets) {
         return;
     }
-    NSUInteger nextPage = self.actualPage + 1;
     self.isLoadingOldSecrets = YES;
-    [[BeeAPIClient sharedClient] GETSecretsAbout:@"" page:nextPage friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient] GETPastSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableSecrets = [[NSMutableArray alloc]init];
+        NSLog(@"%@", (NSArray *)responseObject);
         int i = 0;
         for (NSDictionary *secret in (NSArray *)responseObject) {
             mutableSecrets[i] = [[Secret alloc]initWithDictionary:secret];
             i++;
         }
+        
+        [BeeAPIClient sharedClient].secretLastUpdate = ((Secret *)mutableSecrets.lastObject).createdAt;
+        
         self.secrets = [self.secrets arrayByAddingObjectsFromArray:mutableSecrets];//[mutableSecrets copy];
         [self.tableView reloadData];
-        self.actualPage++;
         self.isLoadingOldSecrets = NO;
         if (mutableSecrets.count == 0) {
             self.loadedAllSecrets = YES;
@@ -225,17 +288,28 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.secrets.count;
+    if (self.secrets.count > 0)
+        return self.secrets.count + 1;
+    else return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    BeeTableViewCell *cell = (BeeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-    Secret *secret = self.secrets[indexPath.row];
-    cell.secret = secret;
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    return cell;
+    if (indexPath.row == self.secrets.count) {
+        BeeLastTableViewCell *cell = (BeeLastTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"BeeLastTableViewCell" forIndexPath:indexPath];
+        if (self.loadedAllSecrets) {
+            [cell.activityIndicatorView stopAnimating];
+        } else {
+            [cell.activityIndicatorView startAnimating];
+        }
+        return cell;
+    } else {
+        BeeTableViewCell *cell = (BeeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
+        Secret *secret = self.secrets[indexPath.row];
+        cell.secret = secret;
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        return cell;
+    }
 }
 
 
@@ -245,9 +319,13 @@
     sizingCell.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableView.bounds), 0);
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == self.secrets.count) {
+        return 75.0;
+    }
+    
     dispatch_once(&onceToken, ^{
         sizingCell = (BeeTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:[self cellIdentifier]];
         [self adjustSizingCellWidthToTableWidth];
@@ -265,10 +343,18 @@
     
     return [rowHeightCache[index] floatValue];
 }
+*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.secrets.count) {
+        return 75.0;
+    }
+    return SECRET_WIDTH;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"Secret Show Segue" sender:self.secrets[indexPath.row]];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
-
+ 
 @end

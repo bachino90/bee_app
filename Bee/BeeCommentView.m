@@ -87,6 +87,10 @@
     [self hideKeyboard];
 }
 
+- (void)setEnablePost:(BOOL)isEnable {
+    self.postButton.enabled = isEnable;
+}
+
 #pragma mark - Keyboard Notifications
 
 - (void)keyboardWillShown:(NSNotification *)notification {

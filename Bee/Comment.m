@@ -10,16 +10,20 @@
 
 @implementation Comment
 
-- (instancetype)initWithDictionary:(NSDictionary *)secret {
+- (instancetype)initWithDictionary:(NSDictionary *)comment {
     self = [super init];
     if (self) {
-        NSDictionary *secret_id = secret[@"id"];
+        NSDictionary *secret_id = comment[@"id"];
         self.commentID = secret_id[[[secret_id allKeys] firstObject]];
         self.avatarID = @"";//secret[@"avatar_id"];
-        self.content = secret[@"content"];
+        self.content = comment[@"content"];
         self.likesCount = 0;//[secret[@"likes_count"] integerValue];
-        self.iAmAuthor = [secret[@"i_am_author"] boolValue];
-        self.friendIsAuthor = [secret[@"author_is_friend"] boolValue];
+        self.iAmAuthor = [comment[@"i_am_author"] boolValue];
+        self.friendIsAuthor = [comment[@"author_is_friend"] boolValue];
+        NSString *dateString = comment[@"created_at"];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        self.createdAt = [dateFormat dateFromString:dateString];
     }
     return self;
 }

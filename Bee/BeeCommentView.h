@@ -17,5 +17,8 @@
 @end
 
 @interface BeeCommentView : UIView
+
 @property (nonatomic, weak) id <BeeCommentViewDelegate> delegate;
+- (void)setEnablePost:(BOOL)isEnable;
+
 @end

@@ -9,13 +9,14 @@
 #import "BeeAPIClient.h"
 #import "BeeUser.h"
 
-static NSString * const kBeeAPIBaseURLString = @"http://localhost:3000/api/v1/";
+static NSString * const kBeeAPIBaseURLString = @"http://bachino90-bee.herokuapp.com/api/v1/";//@"http://localhost:3000/api/v1/";//
 
 static NSString * const kBeeAPIKey = @"API_KEY";
 
 @interface BeeAPIClient ()
 @property (nonatomic, readonly) NSString *userID;
 @property (nonatomic, strong) NSString *deviceID;
+
 @end
 
 @implementation BeeAPIClient
@@ -58,34 +59,74 @@ static NSString * const kBeeAPIKey = @"API_KEY";
                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"sessions"];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:sessionParams, @"session",
-                                                                       self.deviceID, @"device_id", nil];
+                                                                          self.deviceID, @"device_id", nil];
     [self POST:endPoint parameters:parameters success:success failure:failure];
 }
 
-- (void)signOutUserWithData:(NSDictionary *)session
+- (void)signoutUserWithData:(NSDictionary *)session
                     success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                     failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"signout"];
     [self DELETE:endPoint parameters:nil success:success failure:failure];
 }
 
+- (void)signinWithFacebookData:(NSDictionary *)facebookData
+                       success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                       failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    
+}
+
+- (void)updateFriendsList:(NSArray *)friendList
+                  success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                  failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    //NSString *endPoint = [NSString stringWithFormat:@"users/%@/facebook/friends", self.userID];
+    //NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:friendList, @"friends_list", nil];
+    //[self PUT:endPoint parameters:parameters success:success failure:failure];
+}
 
 - (void)GETUserInfoSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
-    NSString *endPoint = [NSString stringWithFormat:@"users/%@",self.userID];
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@", self.userID];
     [self GET:endPoint parameters:nil success:success failure:failure];
+}
+
+#pragma mark - NOTIFICATIONS
+
+- (void)GETLastNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                            failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSDictionary *paramenters = nil;
+    if (self.notificationRecentUpdate) {
+        paramenters = [NSDictionary dictionaryWithObjectsAndKeys:[self.notificationRecentUpdate description], @"notification_recent_update", nil];
+    }
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/notifications",self.userID];
+    [self GET:endPoint parameters:paramenters success:success failure:failure];
 }
 
 #pragma mark - SECRETS
 
-- (void)GETSecretsAbout:(NSString *)about
-                   page:(NSUInteger)page
-                friends:(BOOL)friendsSecrets
-                success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
-                failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+- (void)GETRecentSecretsAbout:(NSString *)about
+                      friends:(BOOL)friendsSecrets
+                      success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                      failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSLog(@"%@",self.requestSerializer.HTTPRequestHeaders);
-    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets?page=%i", self.userID, page];
-    [self GET:endPoint parameters:nil success:success failure:failure];
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets", self.userID];
+    NSDictionary *parameters = nil;
+    if (self.secretRecentUpdate) {
+        NSString *recentDateStr = [self.secretRecentUpdate description];
+        parameters = [NSDictionary dictionaryWithObjectsAndKeys:recentDateStr, @"recent_update_at", nil];
+    }
+    [self GET:endPoint parameters:parameters success:success failure:failure];
+}
+
+- (void)GETPastSecretsAbout:(NSString *)about
+                    friends:(BOOL)friendsSecrets
+                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSLog(@"%@",self.requestSerializer.HTTPRequestHeaders);
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/last", self.userID];
+    NSString *pastDateStr = [self.secretLastUpdate description];
+    NSDictionary *paramenters = [NSDictionary dictionaryWithObjectsAndKeys:pastDateStr, @"last_update_at", nil];
+    [self GET:endPoint parameters:paramenters success:success failure:failure];
 }
 
 - (void)POSTSecret:(NSDictionary *)secretParameters
@@ -113,7 +154,7 @@ static NSString * const kBeeAPIKey = @"API_KEY";
              success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
              failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/%@", self.userID, secretID];
-    [self PUT:endPoint parameters:nil success:success failure:failure];
+    [self DELETE:endPoint parameters:nil success:success failure:failure];
 }
 
 #pragma mark - COMMENTS
@@ -126,7 +167,7 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 }
 
 - (void)POSTComment:(NSDictionary *)commentParameters
-          forSecret:(NSString *)secretID
+           inSecret:(NSString *)secretID
             success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
             failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/%@/comments", self.userID, secretID];
@@ -134,9 +175,11 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 }
 
 - (void)DELETEComment:(NSString *)commentID
+             inSecret:(NSString *)secretID
               success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
               failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
-    
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/%@/comments/%@", self.userID, secretID, commentID];
+    [self DELETE:endPoint parameters:nil success:success failure:failure];
 }
 
 

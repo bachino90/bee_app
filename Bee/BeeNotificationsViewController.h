@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @protocol BeeNotificationsViewControllerDelegate <NSObject>
-
 @end
 
 @interface BeeNotificationsViewController : UIViewController
