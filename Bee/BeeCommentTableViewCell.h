@@ -10,11 +10,18 @@
 #import "Comment.h"
 #import "BeeAvatarView.h"
 
+@class BeeCommentTableViewCell;
+@protocol BeeCommentTableViewCellDelegate <NSObject>
+- (void)commentCell:(BeeCommentTableViewCell *)cell rePostComment:(Comment *)comment;
+- (void)commentCell:(BeeCommentTableViewCell *)cell deleteComment:(Comment *)comment;
+@end
+
 @interface BeeCommentTableViewCell : UITableViewCell
 
+@property (nonatomic, weak) id <BeeCommentTableViewCellDelegate> delegate;
 @property (nonatomic, weak) IBOutlet BeeAvatarView *avatarView;
 @property (nonatomic, weak) IBOutlet UILabel *commentLabel;
-@property (nonatomic, weak) IBOutlet UILabel *howIsLabel;
+@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
 
 @property (nonatomic, strong) Comment *comment;
 @property (nonatomic) CGFloat requiredCellHeight;

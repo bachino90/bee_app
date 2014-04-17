@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    CommentSuccessDelivered = 0,
+    CommentFailDelivered,
+    CommentDelivered,
+} CommentState;
+
 @interface Comment : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)secret;
@@ -20,5 +26,7 @@
 @property (nonatomic) NSInteger likesCount;
 @property (nonatomic) BOOL iAmAuthor;
 @property (nonatomic) BOOL friendIsAuthor;
+@property (nonatomic) CommentState state;
+@property (nonatomic, readonly) NSString *dateString;
 
 @end

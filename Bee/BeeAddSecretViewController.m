@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIView *navBarBackgroundView;
 @property (strong, nonatomic) UITextView *textView;
 
 @property (nonatomic, strong) UITapGestureRecognizer *showTapGesture;
@@ -33,6 +34,7 @@
 @property (nonatomic) NSInteger actualColor;
 @property (nonatomic) NSInteger actualFont;
 @property (nonatomic, readonly) NSString *about;
+@property (nonatomic) BOOL keyboardIsShow;
 @end
 
 @implementation BeeAddSecretViewController
@@ -73,6 +75,7 @@
         _actualColor = [Secret colors].count - 1;
     }
     
+    self.navBarBackgroundView.backgroundColor = [Secret colors][_actualColor];
     self.backgroundView.backgroundColor = [Secret colors][_actualColor];
 }
 
@@ -101,6 +104,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    NSDictionary *textAttributes = @{NSFontAttributeName: [UIFont beeFontWithSize:20.0],
+                                     NSForegroundColorAttributeName: [UIColor blackColor]};
+    [self.cancelButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [self.publicButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     
     self.textView = [[UITextView alloc]initWithFrame:CGRectZero];
     self.textView.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -150,6 +158,7 @@
     [self.internetReachability startNotifier];
     [self updateInterfaceWithReachability:self.internetReachability];
     self.isFirst = YES;
+    self.keyboardIsShow = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -233,7 +242,7 @@
     
     frame.size.width = SCREEN_WIDTH - TEXTVIEW_MARGIN;
     self.textView.frame = frame;
-    if ([self.textView isFirstResponder] && SCREEN_HEIGHT < SMALL_SCREEN_HEIGHT) {
+    if (self.keyboardIsShow && SCREEN_HEIGHT <= SMALL_SCREEN_HEIGHT) {
         self.textView.center = CGPointMake(self.backgroundView.frame.size.width/2.0, (self.backgroundView.frame.size.height/2.0) - ORIGIN_DESVIO);
     } else {
         self.textView.center = CGPointMake(self.backgroundView.frame.size.width/2.0, self.backgroundView.frame.size.height/2.0);
@@ -341,6 +350,8 @@
         self.textView.frame = CGRectMake(self.textView.frame.origin.x, newTextViewY, self.textView.frame.size.width, self.textView.frame.size.height);
     }
     [UIView commitAnimations];
+    
+    self.keyboardIsShow = YES;
 }
 
 - (void)keyboardWillHidden:(NSNotification *)notification {
@@ -360,6 +371,8 @@
         self.textView.frame = CGRectMake(self.textView.frame.origin.x, newTextViewY, self.textView.frame.size.width, self.textView.frame.size.height);
     }
     [UIView commitAnimations];
+    
+    self.keyboardIsShow = NO;
 }
 
 @end

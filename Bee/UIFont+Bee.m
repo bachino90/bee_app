@@ -11,7 +11,7 @@
 @implementation UIFont (Bee)
 
 + (UIFont *)beeFontWithSize:(CGFloat)size {
-    return [UIFont fontWithName:@"19.0" size:size];
+    return [UIFont fontWithName:@"Quicksand-Regular" size:size];
 }
 
 + (NSArray *)secretsFonts {

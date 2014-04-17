@@ -8,7 +8,7 @@
 
 #import "BeeRefreshControl.h"
 
-#define REFRESH_CONTROL_HEIGHT 100.0f
+#define REFRESH_CONTROL_HEIGHT 70.0f
 
 @interface BeeRefreshControl ()
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;

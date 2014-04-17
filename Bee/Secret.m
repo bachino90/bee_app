@@ -7,8 +7,6 @@
 //
 
 #import "Secret.h"
-#import "UIColor+FlatUI.h"
-#import "UIFont+Bee.h"
 
 @implementation Secret
 
@@ -26,18 +24,18 @@
     if (fonts) {
         return fonts;
     }
-    fonts = [UIFont secretsFonts];//@[[UIFont systemFontOfSize:19.0f],[UIFont systemFontOfSize:12.0f],[UIFont systemFontOfSize:20.0f]];
+    fonts = [UIFont secretsFonts];
     return fonts;
 }
 
 - (NSDateFormatter *)dateFormatter {
-    static NSDateFormatter *dateFormmater;
-    if (dateFormmater) {
-        return dateFormmater;
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter) {
+        return dateFormatter;
     }
-    dateFormmater = [[NSDateFormatter alloc] init];
-    [dateFormmater setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    return dateFormmater;
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    return dateFormatter;
 }
 
 - (instancetype)initWithDictionary:(NSDictionary *)secret {

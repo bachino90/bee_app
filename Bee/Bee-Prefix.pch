@@ -16,6 +16,8 @@
     #import "AFNetworking.h"
     #import "Secret.h"
     #import "BeeAPIClient.h"
+    #import "UIColor+FlatUI.h"
+    #import "UIFont+Bee.h"
     #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
     #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
     #define SECRET_WIDTH [[UIScreen mainScreen] bounds].size.width

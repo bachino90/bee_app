@@ -99,6 +99,7 @@
 		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
 		EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8272818D50D6500CCD99B /* KeychainWrapper.m */; };
 		EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEFB2B018C9002B00DDBA53 /* BeeUser.m */; };
+		EBF3231D18FF6CD900D29211 /* BeeNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */; };
 		EBF50A5D18D8667300A49C25 /* BeeNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */; };
 /* End PBXBuildFile section */
 
@@ -258,6 +259,8 @@
 		EBB8272818D50D6500CCD99B /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeUser.h; sourceTree = "<group>"; };
 		EBEFB2B018C9002B00DDBA53 /* BeeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeUser.m; sourceTree = "<group>"; };
+		EBF3231B18FF6CD900D29211 /* BeeNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationView.h; sourceTree = "<group>"; };
+		EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationView.m; sourceTree = "<group>"; };
 		EBF50A5B18D8667300A49C25 /* BeeNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationTableViewCell.h; sourceTree = "<group>"; };
 		EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -376,6 +379,8 @@
 				EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */,
 				EB693C0718BFA7F400CCDF1F /* BeeViewController.h */,
 				EB693C0818BFA7F400CCDF1F /* BeeViewController.m */,
+				EBF3231B18FF6CD900D29211 /* BeeNotificationView.h */,
+				EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */,
 				EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */,
 				EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */,
 			);
@@ -729,6 +734,7 @@
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
 				EB59B9AB18D8DCF20023B129 /* Notification.m in Sources */,
 				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
+				EBF3231D18FF6CD900D29211 /* BeeNotificationView.m in Sources */,
 				EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */,
 				EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */,
 				EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */,

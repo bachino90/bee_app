@@ -7,13 +7,14 @@
 //
 
 #import "BeeTableViewCell.h"
+#import "BeeUser.h"
 
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 280.0f
 #define LABEL_MINIMUM_HEIGHT 50.0f
 #define LABEL_MAXIMUM_HEIGHT 340.0f
 
-@interface BeeTableViewCell ()
+@interface BeeTableViewCell () <UIActionSheetDelegate>
 @property (nonatomic, strong) UIColor *darkColor;
 @property (nonatomic, strong) UIColor *color;
 @end
@@ -62,6 +63,11 @@
 }
 
 - (IBAction)commentSecret:(UIButton *)sender {
+}
+
+- (IBAction)otherActions:(id)sender {
+    UIActionSheet *as = [[UIActionSheet alloc]initWithTitle:@"Otras cosas" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Guardar imagen",@"Denunciar imagen",@"Compartir en Facebook",@"Compartir en Twitter", nil];
+    [as showInView:self.superview];
 }
 
 - (void)setSecret:(Secret *)secret {
@@ -115,6 +121,34 @@
     self.secretLabel.frame = CGRectMake(self.secretLabel.frame.origin.x, self.secretLabel.frame.origin.y, requiredSize.width, requiredSize.height);
     self.requiredCellHeight = 20.0f + requiredSize.height + 30.0f + 6.0f + 8.0f;
      */
+}
+
+#pragma mark - Action Sheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        UIView *view = [[UIView alloc]initWithFrame:self.frame];
+        view.backgroundColor = self.backgroundColor;
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
+        label.frame = self.secretLabel.frame;
+        label.text = self.secretLabel.text;
+        label.textColor = self.secretLabel.textColor;
+        label.font = self.secretLabel.font;
+        label.numberOfLines = 20;
+        label.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:label];
+        //CGFloat screenScale = [[UIScreen mainScreen] scale];
+        //NSLog(@"%g,%g",view.frame.size.width,view.frame.size.height);
+        //view.transform = CGAffineTransformScale(CGAffineTransformIdentity, screenScale, screenScale);
+        //NSLog(@"%g,%g",view.frame.size.width,view.frame.size.height);
+        UIGraphicsBeginImageContext(view.frame.size);
+        [[view layer] renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImageWriteToSavedPhotosAlbum(screenshot, nil, nil, nil);
+        });
+    }
 }
 
 @end

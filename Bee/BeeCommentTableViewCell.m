@@ -11,6 +11,10 @@
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 220.0f
 
+@interface BeeCommentTableViewCell () <UIActionSheetDelegate>
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@end
+
 @implementation BeeCommentTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -29,12 +33,50 @@
     // Configure the view for the selected state
 }
 
+- (UITapGestureRecognizer *)tapGestureRecognizer {
+    if (_tapGestureRecognizer) {
+        return _tapGestureRecognizer;
+    }
+    
+    _tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(rePostComment:)];
+    _tapGestureRecognizer.numberOfTapsRequired = 1;
+    _tapGestureRecognizer.numberOfTouchesRequired = 1;
+    return _tapGestureRecognizer;
+}
+
+- (void)rePostComment:(UITapGestureRecognizer *)tapGesture {
+    if (self.comment.state == CommentFailDelivered) {
+        UIActionSheet *as = [[UIActionSheet alloc]initWithTitle:@"Que deseas hacer?" delegate:self cancelButtonTitle:@"OK" destructiveButtonTitle:nil otherButtonTitles:@"Enviar de nuevo",@"Eliminar el comentario",nil];
+        
+        [as showInView:self.superview];
+    }
+}
+
+- (void)updateBackgroundColor {
+    switch (self.comment.state) {
+        case CommentDelivered:
+            self.backgroundColor = [UIColor blueColor];
+            self.gestureRecognizers = nil;
+            break;
+        case CommentSuccessDelivered:
+            self.backgroundColor = [UIColor clearColor];
+            self.gestureRecognizers = nil;
+            break;
+        case CommentFailDelivered:
+            self.backgroundColor = [UIColor redColor];
+            [self addGestureRecognizer:self.tapGestureRecognizer];
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)setComment:(Comment *)comment {
     _comment = comment;
     NSString *content = _comment.content;
     self.commentLabel.text = content;
-    self.commentLabel.backgroundColor = [UIColor yellowColor];
-    
+    //self.commentLabel.backgroundColor = [UIColor yellowColor];
+    /*
     if (_comment.friendIsAuthor) {
         self.howIsLabel.text = @"F";
     } else {
@@ -43,6 +85,11 @@
         else
             self.howIsLabel.text = @"NF";
     }
+    */
+    self.dateLabel.text = comment.dateString;
+    [self updateBackgroundColor];
+    
+    [self setNeedsLayout];
     [self layoutSubviews];
 }
 
@@ -54,10 +101,20 @@
     requiredSize.width = LABEL_WIDTH;
     self.commentLabel.frame = CGRectMake(self.commentLabel.frame.origin.x, self.commentLabel.frame.origin.y, requiredSize.width, requiredSize.height);
     if (requiredSize.height < 45) {
-        self.requiredCellHeight = 65.0f;
+        self.requiredCellHeight = 60.0f;
     } else
-        self.requiredCellHeight = 20.0f + requiredSize.height;
+        self.requiredCellHeight = 20.0f + requiredSize.height + 13.0f;
 }
 
+
+#pragma mark - UIActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self.delegate commentCell:self rePostComment:self.comment];
+    } else if (buttonIndex == 1) {
+        [self.delegate commentCell:self deleteComment:self.comment];
+    }
+}
 
 @end

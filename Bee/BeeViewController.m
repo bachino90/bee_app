@@ -12,6 +12,7 @@
 #import "BeeSecretViewController.h"
 #import "BeeNavigationController.h"
 
+#import "BeeNotificationView.h"
 #import "BeeTableViewCell.h"
 #import "BeeLastTableViewCell.h"
 #import "JZRefreshControl.h"
@@ -19,6 +20,7 @@
 
 @interface BeeViewController () <UITableViewDataSource, UITableViewDelegate, BeeAddSecretViewControllerDelegate, BeeSecretViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) BeeNotificationView *notificationView;
 @property (strong, nonatomic) NSArray *secrets;
 @property (strong, nonatomic) BeeRefreshControl *refreshControl;
 
@@ -44,6 +46,23 @@
 
 - (void)dealloc {
     [self unregisterForNotifications];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    
+    [super viewWillAppear:animated];
+    
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.font = [UIFont beeFontWithSize:27.0];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text = @"BeeApp";
+    // emboss in the same way as the native title
+    //[label setShadowColor:[UIColor darkGrayColor]];
+    //[label setShadowOffset:CGSizeMake(0, -0.5)];
+    self.navigationItem.titleView = label;
 }
 
 - (void)viewDidLoad
@@ -106,6 +125,14 @@
     //[self refreshSecrets];
 }
 
+- (BeeNotificationView *)notificationView {
+    if (_notificationView) {
+        return _notificationView;
+    }
+    _notificationView = [[BeeNotificationView alloc]initWithFrame:CGRectMake(0.0, self.navigationController.navigationBar.frame.size.height + 20.0, self.view.frame.size.width, 30.0)];
+    return _notificationView;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -158,9 +185,12 @@
     switch (netStatus) {
         case NotReachable:
             //[self.commentView setEnablePost:NO];
+            self.notificationView.notificationText = @"Error de conexion";
+            [self.view addSubview:self.notificationView];
             break;
         default:
             //[self.commentView setEnablePost:YES];
+            [self.notificationView removeFromSuperview];
             break;
     }
 }
