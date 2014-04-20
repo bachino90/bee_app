@@ -7,26 +7,10 @@
 //
 
 #import "Secret.h"
+#import "Secret+Bee.h"
 
 @implementation Secret
 
-+ (NSArray *)colors {
-    static NSArray *colors;
-    if (colors) {
-        return colors;
-    }
-    colors = @[[UIColor turquoiseColor], [UIColor emerlandColor], [UIColor peterRiverColor], [UIColor amethystColor], [UIColor wetAsphaltColor], [UIColor carrotColor], [UIColor sunflowerColor], [UIColor alizarinColor], [UIColor concreteColor]];
-    return colors;
-}
-
-+ (NSArray *)fonts {
-    static NSArray *fonts;
-    if (fonts) {
-        return fonts;
-    }
-    fonts = [UIFont secretsFonts];
-    return fonts;
-}
 
 - (NSDateFormatter *)dateFormatter {
     static NSDateFormatter *dateFormatter;
@@ -47,11 +31,12 @@
         self.mediaURL = secret[@"mediaURL"];
         self.comments = @[];
         self.about = secret[@"about"];
-        NSArray *ar = [self.about componentsSeparatedByString:@","];
+        /*NSArray *ar = [self.about componentsSeparatedByString:@","];
         if (ar.count == 2) {
             self.color = [Secret colors][[ar[0] intValue]];
             self.font = [Secret fonts][[ar[1] intValue]];
         }
+         */
         self.commentsCount = [secret[@"comments_count"] integerValue];
         self.likesCount = [secret[@"likes_count"] integerValue];
         self.author = [secret[@"author"] integerValue];

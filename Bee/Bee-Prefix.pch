@@ -12,6 +12,7 @@
 
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
+    #import <CoreData/CoreData.h>
     #import <Foundation/Foundation.h>
     #import "AFNetworking.h"
     #import "Secret.h"
@@ -21,4 +22,10 @@
     #define SCREEN_WIDTH [[UIScreen mainScreen] bounds].size.width
     #define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
     #define SECRET_WIDTH [[UIScreen mainScreen] bounds].size.width
+
+    typedef enum {
+        CommentSuccessDelivered = 0,
+        CommentFailDelivered,
+        CommentDelivered,
+    } CommentState;
 #endif

@@ -103,6 +103,7 @@
     self.textView.text = @"";
     self.postButton.enabled = NO;
     self.postButton.frame = CGRectMake(SCREEN_WIDTH - BUTTON_WIDTH, 0.0, BUTTON_WIDTH, HEIGHT);
+    self.separatorView.frame = CGRectMake(self.separatorView.frame.origin.x, self.separatorView.frame.origin.y, self.separatorView.frame.size.width, self.postButton.frame.size.height - 20.0);
     [self hideKeyboard];
 }
 

@@ -15,7 +15,7 @@
 #import "BeeUser.h"
 
 #define SLIDE_TIMING .3
-#define PANEL_WIDTH 215
+#define PANEL_WIDTH 160.0
 #define SCALE_FACTOR 0.9
 
 #define CENTER_TAG 101

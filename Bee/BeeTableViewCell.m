@@ -8,6 +8,7 @@
 
 #import "BeeTableViewCell.h"
 #import "BeeUser.h"
+#import "Secret+Bee.h"
 
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 280.0f

@@ -8,6 +8,7 @@
 
 #import "BeeAddSecretViewController.h"
 #import "Secret.h"
+#import "Secret+Bee.h"
 #import "BeeAPIClient.h"
 #import "Reachability.h"
 

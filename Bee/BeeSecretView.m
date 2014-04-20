@@ -7,6 +7,7 @@
 //
 
 #import "BeeSecretView.h"
+#import "Secret+Bee.h"
 #define LABEL_WIDTH 280.0f
 #define LABEL_MARGIN_X 20.0f
 #define LABEL_MARGIN_TOP_Y 20.0f
@@ -31,13 +32,13 @@
     self = [self initWithFrame:CGRectZero];
     if (self) {
         self.secret = secret;
-        self.backgroundColor = secret.color;
+        self.backgroundColor = [secret color];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
         label.text = secret.content;
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = [UIColor whiteColor];
         label.numberOfLines = 20;
-        label.font = secret.font;
+        label.font = [secret font];
         //CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 2*LABEL_MARGIN_X, CGFLOAT_MAX);
         //CGSize requiredSize = [label sizeThatFits:maxSize];
         //requiredSize.width = SCREEN_WIDTH - 2*LABEL_MARGIN_X;

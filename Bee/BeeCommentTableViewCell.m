@@ -7,6 +7,7 @@
 //
 
 #import "BeeCommentTableViewCell.h"
+#import "Comment+Bee.h"
 
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 220.0f
@@ -103,7 +104,7 @@
     if (requiredSize.height < 45) {
         self.requiredCellHeight = 60.0f;
     } else
-        self.requiredCellHeight = 20.0f + requiredSize.height + 13.0f;
+        self.requiredCellHeight = 20.0f + requiredSize.height + 10.0f;
 }
 
 

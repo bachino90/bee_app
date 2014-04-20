@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet BeeCommentView *commentView;
 @property (nonatomic, strong) Reachability *internetReachability;
+@property (nonatomic) BOOL isSearchingComments;
 @end
 
 @implementation BeeSecretViewController {
@@ -57,6 +58,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     rowHeightCache = [NSMutableDictionary dictionary];
+    self.isSearchingComments = YES;
     [[BeeAPIClient sharedClient]GETCommentsForSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableComments = [[NSMutableArray alloc]init];
         int i = 0;
@@ -65,6 +67,7 @@
             i++;
         }
         self.secret.comments = [mutableComments copy];
+        self.isSearchingComments = NO;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -106,6 +109,11 @@
     }
 }
 
+-(void)scrollToBottom{
+    //[self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height)];
+}
+
 #pragma mark - Reachability Notifications
 
 - (void)reachabilityChanged:(NSNotification *)note {
@@ -120,6 +128,7 @@
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
     CGFloat newHeight = SCREEN_HEIGHT - kbSize.height - commentView.frame.size.height;
     self.tableView.frame = CGRectMake(self.tableView.frame.origin.x,  self.tableView.frame.origin.y, self.tableView.frame.size.width, newHeight);
+    //[self scrollToBottom];
 }
 
 - (void)commentView:(BeeCommentView *)commentView keyboardWillHidden:(NSDictionary *)info {
@@ -133,7 +142,7 @@
 }
 
 - (void)commentView:(BeeCommentView *)commentView postComment:(NSString *)comment {
-    
+    [self scrollToBottom];
     __block Comment *comm = [[Comment alloc]initWithContent:comment];
     self.secret.comments = [self.secret.comments arrayByAddingObject:comm];
     [self.tableView reloadData];
@@ -194,16 +203,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.secret.comments.count;
+    if (self.isSearchingComments) {
+        return 1;
+    } else {
+        return self.secret.comments.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-    Comment *comment = self.secret.comments[indexPath.row];
-    cell.comment = comment;
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
-    return cell;
+    if (self.isSearchingComments) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LoadingCommentsCell" forIndexPath:indexPath];
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        activityView.center = cell.contentView.center;
+        [activityView startAnimating];
+        [cell.contentView addSubview:activityView];
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        return cell;
+    } else {
+        BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
+        Comment *comment = self.secret.comments[indexPath.row];
+        cell.comment = comment;
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+        return cell;
+    }
 }
 
 #pragma mark - Table View delegate
@@ -218,6 +242,10 @@
         sizingCell = (BeeCommentTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:[self cellIdentifier]];
         [self adjustSizingCellWidthToTableWidth];
     });
+    
+    if (self.isSearchingComments) {
+        return 50.0;
+    }
     
     NSString *index = [NSString stringWithFormat:@"%i",indexPath.row];
     
@@ -238,6 +266,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, SCREEN_WIDTH, HEADER_HEIGHT)];
+    headerView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.92];
     UIButton *likeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     NSString *likeTitle = [NSString stringWithFormat:@"L%i", self.secret.likesCount];
     [likeBtn setTitle:likeTitle forState:UIControlStateNormal];
