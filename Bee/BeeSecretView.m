@@ -8,6 +8,9 @@
 
 #import "BeeSecretView.h"
 #import "Secret+Bee.h"
+#import "Notification.h"
+#import "Notification+Bee.h"
+
 #define LABEL_WIDTH 280.0f
 #define LABEL_MARGIN_X 20.0f
 #define LABEL_MARGIN_TOP_Y 20.0f
@@ -47,6 +50,22 @@
         [self addSubview:label];
         
         self.frame = CGRectMake(0.0, 0.0, SCREEN_WIDTH, SECRET_WIDTH);
+    }
+    return self;
+}
+
+- (id)initWithNotification:(Notification *)notification {
+    self = [self initWithFrame:CGRectMake(0.0, 0.0, SCREEN_WIDTH/2.0, SECRET_WIDTH/2.0)];
+    if (self) {
+        self.backgroundColor = [notification color];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
+        label.text = notification.secret_content;
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.numberOfLines = 20;
+        label.font = [notification font];
+        label.frame = CGRectMake(LABEL_MARGIN_X/2.0, LABEL_MARGIN_TOP_Y/2.0, SCREEN_WIDTH/2.0 - LABEL_MARGIN_X, SECRET_WIDTH/2.0 - LABEL_MARGIN_TOP_Y/2.0);
+        [self addSubview:label];
     }
     return self;
 }

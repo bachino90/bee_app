@@ -8,6 +8,8 @@
 
 #import "Secret.h"
 
+@class Comment;
+
 @interface Secret (Bee)
 
 + (NSArray *)colors;
@@ -15,5 +17,7 @@
 
 - (UIColor *)color;
 - (UIFont *)font;
+
+//-(void)addCommentsObject:(Comment *)value;
 
 @end

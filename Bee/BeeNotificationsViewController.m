@@ -9,13 +9,15 @@
 #import "BeeNotificationsViewController.h"
 #import "BeeNotificationTableViewCell.h"
 #import "SettingsViewController.h"
+
+#import "CoreDataController.h"
+
 #import "BeeUser.h"
 #import "Notification.h"
 
-@interface BeeNotificationsViewController () <UITableViewDataSource, UITableViewDelegate, SettingsViewControllerDelegate>
+@interface BeeNotificationsViewController () <UITableViewDataSource, UITableViewDelegate, SettingsViewControllerDelegate, NSFetchedResultsControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray *notifications;
-@property (nonatomic, strong) NSDate *lastUpdateDate;
+@property (nonatomic, strong)  NSFetchedResultsController *fetchedResultsController;
 @end
 
 @implementation BeeNotificationsViewController
@@ -32,8 +34,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.notifications = [NSArray array];
-    [self refreshNotifications];
+    [self loadNewNotifications];
 	// Do any additional setup after loading the view.
 }
 
@@ -56,7 +57,8 @@
     }
 }
 
-- (void)refreshNotifications {
+- (void)loadNewNotifications {
+    /*
     [[BeeAPIClient sharedClient]GETLastNotificationsSuccess:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableNotifications = [[NSMutableArray alloc]init];
         int i = 0;
@@ -81,6 +83,11 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+    */
+}
+
+- (void)loadOldNotifications {
+    
 }
 
 - (IBAction)signOut:(UIButton *)sender {
@@ -118,6 +125,43 @@
     }];
 }
 
+#pragma mark - Scroll View Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //[self.refreshControl scrollViewDidScroll:scrollView];
+    
+    CGFloat currentOffset = scrollView.contentOffset.y;
+    CGFloat maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+    
+    if (maximumOffset - currentOffset <= 100.0) {
+        //[self loadOldSecrets];
+    }
+}
+
+#pragma mark - FetchedResultsController
+
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    
+    NSManagedObjectContext *moc = [[CoreDataController sharedInstance]masterManagedObjectContext];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Secret"];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc]initWithKey:@"created_at" ascending:NO];
+    [fetchRequest setSortDescriptors:@[descriptor]];
+    
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"Secrets"];
+    frc.delegate = self;
+    self.fetchedResultsController = frc;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    return _fetchedResultsController;
+}
+
 #pragma mark - Table View data source
 
 - (NSString *)cellIdentifier {
@@ -125,24 +169,105 @@
     return CellIdentifier;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.fetchedResultsController.sections.count;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.notifications.count;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    if ([sectionInfo numberOfObjects] > 0) {
+        NSLog(@"%i",[sectionInfo numberOfObjects]);
+        return [sectionInfo numberOfObjects];
+    }
+    else return 0;
+}
+
+- (void)configureCell:(BeeNotificationTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    //BeeNotificationTableViewCell *newCell = (BeeNotificationTableViewCell *)cell;
+    Notification *notification = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.notification = notification;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     BeeNotificationTableViewCell *cell = (BeeNotificationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-    [cell setNeedsLayout];
-    [cell layoutIfNeeded];
+    [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
 #pragma mark - Table View delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"Secret Show Segue" sender:self.notifications[indexPath.row]];
+    [self performSegueWithIdentifier:@"Secret Show Segue" sender:[self.fetchedResultsController objectAtIndexPath:indexPath]];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return SECRET_WIDTH/2.0;
+}
+
+#pragma mark - NSFetchedResultsController Delegate
+
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView beginUpdates];
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
+                          withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    UITableView *tableView = self.tableView;
+    
+    switch(type) {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:(BeeNotificationTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]
+                    atIndexPath:indexPath];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                             withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+    [self.tableView endUpdates];
+}
+
 
 
 @end

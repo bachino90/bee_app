@@ -43,19 +43,19 @@
 }
 
 - (IBAction)likeSecret:(UIButton *)sender {
-    if (self.secret.iLikeIt) {
-        [[BeeAPIClient sharedClient]DELETELikeOnSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
-            self.secret.likesCount--;
-            self.secret.iLikeIt = NO;
-            self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",self.secret.likesCount];
+    if ([self.secret.i_like_it boolValue]) {
+        [[BeeAPIClient sharedClient]DELETELikeOnSecret:self.secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+            //self.secret.likes_count--;
+            self.secret.i_like_it = NO;
+            self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",[self.secret.likes_count integerValue]];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
         }];
     } else {
-        [[BeeAPIClient sharedClient]PUTLikeOnSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
-            self.secret.likesCount++;
-            self.secret.iLikeIt = YES;
-            self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",self.secret.likesCount];
+        [[BeeAPIClient sharedClient]PUTLikeOnSecret:self.secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+            //self.secret.likesCount++;
+            //self.secret.iLikeIt = YES;
+            //self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",self.secret.likesCount];
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
         }];
@@ -79,7 +79,7 @@
     self.secretLabel.textColor = [UIColor whiteColor];
     //self.secretLabel.layer.borderWidth = 1.0f;
     //self.secretLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    switch (_secret.author) {
+    switch ([_secret.author integerValue]) {
         case 0:
             self.isFriendLabel.text = @"";
             break;
@@ -96,8 +96,8 @@
             self.isFriendLabel.text = @"";
             break;
     }
-    self.commentButton.titleLabel.text = [NSString stringWithFormat:@"C%i",_secret.commentsCount];
-    self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",_secret.likesCount];
+    //self.commentButton.titleLabel.text = [NSString stringWithFormat:@"C%i",_secret.commentsCount];
+    //self.likeButton.titleLabel.text = [NSString stringWithFormat:@"L%i",_secret.likesCount];
     self.backgroundColor = secret.color;
     self.secretLabel.font = secret.font;
     

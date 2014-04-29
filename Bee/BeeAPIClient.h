@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSDate *secretRecentUpdate;
 @property (nonatomic, strong) NSDate *secretLastUpdate;
 @property (nonatomic, strong) NSDate *notificationRecentUpdate;
+@property (nonatomic, strong) NSDate *notificationLastUpdate;
 
 + (BeeAPIClient *)sharedClient;
 
@@ -48,8 +49,11 @@
 
 /********* NOTIFICATIONS *********/
 
-- (void)GETLastNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
-                            failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+- (void)GETRecentNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                              failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
+- (void)GETOldNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                           failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
 /********* SECRETS *********/
 

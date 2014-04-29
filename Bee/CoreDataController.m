@@ -105,6 +105,19 @@
     }];
 }
 
+- (void)deleteDB {
+    NSPersistentStore *store = [self.persistentStoreCoordinator.persistentStores lastObject];
+    NSError *error = nil;
+    NSURL *storeURL = store.URL;
+    [self.persistentStoreCoordinator removePersistentStore:store error:&error];
+    [[NSFileManager defaultManager] removeItemAtURL:storeURL error:&error];
+    if (error == nil) {
+        _backgroundManagedObjectContext = nil;
+        _masterManagedObjectContext = nil;
+        _persistentStoreCoordinator = nil;
+    }
+}
+
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel

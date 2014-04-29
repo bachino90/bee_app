@@ -8,6 +8,7 @@
 
 #import "BeeUser.h"
 #import "KeychainWrapper.h"
+#import "CoreDataController.h"
 
 #define PASSWORD_KEY (__bridge id)kSecValueData
 #define USER_KEY (__bridge id)kSecAttrAccount
@@ -42,6 +43,7 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
 - (void)clearData {
     if ([self isLoggedin]) {
         [self.tokenWrapper resetKeychainItem];
+        [[CoreDataController sharedInstance] deleteDB];
     }
 }
 

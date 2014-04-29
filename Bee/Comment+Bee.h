@@ -10,9 +10,6 @@
 
 @interface Comment (Bee)
 
-+ (Comment *)newCommentWithDictionary:(NSDictionary *)comment;
-+ (Comment *)newCommentWithContent:(NSString *)content;
-
 - (NSString *)dateString;
 
 @end

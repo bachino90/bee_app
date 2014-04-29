@@ -10,39 +10,6 @@
 
 @implementation Comment (Bee)
 
-+ (Comment *)newCommentWithDictionary:(NSDictionary *)comment {
-    Comment *comm = [[Comment alloc]initWithDictionary:comment];
-    if (self) {
-        NSDictionary *secret_id = comment[@"id"];
-        comm.commentID = secret_id[[[secret_id allKeys] firstObject]];
-        comm.avatarID = @"";//secret[@"avatar_id"];
-        comm.content = comment[@"content"];
-        comm.likesCount = 0;//[secret[@"likes_count"] integerValue];
-        comm.iAmAuthor = [comment[@"i_am_author"] boolValue];
-        comm.friendIsAuthor = [comment[@"author_is_friend"] boolValue];
-        NSString *dateString = comment[@"created_at"];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-        comm.createdAt = [dateFormat dateFromString:dateString];
-        comm.state = CommentSuccessDelivered;
-    }
-    return comm;
-}
-
-+ (Comment *)newCommentWithContent:(NSString *)content {
-    Comment *comment = [[Comment alloc] initWithContent:content];
-    if (comment) {
-        comment.commentID = @"";
-        comment.avatarID = @"";//secret[@"avatar_id"];
-        comment.content = content;
-        comment.likesCount = 0;
-        comment.iAmAuthor = YES;
-        comment.friendIsAuthor = NO;
-        comment.state = CommentDelivered;
-    }
-    return comment;
-}
-
 + (NSString *)monthStringForMonthNumber:(NSInteger)month {
     switch (month) {
         case 1:
@@ -117,7 +84,7 @@
 }
 
 - (NSString *)dateString {
-    NSTimeInterval interval = [self.createdAt timeIntervalSinceNow];
+    NSTimeInterval interval = [self.created_at timeIntervalSinceNow];
     if (interval < 0) {
         interval = -interval;
         if (interval < 60.0) {
@@ -130,21 +97,21 @@
             return [NSString stringWithFormat:@"Hace %i horas",horas];
         } else if (interval < 60.0*60.0*24.0*2) {
             NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.createdAt];
+            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:self.created_at];
             return [NSString stringWithFormat:@"Ayer a la(s) %i:%2.i",components.hour,components.minute];
         } else if (interval < 60.0*60.0*24.0*7) {
             NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSWeekdayCalendarUnit) fromDate:self.createdAt];
+            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSWeekdayCalendarUnit) fromDate:self.created_at];
             NSString *weekday = [Comment weekdayForWeekdayNumber:components.weekday];
             return [NSString stringWithFormat:@"El %@ a la(s) %i:%2.i",weekday,components.hour,components.minute];
         } else if (interval < 60.0*60.0*24.0*365.0) {
             NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSDayCalendarUnit | NSMonthCalendarUnit) fromDate:self.createdAt];
+            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSDayCalendarUnit | NSMonthCalendarUnit) fromDate:self.created_at];
             NSString *month = [Comment monthStringForMonthNumber:components.month];
             return [NSString stringWithFormat:@"El %i de %@ a la(s) %i:%2.i",components.day,month,components.hour,components.minute];
         } else {
             NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.createdAt];
+            NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit |NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:self.created_at];
             NSString *month = [Comment monthStringForMonthNumber:components.month];
             return [NSString stringWithFormat:@"El %i de %@ de %i a la(s) %i:%2.i",components.day,month,components.year,components.hour,components.minute];
         }
@@ -152,5 +119,40 @@
         return @"";
     }
 }
+
+/*
+- (instancetype)initWithDictionary:(NSDictionary *)comment {
+    self = [super init];
+    if (self) {
+        NSDictionary *secret_id = comment[@"id"];
+        self.commentID = secret_id[[[secret_id allKeys] firstObject]];
+        self.avatarID = @"";//secret[@"avatar_id"];
+        self.content = comment[@"content"];
+        self.likesCount = 0;//[secret[@"likes_count"] integerValue];
+        self.iAmAuthor = [comment[@"i_am_author"] boolValue];
+        self.friendIsAuthor = [comment[@"author_is_friend"] boolValue];
+        NSString *dateString = comment[@"created_at"];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+        self.createdAt = [dateFormat dateFromString:dateString];
+        self.state = CommentSuccessDelivered;
+    }
+    return self;
+}
+
+- (instancetype)initWithContent:(NSString *)content {
+    self = [super init];
+    if (self) {
+        self.commentID = @"";
+        self.avatarID = @"";//secret[@"avatar_id"];
+        self.content = content;
+        self.likesCount = 0;
+        self.iAmAuthor = YES;
+        self.friendIsAuthor = NO;
+        self.state = CommentDelivered;
+    }
+    return self;
+}
+*/
 
 @end

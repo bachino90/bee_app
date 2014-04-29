@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Notification.h"
+#import "BeeSecretView.h"
 
 @interface BeeNotificationTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) Notification *notification;
 
 @end

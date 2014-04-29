@@ -10,4 +10,7 @@
 
 @interface Notification (Bee)
 
+- (UIColor *)color;
+- (UIFont *)font;
+
 @end

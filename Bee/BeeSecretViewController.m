@@ -11,7 +11,11 @@
 #import "BeeSecretView.h"
 #import "Comment.h"
 #import "BeeCommentView.h"
+#import "BeeCommentFooterView.h"
 #import "Reachability.h"
+
+#import "CoreDataController.h"
+#import "BeeSyncEngine.h"
 
 #define HEADER_HEIGHT 50.0f
 
@@ -20,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet BeeCommentView *commentView;
 @property (nonatomic, strong) Reachability *internetReachability;
 @property (nonatomic) BOOL isSearchingComments;
+@property (nonatomic) BOOL isFirstLoad;
+
+@property (nonatomic, strong) NSArray *comments;
 @end
 
 @implementation BeeSecretViewController {
@@ -41,12 +48,37 @@
     return self;
 }
 
+- (NSArray *)comments {
+    if (_comments) {
+        return _comments;
+    }
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"created_at" ascending:YES];
+    _comments = [self.secret.comments sortedArrayUsingDescriptors:@[descriptor]];
+    return _comments;
+}
+
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        self.tableView.tableFooterView = nil;
+        self.comments = nil;
+        [self.tableView reloadData];
+        if (!self.isFirstLoad) {
+            [self scrollToBottom];
+        }
+        self.isFirstLoad = NO;
+    }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncFailed" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+    }];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextDidSaveNotification object:nil];
 }
 
 - (void)unregisterForNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BeeSyncEngineSyncCompleted" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BeeSyncEngineSyncFailed" object:nil];
 }
 
 - (void)dealloc {
@@ -57,22 +89,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    rowHeightCache = [NSMutableDictionary dictionary];
-    self.isSearchingComments = YES;
-    [[BeeAPIClient sharedClient]GETCommentsForSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSMutableArray *mutableComments = [[NSMutableArray alloc]init];
-        int i = 0;
-        for (NSDictionary *comment in (NSArray *)responseObject) {
-            mutableComments[i] = [[Comment alloc]initWithDictionary:comment];
-            i++;
-        }
-        self.secret.comments = [mutableComments copy];
-        self.isSearchingComments = NO;
-        [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-    }];
+    self.isFirstLoad = YES;
     
+    rowHeightCache = [NSMutableDictionary dictionary];
+    [[BeeSyncEngine sharedEngine]startSearchingRecentCommentsForSecret:self.secret];
     BeeSecretView *headerView = [[BeeSecretView alloc]initWithSecret:self.secret];
     self.tableView.tableHeaderView = headerView;
     
@@ -84,6 +104,18 @@
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
     [self updateInterfaceWithReachability:self.internetReachability];
+    
+    // FOOTER
+    self.tableView.tableFooterView = [[BeeCommentFooterView alloc]init];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self registerForNotifications];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,7 +133,7 @@
     //BOOL connectionRequired = [reach connectionRequired];
     switch (netStatus) {
         case NotReachable:
-            [self.commentView setEnablePost:NO];
+            //[self.commentView setEnablePost:NO];
             break;
         default:
             [self.commentView setEnablePost:YES];
@@ -142,53 +174,56 @@
 }
 
 - (void)commentView:(BeeCommentView *)commentView postComment:(NSString *)comment {
-    [self scrollToBottom];
-    __block Comment *comm = [[Comment alloc]initWithContent:comment];
-    self.secret.comments = [self.secret.comments arrayByAddingObject:comm];
-    [self.tableView reloadData];
-    NSInteger index = [self.secret.comments indexOfObject:comm];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [self postComment:comm withCell:cell];
+    //[self scrollToBottom];
+    //__block Comment *comm;// = [[Comment alloc]initWithContent:comment];
+    //self.secret.comments = [self.secret.comments arrayByAddingObject:comm];
+    //[self.tableView reloadData];
+    //NSInteger index = [self.comments indexOfObject:comm];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    //BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [self postComment:comment];
 }
 
-- (void)postComment:(Comment *)comment withCell:(BeeCommentTableViewCell *)cell {
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:comment.content, @"content", nil];
+- (void)postComment:(NSString *)content {
+    NSDictionary *comment = [NSDictionary dictionaryWithObjectsAndKeys:content, @"content", nil];
+    [[BeeSyncEngine sharedEngine]startPostingComment:comment forSecret:self.secret];
+    /*
     NSDictionary *dictComment = [NSDictionary dictionaryWithObjectsAndKeys:params, @"comment", nil];
-    comment.state = CommentDelivered;
+    comment.state = @(CommentDelivered);
     cell.comment = comment;
     __block Comment *comm = comment;
-    [[BeeAPIClient sharedClient]POSTComment:dictComment inSecret:self.secret.secretID success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[BeeAPIClient sharedClient]POSTComment:dictComment inSecret:self.secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
         comm.state = CommentSuccessDelivered;
-        comm.createdAt = [NSDate date];
+        comm.created_at = [NSDate date];
         cell.comment = comm;
         cell.delegate = nil;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        comm.state = CommentFailDelivered;
+        comm.state = @(CommentFailDelivered);
         cell.comment = comm;
         cell.delegate = self;
         [self.tableView reloadData];
     }];
+     */
 }
 
-- (void)deleteComment:(Comment *)comment inCell:(BeeCommentTableViewCell *)cell {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSMutableArray *array = [self.secret.comments mutableCopy];
-    [array removeObjectAtIndex:indexPath.row];
-    self.secret.comments = [array copy];
-    [self.tableView reloadData];
+- (void)rePostComment:(Comment *)comment {
+    [[BeeSyncEngine sharedEngine] startRePostingComment:comment forSecret:self.secret];
+}
+
+- (void)deleteComment:(Comment *)comment {
+    [[BeeSyncEngine sharedEngine] startDeletingComment:comment forSecret:self.secret];
 }
 
 
 #pragma mark - BeeCommentTableViewCell Delegate
 
-- (void)commentCell:(BeeCommentTableViewCell *)cell rePostComment:(Comment *)comment {
-    [self postComment:comment withCell:cell];
+- (void)commentCell:(BeeCommentTableViewCell *)cell rePostComment:(NSString *)content {
+    [self rePostComment:cell.comment];
 }
 
-- (void)commentCell:(BeeCommentTableViewCell *)cell deleteComment:(Comment *)comment {
-    [self deleteComment:comment inCell:cell];
+- (void)commentCell:(BeeCommentTableViewCell *)cell deleteComment:(NSString *)content {
+    [self deleteComment:cell.comment];
 }
 
 #pragma mark - Table View data source
@@ -203,14 +238,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.isSearchingComments) {
-        return 1;
-    } else {
-        return self.secret.comments.count;
-    }
+    return self.comments.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     if (self.isSearchingComments) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LoadingCommentsCell" forIndexPath:indexPath];
         UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -221,13 +253,15 @@
         [cell layoutIfNeeded];
         return cell;
     } else {
+     */
         BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-        Comment *comment = self.secret.comments[indexPath.row];
+        Comment *comment = self.comments[indexPath.row];
         cell.comment = comment;
+        cell.delegate = self;
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
         return cell;
-    }
+    //}
 }
 
 #pragma mark - Table View delegate
@@ -243,14 +277,15 @@
         [self adjustSizingCellWidthToTableWidth];
     });
     
+    /*
     if (self.isSearchingComments) {
         return 50.0;
     }
-    
+    */
     NSString *index = [NSString stringWithFormat:@"%i",indexPath.row];
     
     if (rowHeightCache[index] == nil) {
-        sizingCell.comment = self.secret.comments[indexPath.row];
+        sizingCell.comment = self.comments[indexPath.row];
         CGFloat rowHeight = sizingCell.requiredCellHeight;
         [sizingCell setNeedsLayout];
         [sizingCell layoutIfNeeded];
@@ -268,7 +303,7 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, SCREEN_WIDTH, HEADER_HEIGHT)];
     headerView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.92];
     UIButton *likeBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    NSString *likeTitle = [NSString stringWithFormat:@"L%i", self.secret.likesCount];
+    NSString *likeTitle = [NSString stringWithFormat:@"L%i", [self.secret.likes_count integerValue]];
     [likeBtn setTitle:likeTitle forState:UIControlStateNormal];
     likeBtn.frame = CGRectMake(SCREEN_WIDTH - 50.0, 0.0, 40.0, HEADER_HEIGHT);
     [headerView addSubview:likeBtn];

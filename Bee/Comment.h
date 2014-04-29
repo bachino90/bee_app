@@ -2,24 +2,25 @@
 //  Comment.h
 //  Bee
 //
-//  Created by Emiliano Bivachi on 01/03/14.
+//  Created by Emiliano Bivachi on 26/04/14.
 //  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface Comment : NSObject
+@class Secret;
 
-- (instancetype)initWithDictionary:(NSDictionary *)comment;
-- (instancetype)initWithContent:(NSString *)content;
+@interface Comment : NSManagedObject
 
-@property (nonatomic, strong) NSString *commentID;
-@property (nonatomic, strong) NSString *avatarID;
-@property (nonatomic, strong) NSString *content;
-@property (nonatomic, strong) NSDate *createdAt;
-@property (nonatomic) NSInteger likesCount;
-@property (nonatomic) BOOL iAmAuthor;
-@property (nonatomic) BOOL friendIsAuthor;
-@property (nonatomic) CommentState state;
+@property (nonatomic, retain) NSNumber * author;
+@property (nonatomic, retain) NSString * avatar_id;
+@property (nonatomic, retain) NSString * comment_id;
+@property (nonatomic, retain) NSString * content;
+@property (nonatomic, retain) NSDate * created_at;
+@property (nonatomic, retain) NSNumber * likes_count;
+@property (nonatomic, retain) NSNumber * state;
+@property (nonatomic, retain) NSNumber * i_like_it;
+@property (nonatomic, retain) Secret *secret;
 
 @end

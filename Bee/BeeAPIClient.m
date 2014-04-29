@@ -9,7 +9,7 @@
 #import "BeeAPIClient.h"
 #import "BeeUser.h"
 
-static NSString * const kBeeAPIBaseURLString = @"http://bachino90-bee.herokuapp.com/api/v1/";//@"http://localhost:3000/api/v1/";//
+static NSString * const kBeeAPIBaseURLString = @"http://localhost:3000/api/v1/";//@"http://bachino90-bee.herokuapp.com/api/v1/";//
 
 static NSString * const kBeeAPIKey = @"API_KEY";
 
@@ -92,14 +92,19 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 
 #pragma mark - NOTIFICATIONS
 
-- (void)GETLastNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
-                            failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+- (void)GETRecentNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                              failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSDictionary *paramenters = nil;
     if (self.notificationRecentUpdate) {
         paramenters = [NSDictionary dictionaryWithObjectsAndKeys:[self.notificationRecentUpdate description], @"notification_recent_update", nil];
     }
     NSString *endPoint = [NSString stringWithFormat:@"users/%@/notifications",self.userID];
     [self GET:endPoint parameters:paramenters success:success failure:failure];
+}
+
+- (void)GETOldNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                           failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    
 }
 
 #pragma mark - SECRETS

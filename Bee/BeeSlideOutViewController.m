@@ -219,6 +219,9 @@
                 //childView = [self getRightView];
             //}
             if (_showingLeftPanel) {
+                self.showingLeftPanel = YES;
+                self.showingCenterPanel = NO;
+            } else {
                 self.showingLeftPanel = NO;
                 self.showingCenterPanel = YES;
             }
@@ -260,8 +263,9 @@
             //}
         } else {
             if (!_showingLeftPanel) {
+                return;
                 //childView = _rightPanelViewController.view;
-                childView = _leftPanelViewController.view;
+                //childView = _leftPanelViewController.view;
             } else {
                 childView = _leftPanelViewController.view;
             }
@@ -271,7 +275,11 @@
         _showPanel = abs([sender view].center.x - _centerViewController.view.frame.size.width/4) > _centerViewController.view.frame.size.width/4;
         
         // Allow dragging only in x-coordinates by only updating the x-coordinate with translation position.
-        [sender view].center = CGPointMake([sender view].center.x + translatedPoint.x, [sender view].center.y);
+        CGPoint center = CGPointMake([sender view].center.x + translatedPoint.x, [sender view].center.y);
+        if (center.x > SCREEN_WIDTH / 2.0 && !_showingLeftPanel) {
+            center.x = SCREEN_WIDTH / 2.0;
+        }
+        [sender view].center = center;
         [(UIPanGestureRecognizer*)sender setTranslation:CGPointMake(0,0) inView:self.view];
         
         CGFloat percent = [self percentForCenterViewPosition:[sender view].frame.origin.x];

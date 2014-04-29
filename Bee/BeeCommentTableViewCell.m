@@ -46,7 +46,7 @@
 }
 
 - (void)rePostComment:(UITapGestureRecognizer *)tapGesture {
-    if (self.comment.state == CommentFailDelivered) {
+    if ([self.comment.state integerValue] == CommentFailDelivered) {
         UIActionSheet *as = [[UIActionSheet alloc]initWithTitle:@"Que deseas hacer?" delegate:self cancelButtonTitle:@"OK" destructiveButtonTitle:nil otherButtonTitles:@"Enviar de nuevo",@"Eliminar el comentario",nil];
         
         [as showInView:self.superview];
@@ -54,7 +54,7 @@
 }
 
 - (void)updateBackgroundColor {
-    switch (self.comment.state) {
+    switch ([self.comment.state integerValue]) {
         case CommentDelivered:
             self.backgroundColor = [UIColor blueColor];
             self.gestureRecognizers = nil;

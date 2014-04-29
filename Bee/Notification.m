@@ -2,26 +2,26 @@
 //  Notification.m
 //  Bee
 //
-//  Created by Emiliano Bivachi on 18/03/14.
+//  Created by Emiliano Bivachi on 29/04/14.
 //  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
 //
 
 #import "Notification.h"
 
+
 @implementation Notification
 
-- (instancetype)initWithDictionary:(NSDictionary *)notif {
-    self = [super init];
-    if (self) {
-        self.secretID = notif[@"secret_id"];
-        self.isLike = [notif[@"is_like"] boolValue];
-        self.isComment = [notif[@"is_comment"] boolValue];
-        NSString *dateString = notif[@"created_at"];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-        self.createdAt = [dateFormat dateFromString:dateString];
-    }
-    return self;
-}
+@dynamic created_at;
+@dynamic is_comment;
+@dynamic is_like;
+@dynamic is_new;
+@dynamic comments_count;
+@dynamic likes_count;
+@dynamic secret_about;
+@dynamic secret_content;
+@dynamic secret_id;
+@dynamic secret_media_url;
+@dynamic secret_photo_url;
+@dynamic notification_id;
 
 @end

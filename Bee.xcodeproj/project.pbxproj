@@ -49,12 +49,10 @@
 		EB2994AD18F86374007FFAEC /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2994AC18F86374007FFAEC /* UIColor+FlatUI.m */; };
 		EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2F424718C4E0B1000B7049 /* BeeCommentView.m */; };
 		EB2F424A18C5005D000B7049 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB2F424918C5005D000B7049 /* QuartzCore.framework */; };
-		EB34D0EF18C23CF200637B90 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0EE18C23CF200637B90 /* Comment.m */; };
 		EB34D0F218C240E500637B90 /* BeeAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F118C240E500637B90 /* BeeAvatarView.m */; };
 		EB34D0F518C2679500637B90 /* BeeSecretView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB34D0F418C2679500637B90 /* BeeSecretView.m */; };
 		EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF418D7555E00695353 /* BeeSignUpViewController.m */; };
 		EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB416EF718D7556C00695353 /* BeeSignInViewController.m */; };
-		EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */; };
 		EB4FE0E51902D3320055554C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4FE0E41902D3320055554C /* CoreData.framework */; };
 		EB4FE0E81902D39E0055554C /* BeeModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE0E61902D39E0055554C /* BeeModel.xcdatamodeld */; };
 		EB4FE0EC1902D6770055554C /* Secret+Bee.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE0EB1902D6770055554C /* Secret+Bee.m */; };
@@ -62,7 +60,6 @@
 		EB4FE0F21902D6980055554C /* Notification+Bee.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE0F11902D6980055554C /* Notification+Bee.m */; };
 		EB4FE0F51902DDAE0055554C /* CoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE0F41902DDAE0055554C /* CoreDataController.m */; };
 		EB4FE0F81902DDEC0055554C /* BeeSyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4FE0F71902DDEC0055554C /* BeeSyncEngine.m */; };
-		EB59B9AB18D8DCF20023B129 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = EB59B9AA18D8DCF20023B129 /* Notification.m */; };
 		EB693BF318BFA7F400CCDF1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF218BFA7F400CCDF1F /* Foundation.framework */; };
 		EB693BF518BFA7F400CCDF1F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */; };
 		EB693BF718BFA7F400CCDF1F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693BF618BFA7F400CCDF1F /* UIKit.framework */; };
@@ -101,13 +98,17 @@
 		EB693CA018BFC5AF00CCDF1F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB693C9F18BFC5AF00CCDF1F /* MobileCoreServices.framework */; };
 		EB693CA318C0F5A000CCDF1F /* BeeAddSecretViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */; };
 		EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */; };
-		EB693CA918C148C000CCDF1F /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA818C148C000CCDF1F /* Secret.m */; };
 		EB762C1D18C76E71003E9E96 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */; };
 		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
+		EB894BAF190EBE9D009A9CA2 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB894BAE190EBE9D009A9CA2 /* Secret.m */; };
+		EB94EFEA190C66D200FC8FEF /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB94EFE9190C66D200FC8FEF /* Comment.m */; };
 		EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8272818D50D6500CCD99B /* KeychainWrapper.m */; };
+		EBE178211908830B00DAAC30 /* BeeFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE178201908830B00DAAC30 /* BeeFooterView.m */; };
+		EBE17826190888B800DAAC30 /* BeeCommentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE17825190888B800DAAC30 /* BeeCommentFooterView.m */; };
 		EBEFB2B118C9002B00DDBA53 /* BeeUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEFB2B018C9002B00DDBA53 /* BeeUser.m */; };
 		EBF3231D18FF6CD900D29211 /* BeeNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */; };
 		EBF50A5D18D8667300A49C25 /* BeeNotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */; };
+		EBF9DA9F191013BF000EF747 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF9DA9E191013BF000EF747 /* Notification.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,8 +178,6 @@
 		EB2F424618C4E0B1000B7049 /* BeeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentView.h; sourceTree = "<group>"; };
 		EB2F424718C4E0B1000B7049 /* BeeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentView.m; sourceTree = "<group>"; };
 		EB2F424918C5005D000B7049 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		EB34D0ED18C23CF200637B90 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		EB34D0EE18C23CF200637B90 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		EB34D0F018C240E500637B90 /* BeeAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeAvatarView.h; sourceTree = "<group>"; };
 		EB34D0F118C240E500637B90 /* BeeAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeAvatarView.m; sourceTree = "<group>"; };
 		EB34D0F318C2679500637B90 /* BeeSecretView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSecretView.h; sourceTree = "<group>"; };
@@ -187,8 +186,6 @@
 		EB416EF418D7555E00695353 /* BeeSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSignUpViewController.m; sourceTree = "<group>"; };
 		EB416EF618D7556C00695353 /* BeeSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSignInViewController.h; sourceTree = "<group>"; };
 		EB416EF718D7556C00695353 /* BeeSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSignInViewController.m; sourceTree = "<group>"; };
-		EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeTableViewController.h; sourceTree = "<group>"; };
-		EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeTableViewController.m; sourceTree = "<group>"; };
 		EB4FE0E41902D3320055554C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		EB4FE0E71902D39E0055554C /* BeeModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BeeModel.xcdatamodel; sourceTree = "<group>"; };
 		EB4FE0EA1902D6770055554C /* Secret+Bee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Secret+Bee.h"; sourceTree = "<group>"; };
@@ -201,8 +198,6 @@
 		EB4FE0F41902DDAE0055554C /* CoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataController.m; sourceTree = "<group>"; };
 		EB4FE0F61902DDEC0055554C /* BeeSyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSyncEngine.h; sourceTree = "<group>"; };
 		EB4FE0F71902DDEC0055554C /* BeeSyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSyncEngine.m; sourceTree = "<group>"; };
-		EB59B9A918D8DCF20023B129 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
-		EB59B9AA18D8DCF20023B129 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		EB693BEF18BFA7F400CCDF1F /* Bee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB693BF218BFA7F400CCDF1F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EB693BF418BFA7F400CCDF1F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -269,19 +264,27 @@
 		EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeAddSecretViewController.m; sourceTree = "<group>"; };
 		EB693CA418C1140700CCDF1F /* BeeSecretViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeSecretViewController.h; sourceTree = "<group>"; };
 		EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeSecretViewController.m; sourceTree = "<group>"; };
-		EB693CA718C148C000CCDF1F /* Secret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
-		EB693CA818C148C000CCDF1F /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
 		EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLoginViewController.h; sourceTree = "<group>"; };
 		EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLoginViewController.m; sourceTree = "<group>"; };
+		EB894BAD190EBE9D009A9CA2 /* Secret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
+		EB894BAE190EBE9D009A9CA2 /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
+		EB94EFE8190C66D200FC8FEF /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		EB94EFE9190C66D200FC8FEF /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		EBB8272718D50D6500CCD99B /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		EBB8272818D50D6500CCD99B /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		EBE1781F1908830B00DAAC30 /* BeeFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeFooterView.h; sourceTree = "<group>"; };
+		EBE178201908830B00DAAC30 /* BeeFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeFooterView.m; sourceTree = "<group>"; };
+		EBE17824190888B800DAAC30 /* BeeCommentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeCommentFooterView.h; sourceTree = "<group>"; };
+		EBE17825190888B800DAAC30 /* BeeCommentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeCommentFooterView.m; sourceTree = "<group>"; };
 		EBEFB2AF18C9002B00DDBA53 /* BeeUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeUser.h; sourceTree = "<group>"; };
 		EBEFB2B018C9002B00DDBA53 /* BeeUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeUser.m; sourceTree = "<group>"; };
 		EBF3231B18FF6CD900D29211 /* BeeNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationView.h; sourceTree = "<group>"; };
 		EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationView.m; sourceTree = "<group>"; };
 		EBF50A5B18D8667300A49C25 /* BeeNotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeNotificationTableViewCell.h; sourceTree = "<group>"; };
 		EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeNotificationTableViewCell.m; sourceTree = "<group>"; };
+		EBF9DA9D191013BF000EF747 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		EBF9DA9E191013BF000EF747 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,10 +402,7 @@
 				EB15967618C66F1B00722F93 /* BeeNotificationsViewController.m */,
 				EB693C0718BFA7F400CCDF1F /* BeeViewController.h */,
 				EB693C0818BFA7F400CCDF1F /* BeeViewController.m */,
-				EBF3231B18FF6CD900D29211 /* BeeNotificationView.h */,
-				EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */,
-				EB4A5B6318D7F1C500B2C3A6 /* BeeTableViewController.h */,
-				EB4A5B6418D7F1C500B2C3A6 /* BeeTableViewController.m */,
+				EBE17822190887F600DAAC30 /* Views */,
 			);
 			name = "Bee Slide Out Controllers";
 			sourceTree = "<group>";
@@ -414,8 +414,7 @@
 				EB693CA218C0F5A000CCDF1F /* BeeAddSecretViewController.m */,
 				EB693CA418C1140700CCDF1F /* BeeSecretViewController.h */,
 				EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */,
-				EB2F424618C4E0B1000B7049 /* BeeCommentView.h */,
-				EB2F424718C4E0B1000B7049 /* BeeCommentView.m */,
+				EBE178231908880700DAAC30 /* Views */,
 			);
 			name = "Bee Secret Controller";
 			sourceTree = "<group>";
@@ -467,16 +466,16 @@
 			isa = PBXGroup;
 			children = (
 				EB4FE0E61902D39E0055554C /* BeeModel.xcdatamodeld */,
-				EB693CA718C148C000CCDF1F /* Secret.h */,
-				EB693CA818C148C000CCDF1F /* Secret.m */,
+				EB894BAD190EBE9D009A9CA2 /* Secret.h */,
+				EB894BAE190EBE9D009A9CA2 /* Secret.m */,
+				EB94EFE8190C66D200FC8FEF /* Comment.h */,
+				EB94EFE9190C66D200FC8FEF /* Comment.m */,
+				EBF9DA9D191013BF000EF747 /* Notification.h */,
+				EBF9DA9E191013BF000EF747 /* Notification.m */,
 				EB4FE0EA1902D6770055554C /* Secret+Bee.h */,
 				EB4FE0EB1902D6770055554C /* Secret+Bee.m */,
-				EB34D0ED18C23CF200637B90 /* Comment.h */,
-				EB34D0EE18C23CF200637B90 /* Comment.m */,
 				EB4FE0ED1902D6890055554C /* Comment+Bee.h */,
 				EB4FE0EE1902D6890055554C /* Comment+Bee.m */,
-				EB59B9A918D8DCF20023B129 /* Notification.h */,
-				EB59B9AA18D8DCF20023B129 /* Notification.m */,
 				EB4FE0F01902D6980055554C /* Notification+Bee.h */,
 				EB4FE0F11902D6980055554C /* Notification+Bee.m */,
 			);
@@ -633,6 +632,28 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		EBE17822190887F600DAAC30 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EBE1781F1908830B00DAAC30 /* BeeFooterView.h */,
+				EBE178201908830B00DAAC30 /* BeeFooterView.m */,
+				EBF3231B18FF6CD900D29211 /* BeeNotificationView.h */,
+				EBF3231C18FF6CD900D29211 /* BeeNotificationView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		EBE178231908880700DAAC30 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EB2F424618C4E0B1000B7049 /* BeeCommentView.h */,
+				EB2F424718C4E0B1000B7049 /* BeeCommentView.m */,
+				EBE17824190888B800DAAC30 /* BeeCommentFooterView.h */,
+				EBE17825190888B800DAAC30 /* BeeCommentFooterView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -760,6 +781,7 @@
 			files = (
 				EB15967A18C6819B00722F93 /* BeeNavigationController.m in Sources */,
 				EB15967718C66F1B00722F93 /* BeeNotificationsViewController.m in Sources */,
+				EBE178211908830B00DAAC30 /* BeeFooterView.m in Sources */,
 				EB34D0F518C2679500637B90 /* BeeSecretView.m in Sources */,
 				EB693C8F18BFC57600CCDF1F /* AFURLConnectionOperation.m in Sources */,
 				EB693C8A18BFC57600CCDF1F /* AFHTTPRequestOperation.m in Sources */,
@@ -773,10 +795,8 @@
 				EB14AC7C18EFBC880084C37B /* Reachability.m in Sources */,
 				EB693C8D18BFC57600CCDF1F /* AFNetworkReachabilityManager.m in Sources */,
 				EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */,
-				EB59B9AB18D8DCF20023B129 /* Notification.m in Sources */,
 				EB15967418C66EE900722F93 /* BeeSlideOutViewController.m in Sources */,
 				EBF3231D18FF6CD900D29211 /* BeeNotificationView.m in Sources */,
-				EB4A5B6518D7F1C500B2C3A6 /* BeeTableViewController.m in Sources */,
 				EB416EF518D7555E00695353 /* BeeSignUpViewController.m in Sources */,
 				EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */,
 				EB416EF818D7556C00695353 /* BeeSignInViewController.m in Sources */,
@@ -788,6 +808,7 @@
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
 				EB4FE0E81902D39E0055554C /* BeeModel.xcdatamodeld in Sources */,
+				EB894BAF190EBE9D009A9CA2 /* Secret.m in Sources */,
 				EB0B7A0518FA06EA00F34F1E /* UIFont+Bee.m in Sources */,
 				EB693C9018BFC57600CCDF1F /* AFURLRequestSerialization.m in Sources */,
 				EB693C2918BFA85400CCDF1F /* BeeTableViewCell.m in Sources */,
@@ -796,10 +817,9 @@
 				EB15966818C6557D00722F93 /* AMScrollingNavbarTableViewController.m in Sources */,
 				EB693BFF18BFA7F400CCDF1F /* main.m in Sources */,
 				EB693C9718BFC57600CCDF1F /* UIImageView+AFNetworking.m in Sources */,
+				EB94EFEA190C66D200FC8FEF /* Comment.m in Sources */,
 				EB4FE0F51902DDAE0055554C /* CoreDataController.m in Sources */,
 				EB693C6318BFBF0800CCDF1F /* BeeAPIClient.m in Sources */,
-				EB34D0EF18C23CF200637B90 /* Comment.m in Sources */,
-				EB693CA918C148C000CCDF1F /* Secret.m in Sources */,
 				EB4FE0F81902DDEC0055554C /* BeeSyncEngine.m in Sources */,
 				EB693C9518BFC57600CCDF1F /* UIAlertView+AFNetworking.m in Sources */,
 				EB693C8B18BFC57600CCDF1F /* AFHTTPRequestOperationManager.m in Sources */,
@@ -811,7 +831,9 @@
 				EB693C0318BFA7F400CCDF1F /* BeeAppDelegate.m in Sources */,
 				EB34D0F218C240E500637B90 /* BeeAvatarView.m in Sources */,
 				EB693C8C18BFC57600CCDF1F /* AFHTTPSessionManager.m in Sources */,
+				EBF9DA9F191013BF000EF747 /* Notification.m in Sources */,
 				EB693C9418BFC57600CCDF1F /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				EBE17826190888B800DAAC30 /* BeeCommentFooterView.m in Sources */,
 				EB693C9318BFC57600CCDF1F /* AFNetworkActivityIndicatorManager.m in Sources */,
 				EB2F424818C4E0B1000B7049 /* BeeCommentView.m in Sources */,
 				EBF50A5D18D8667300A49C25 /* BeeNotificationTableViewCell.m in Sources */,

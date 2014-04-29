@@ -19,6 +19,7 @@
 - (NSManagedObjectContext *)newManagedObjectContext;
 - (void)saveMasterContext;
 - (void)saveBackgroundContext;
+- (void)deleteDB;
 - (NSManagedObjectModel *)managedObjectModel;
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 

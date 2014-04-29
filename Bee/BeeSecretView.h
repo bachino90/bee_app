@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+@class Notification;
+
 @interface BeeSecretView : UIView
 - (instancetype)initWithSecret:(Secret *)secret;
+- (instancetype)initWithNotification:(Notification *)notification;
 @end
