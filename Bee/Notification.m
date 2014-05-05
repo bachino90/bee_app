@@ -11,17 +11,18 @@
 
 @implementation Notification
 
+@dynamic comments_count;
 @dynamic created_at;
 @dynamic is_comment;
 @dynamic is_like;
 @dynamic is_new;
-@dynamic comments_count;
 @dynamic likes_count;
+@dynamic notification_id;
 @dynamic secret_about;
 @dynamic secret_content;
 @dynamic secret_id;
 @dynamic secret_media_url;
 @dynamic secret_photo_url;
-@dynamic notification_id;
+@dynamic updated_at;
 
 @end

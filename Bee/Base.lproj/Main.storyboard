@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0qr-7y-o5x">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0qr-7y-o5x">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -269,6 +269,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gA2-iI-XEZ" customClass="BeeCommentView">
+                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="auj-MQ-KKn"/>
+                                    <constraint firstAttribute="height" constant="50" id="tmI-Oc-SrY"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="68" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ldn-NF-sQn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="430"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -296,11 +305,11 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuO-oD-eTS">
-                                                    <rect key="frame" x="73" y="38" width="227" height="14"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuO-oD-eTS">
+                                                    <rect key="frame" x="73" y="38" width="123" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="227" id="8Ke-be-WOL"/>
+                                                        <constraint firstAttribute="width" constant="123" id="8Ke-be-WOL"/>
                                                         <constraint firstAttribute="height" constant="14" id="EPl-X1-2vw"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -316,23 +325,44 @@
                                                         <constraint firstAttribute="width" constant="320" id="tLs-p1-Dew"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vZR-od-g3h">
+                                                    <rect key="frame" x="204" y="38" width="55" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="55" id="X3i-90-b27"/>
+                                                        <constraint firstAttribute="height" constant="14" id="xJ2-p7-W7t"/>
+                                                    </constraints>
+                                                    <state key="normal">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Eliminar">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="TuO-oD-eTS" secondAttribute="bottom" constant="7" id="HDK-5N-TRb"/>
+                                                <constraint firstAttribute="bottom" secondItem="TuO-oD-eTS" secondAttribute="bottom" constant="8" id="HDK-5N-TRb"/>
                                                 <constraint firstAttribute="trailing" secondItem="Vl1-yB-83a" secondAttribute="trailing" constant="20" id="NWF-Dx-6xa"/>
                                                 <constraint firstItem="TuO-oD-eTS" firstAttribute="leading" secondItem="mSc-9q-lMZ" secondAttribute="leading" constant="73" id="Ojm-Wf-CeA"/>
                                                 <constraint firstAttribute="bottom" secondItem="0PI-qL-Gri" secondAttribute="bottom" id="Usu-hw-gY3"/>
+                                                <constraint firstItem="vZR-od-g3h" firstAttribute="top" secondItem="Vl1-yB-83a" secondAttribute="bottom" constant="15" id="a87-ne-UGV"/>
                                                 <constraint firstItem="Vl1-yB-83a" firstAttribute="leading" secondItem="mSc-9q-lMZ" secondAttribute="leading" constant="73" id="cHB-hX-3ZO"/>
+                                                <constraint firstItem="vZR-od-g3h" firstAttribute="leading" secondItem="TuO-oD-eTS" secondAttribute="trailing" constant="8" id="h6a-bC-UZl"/>
+                                                <constraint firstItem="0PI-qL-Gri" firstAttribute="top" secondItem="vZR-od-g3h" secondAttribute="bottom" constant="7" id="lbs-oX-zTm"/>
                                                 <constraint firstItem="0PI-qL-Gri" firstAttribute="leading" secondItem="mSc-9q-lMZ" secondAttribute="leading" id="mU6-ag-FgG"/>
                                                 <constraint firstAttribute="trailing" secondItem="0PI-qL-Gri" secondAttribute="trailing" id="nYU-b8-hhK"/>
                                                 <constraint firstItem="Vl1-yB-83a" firstAttribute="top" secondItem="mSc-9q-lMZ" secondAttribute="top" constant="7" id="sew-vf-yR3"/>
-                                                <constraint firstAttribute="trailing" secondItem="TuO-oD-eTS" secondAttribute="trailing" constant="20" id="vtv-HV-XMU"/>
+                                                <constraint firstAttribute="trailing" secondItem="TuO-oD-eTS" secondAttribute="trailing" constant="124" id="vtv-HV-XMU"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="avatarView" destination="k3y-cI-Gni" id="T4C-xf-1FG"/>
                                             <outlet property="commentLabel" destination="Vl1-yB-83a" id="2A9-w5-AP6"/>
                                             <outlet property="dateLabel" destination="TuO-oD-eTS" id="QDN-9z-4Gx"/>
+                                            <outlet property="deleteButton" destination="vZR-od-g3h" id="Bn2-xC-VWH"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCommentsCell" rowHeight="50" id="nGl-hO-Mak">
@@ -360,15 +390,6 @@
                                     <action selector="cancelBtn:" destination="baf-Tj-rLP" eventType="touchUpInside" id="pFh-yI-9Th"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gA2-iI-XEZ" customClass="BeeCommentView">
-                                <rect key="frame" x="0.0" y="430" width="320" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="auj-MQ-KKn"/>
-                                    <constraint firstAttribute="height" constant="50" id="tmI-Oc-SrY"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -633,11 +654,12 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="akA-a1-MjD" id="GPJ-M7-hvg"/>
+                        <segue destination="baf-Tj-rLP" kind="modal" identifier="Secret Show Segue" id="hwO-cG-EBT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tJD-hy-bSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="68" y="662"/>
+            <point key="canvasLocation" x="824" y="662"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xQi-TK-f1y">
@@ -686,4 +708,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="hwO-cG-EBT"/>
+    </inferredMetricsTieBreakers>
 </document>

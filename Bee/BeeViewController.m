@@ -49,7 +49,8 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
         self.isLoadingNewSecrets = NO;
         self.isLoadingOldSecrets = NO;
-        if (self.tableView.tableFooterView == nil) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:0];
+        if (self.tableView.tableFooterView == nil && [sectionInfo numberOfObjects] > 0) {
             self.tableView.tableFooterView = self.footerView;
         }
         if (self.loadedAllSecrets) {

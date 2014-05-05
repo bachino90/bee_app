@@ -11,6 +11,7 @@
 #import "SettingsViewController.h"
 
 #import "CoreDataController.h"
+#import "BeeSyncEngine.h"
 
 #import "BeeUser.h"
 #import "Notification.h"
@@ -58,6 +59,7 @@
 }
 
 - (void)loadNewNotifications {
+    [[BeeSyncEngine sharedEngine]startSearchingRecentNotifications];
     /*
     [[BeeAPIClient sharedClient]GETLastNotificationsSuccess:^(NSURLSessionDataTask *task, id responseObject) {
         NSMutableArray *mutableNotifications = [[NSMutableArray alloc]init];
@@ -146,11 +148,11 @@
     }
     
     NSManagedObjectContext *moc = [[CoreDataController sharedInstance]masterManagedObjectContext];
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Secret"];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc]initWithKey:@"created_at" ascending:NO];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Notification"];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc]initWithKey:@"updated_at" ascending:NO];
     [fetchRequest setSortDescriptors:@[descriptor]];
     
-    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"Secrets"];
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"Notification"];
     frc.delegate = self;
     self.fetchedResultsController = frc;
     

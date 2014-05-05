@@ -25,7 +25,7 @@
 @property (nonatomic, strong) Reachability *internetReachability;
 @property (nonatomic) BOOL isSearchingComments;
 @property (nonatomic) BOOL isFirstLoad;
-
+@property (nonatomic) BOOL loadedAllComments;
 @property (nonatomic, strong) NSArray *comments;
 @end
 
@@ -64,7 +64,7 @@
         self.tableView.tableFooterView = nil;
         self.comments = nil;
         [self.tableView reloadData];
-        if (!self.isFirstLoad) {
+        if (!self.isFirstLoad && self.comments.count > 0) {
             [self scrollToBottom];
         }
         self.isFirstLoad = NO;
@@ -72,13 +72,16 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncFailed" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
     }];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextDidSaveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncAllCommentsCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        self.loadedAllComments = YES;
+    }];
 }
 
 - (void)unregisterForNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BeeSyncEngineSyncCompleted" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BeeSyncEngineSyncFailed" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"BeeSyncEngineSyncAllCommentsCompleted" object:nil];
 }
 
 - (void)dealloc {
@@ -90,6 +93,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.isFirstLoad = YES;
+    self.loadedAllComments = NO;
     
     rowHeightCache = [NSMutableDictionary dictionary];
     [[BeeSyncEngine sharedEngine]startSearchingRecentCommentsForSecret:self.secret];

@@ -49,6 +49,10 @@
 
 /********* NOTIFICATIONS *********/
 
+- (void)PUTPushNotificationToken:(NSString *)token
+                         Success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                         failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
 - (void)GETRecentNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                               failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
@@ -80,8 +84,8 @@
 
 // DELETE LIKE
 - (void)DELETELikeOnSecret:(NSString *)secretID
-                success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
-                failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
 // DELETE SECRET
 - (void)DELETESecret:(NSString *)secretID

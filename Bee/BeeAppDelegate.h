@@ -10,6 +10,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "BeeSlideOutViewController.h"
 
+//${PRODUCT_NAME:rfc1034identifier}
+
 @interface BeeAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

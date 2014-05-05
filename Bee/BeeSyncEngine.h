@@ -14,8 +14,11 @@
 
 + (BeeSyncEngine *)sharedEngine;
 
+- (void)emptyAllDB;
+
 - (void)startRecentSync;
 - (void)startOldSync;
+- (void)startDeletingSecret:(Secret *)secret;
 
 - (void)startSearchingRecentCommentsForSecret:(Secret *)secret;
 - (void)startSearchingOldCommentsForSecret:(Secret *)secret;

@@ -23,6 +23,8 @@
 + (BeeUser *)sharedUser;
 
 - (BOOL)isLoggedin;
+- (BOOL)isLoggedinFacebook;
+- (BOOL)isLoggedinTwitter;
 - (void)setNewSession:(NSDictionary *)response;
 - (void)userSignOut;
 

@@ -15,12 +15,16 @@
 
 @interface BeeSyncEngine ()
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic) BOOL loadingFirstSecrets;
+@property (nonatomic) BOOL loadingFirstNotifications;
 @end
 
 NSString * const kBeeSyncEngineInitialCompleteKey = @"BeeSyncEngineInitialSyncCompleted";
 NSString * const kBeeSyncEngineSyncCompletedNotificationName = @"BeeSyncEngineSyncCompleted";
 NSString * const kBeeSyncEngineSyncFailedNotificationName = @"BeeSyncEngineSyncFailed";
 NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEngineSyncAllSecretsCompleted";
+NSString * const kBeeSyncEngineAllNotificationCompletedNotificationName = @"BeeSyncEngineSyncAllNotificationsCompleted";
+NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEngineSyncAllCommentsCompleted";
 
 @implementation BeeSyncEngine
 
@@ -29,10 +33,10 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         engine = [[BeeSyncEngine alloc]init];
+        engine.loadingFirstNotifications = YES;
+        engine.loadingFirstSecrets = YES;
         [BeeAPIClient sharedClient].notificationRecentUpdate = [engine firstNotificationDate];
         [BeeAPIClient sharedClient].notificationLastUpdate = [engine lastNotificationDate];
-        //[BeeAPIClient sharedClient].secretRecentUpdate = [engine firstSecretDate];
-        //[BeeAPIClient sharedClient].secretLastUpdate = [engine lastSecretDate];
     });
     return engine;
 }
@@ -128,10 +132,13 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
 }
 
 - (void)setValue:(id)value forKey:(NSString *)key forManagedObject:(NSManagedObject *)managedObject {
-    if ([key isEqualToString:@"created_at"]) {
+    if ([value isKindOfClass:[NSNull class]]) {
+        value = nil;
+    }
+    if ([key isEqualToString:@"created_at"] || [key isEqualToString:@"updated_at"] ) {
         NSDate *date = [self.dateFormatter dateFromString:value];
         [managedObject setValue:date forKey:key];
-    } else if ([key isEqualToString:@"id"]) {
+    } else if ([key isEqualToString:@"id"] || [key isEqualToString:@"_id"]) {
         NSDictionary *UID = value;
         NSString *id_string =  UID[[[UID allKeys] firstObject]];
         if ([managedObject isKindOfClass:[Secret class]]) {
@@ -148,9 +155,6 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
 }
 
 - (NSManagedObject *)searchManagedObjectForEntity:(NSString *)className withId:(NSString *)object_id {
-    if ([className isEqualToString:@"Notification"]) {
-        return nil;
-    }
     NSManagedObjectContext *moc = [[CoreDataController sharedInstance] backgroundManagedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc]init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:className inManagedObjectContext:moc];
@@ -226,46 +230,39 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
     [self executeSyncCompletedOperations];
 }
 
+- (void)removeFromDBComment:(Comment *)comment fromSecret:(Secret *)secret {
+    Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    Comment *commentObject = (Comment *)[self searchManagedObjectForEntity:@"Comment" withId:comment.comment_id];
+    if (secretObject == nil || commentObject == nil) {
+        return;
+    }
+    [secretObject removeCommentsObject:commentObject];
+    
+    [self executeSyncCompletedOperations];
+}
+
 - (void)saveNotificationsToCoreData:(id)responseObject {
-    //Notification *lastNotification = nil;
     for (NSDictionary *notification in (NSArray *)responseObject) {
         [self newManagedObjectWithClassName:@"Notification" forRecord:notification];
-        /*
-        if (lastNotification == nil) {
-            lastNotification = (Notification *)[self newManagedObjectWithClassName:@"Notification" forRecord:notification];
-            //[lastNotification setValue:@(YES) forKey:@"is_new"];
-        } else {
-            if ([lastNotification.secret_id isEqualToString:notification[@"secret_id"]]) {
-                if ([notification[@"is_like"] boolValue]) {
-                    [lastNotification setValue:@(YES) forKey:@"is_like"];
-                    [lastNotification setValue:@([lastNotification.number_of_likes integerValue]+1) forKey:@"number_of_likes"];
-                    //lastNotification.number_of_likes = @([lastNotification.number_of_likes integerValue]+1);
-                } else if ([notification[@"is_comment"] boolValue]) {
-                    [lastNotification setValue:@(YES) forKey:@"is_comment"];
-                    [lastNotification setValue:@([lastNotification.number_of_comments integerValue]+1) forKey:@"number_of_comments"];
-                }
-            } else {
-                lastNotification = (Notification *)[self newManagedObjectWithClassName:@"Notification" forRecord:notification];
-            }
-        }
-         */
     }
     
     [self executeSyncCompletedOperations];
 }
 
-- (void)emptyDBSinc:(NSDate *)date {
-    NSManagedObjectContext *moc = [[CoreDataController sharedInstance]masterManagedObjectContext];
+- (void)emptyEntity:(NSString *)entity {
+    NSManagedObjectContext *moc = [[CoreDataController sharedInstance]backgroundManagedObjectContext];
     
     [moc performBlockAndWait:^{
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:[NSEntityDescription entityForName:@"Secret" inManagedObjectContext:moc]];
+        [fetch setEntity:[NSEntityDescription entityForName:entity inManagedObjectContext:moc]];
+        /*
         if (date) {
             NSExpression *exprDate = [NSExpression expressionForKeyPath:@"created_at"];
             NSExpression *exprD = [NSExpression expressionForConstantValue:date];
             NSPredicate *predicate = [NSComparisonPredicate predicateWithLeftExpression:exprDate rightExpression:exprD modifier:NSDirectPredicateModifier type:NSLessThanOrEqualToPredicateOperatorType options:0];
             [fetch setPredicate:predicate];
         }
+        */
         NSArray *result = [moc executeFetchRequest:fetch error:nil];
         for (id basket in result)
             [moc deleteObject:basket];
@@ -276,6 +273,14 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
             NSLog(@"Unable to save context for Secret");
         }
     }];
+    
+    [[CoreDataController sharedInstance] saveBackgroundContext];
+    [[CoreDataController sharedInstance] saveMasterContext];
+}
+
+- (void)emptyAllDB {
+    [self emptyEntity:@"Secret"];
+    [self emptyEntity:@"Notification"];
 }
 
 #pragma mark - Download Methods
@@ -286,9 +291,13 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
             NSLog(@"%@",responseObject);
             
             if ([BeeAPIClient sharedClient].secretRecentUpdate == nil) {
-                //NSDate *firstSecretInDB = [self firstSecretDate];
-                //NSDate *today = [NSDate date];
-                [self emptyDBSinc:nil];
+                self.loadingFirstSecrets = NO;
+                NSDate *recentDateInDB = [self firstSecretDate];
+                //NSDate *recentDateInResponse = [self.dateFormatter dateFromString:[responseObject firstObject][@"created_at"]];
+                NSDate *oldDateInResponse = [self.dateFormatter dateFromString:[responseObject lastObject][@"created_at"]];
+                if ([recentDateInDB compare:oldDateInResponse] == NSOrderedAscending) {
+                    [self emptyEntity:@"Secret"];
+                }
             }
             [self saveSecretsToCoreData:responseObject];
 
@@ -322,6 +331,20 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
     }];
 }
 
+- (void)deleteSecret:(Secret *)secret {
+    NSManagedObjectContext *moc = [[CoreDataController sharedInstance]backgroundManagedObjectContext];
+    __block Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    if (secret == nil) {
+        return;
+    }
+    [[BeeAPIClient sharedClient]DELETESecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+        [moc deleteObject:secretObject];
+        [self executeSyncCompletedOperations];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self executeSyncFailed];
+    }];
+}
+
 - (void)downloadRecentCommentsForSecret:(Secret *)secret {
     [[BeeAPIClient sharedClient]GETCommentsForSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
@@ -334,7 +357,17 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
 }
 
 - (void)downloadOldCommentsForSecret:(Secret *)secret {
-    
+    [[BeeAPIClient sharedClient]GETCommentsForSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSLog(@"%@",responseObject);
+            [self saveCommentsForSecret:secret toCoreData:responseObject];
+            if ([responseObject count] == 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kBeeSyncEngineAllCommentCompletedNotificationName object:nil];
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self executeSyncFailed];
+    }];
 }
 
 - (void)postComment:(NSDictionary *)comment forSecret:(Secret *)secret {
@@ -391,26 +424,29 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
 }
 
 - (void)deleteComment:(Comment *)comment forSecret:(Secret *)secret {
-    Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
-    if (secret == nil) {
-        return;
+    if ([comment.state integerValue] == CommentSuccessDelivered) {
+        [[BeeAPIClient sharedClient]DELETEComment:comment.comment_id inSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+            [self removeFromDBComment:comment fromSecret:secret];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            [self executeSyncFailed];
+        }];
+    } else if ([comment.state integerValue] == CommentFailDelivered) {
+        [self removeFromDBComment:comment fromSecret:secret];
     }
-    Comment *commentObject = (Comment *)[self searchManagedObjectForEntity:@"Comment" withId:comment.comment_id];
-    
-    if ([commentObject.state integerValue] == CommentSuccessDelivered) {
-        //eliminarlo del web service
-    }
-    
-    [secretObject removeCommentsObject:commentObject];
-    
-    [self executeSyncCompletedOperations];
 }
 
 - (void)downloadRecentNotifications {
     [[BeeAPIClient sharedClient]GETRecentNotificationsSuccess:^(NSURLSessionDataTask *task, id responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSLog(@"%@",responseObject);
-            
+            if (self.loadingFirstNotifications) {
+                self.loadingFirstNotifications = NO;
+                NSDate *recentDateInDB = [self firstNotificationDate];
+                NSDate *oldDateInResponse = [self.dateFormatter dateFromString:[responseObject lastObject][@"created_at"]];
+                if ([recentDateInDB compare:oldDateInResponse] == NSOrderedAscending) {
+                    [self emptyEntity:@"Notification"];
+                }
+            }
             [self saveNotificationsToCoreData:responseObject];
             
             [BeeAPIClient sharedClient].notificationRecentUpdate = [self firstNotificationDate];
@@ -418,28 +454,6 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
                 [BeeAPIClient sharedClient].notificationLastUpdate = [self lastNotificationDate];
             }
         }
-        /*
-        NSMutableArray *mutableNotifications = [[NSMutableArray alloc]init];
-        int i = 0;
-        NSMutableArray *secretIDs = [NSMutableArray array];
-        for (NSDictionary *notifications in (NSArray *)responseObject) {
-            Notification *notif = [[Notification alloc]initWithDictionary:notifications];
-            if (![secretIDs containsObject:notif.secretID]) {
-                mutableNotifications[i] = notif;
-                secretIDs[i] = notif.secretID;
-            } else {
-                NSInteger index = [secretIDs indexOfObject:notif.secretID];
-                if (notif.isComment) {
-                    ((Notification *)[mutableNotifications objectAtIndex:index]).isComment = YES;
-                } else if (notif.isLike) {
-                    ((Notification *)[mutableNotifications objectAtIndex:index]).isLike = YES;
-                }
-            }
-            i++;
-        }
-        self.notifications = [mutableNotifications arrayByAddingObjectsFromArray:self.notifications];
-        [self.tableView reloadData];
-         */
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self executeSyncFailed];
     }];
@@ -450,7 +464,17 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
         return;
     }
     [[BeeAPIClient sharedClient]GETOldNotificationsSuccess:^(NSURLSessionDataTask *task, id responseObject) {
-
+        if ([responseObject isKindOfClass:[NSArray class]]) {
+            NSLog(@"%@",responseObject);
+            
+            [self saveNotificationsToCoreData:responseObject];
+            
+            [BeeAPIClient sharedClient].notificationLastUpdate = [self lastNotificationDate];
+            if (((NSArray *)responseObject).count == 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kBeeSyncEngineAllNotificationCompletedNotificationName object:nil];
+            }
+        }
+        [BeeAPIClient sharedClient].notificationLastUpdate = [self lastNotificationDate];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self executeSyncFailed];
     }];
@@ -476,6 +500,17 @@ NSString * const kBeeSyncEngineAllSecretCompletedNotificationName = @"BeeSyncEng
         [self didChangeValueForKey:@"syncInProgress"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             [self downloadOldSecrets];
+        });
+    }
+}
+
+- (void)startDeletingSecret:(Secret *)secret {
+    if (!self.syncInProgress) {
+        [self willChangeValueForKey:@"syncInProgress"];
+        _syncInProgress = YES;
+        [self didChangeValueForKey:@"syncInProgress"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self deleteSecret:secret];
         });
     }
 }

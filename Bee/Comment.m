@@ -2,7 +2,7 @@
 //  Comment.m
 //  Bee
 //
-//  Created by Emiliano Bivachi on 26/04/14.
+//  Created by Emiliano Bivachi on 03/05/14.
 //  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
 //
 
@@ -17,9 +17,9 @@
 @dynamic comment_id;
 @dynamic content;
 @dynamic created_at;
+@dynamic i_like_it;
 @dynamic likes_count;
 @dynamic state;
-@dynamic i_like_it;
 @dynamic secret;
 
 @end

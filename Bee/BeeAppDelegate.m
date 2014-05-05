@@ -14,6 +14,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Let the device know we want to receive push notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
     [FBLoginView class];
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -44,6 +48,26 @@
     }
     
     return YES;
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+	NSLog(@"My token is: %@", deviceToken);
+    const char *data = [deviceToken bytes];
+    NSMutableString *token = [NSMutableString string];
+    for (int i = 0; i < [deviceToken length]; i++) {
+        [token appendFormat:@"%02.2hhX", data[i]];
+    }
+    if ([[BeeUser sharedUser] isLoggedin]) {
+        [[BeeAPIClient sharedClient]PUTPushNotificationToken:token Success:^(NSURLSessionDataTask *task, id responseObject) {
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        }];
+    }
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"Failed to get token, error: %@", error);
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

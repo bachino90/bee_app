@@ -128,8 +128,8 @@
 	{
 		_refreshing = YES;
 		self.displayLink.paused = NO;
-		if (self.tableView)
-			self.tableView.userInteractionEnabled = NO;
+		//if (self.tableView)
+			//self.tableView.userInteractionEnabled = NO;
 		
 		CGFloat newInset = self.tableView.contentInset.top + self.frame.size.height;
 		// If positive targetContentOffset.y, it means the scrollview was scrolled

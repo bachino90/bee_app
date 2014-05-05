@@ -22,6 +22,7 @@
 @property (nonatomic, weak) IBOutlet BeeAvatarView *avatarView;
 @property (nonatomic, weak) IBOutlet UILabel *commentLabel;
 @property (nonatomic, weak) IBOutlet UILabel *dateLabel;
+@property (nonatomic, weak) IBOutlet UIButton *deleteButton;
 
 @property (nonatomic, strong) Comment *comment;
 @property (nonatomic) CGFloat requiredCellHeight;

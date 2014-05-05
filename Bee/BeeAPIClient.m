@@ -9,7 +9,7 @@
 #import "BeeAPIClient.h"
 #import "BeeUser.h"
 
-static NSString * const kBeeAPIBaseURLString = @"http://localhost:3000/api/v1/";//@"http://bachino90-bee.herokuapp.com/api/v1/";//
+static NSString * const kBeeAPIBaseURLString = @"http://bachino90-bee.herokuapp.com/api/v1/";//@"http://localhost:3000/api/v1/";//
 
 static NSString * const kBeeAPIKey = @"API_KEY";
 
@@ -48,16 +48,17 @@ static NSString * const kBeeAPIKey = @"API_KEY";
                    success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                    failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"users"];
+    [self.requestSerializer clearAuthorizationHeader];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:signup, @"user",
                                                                           self.deviceID, @"device_id", nil];
     [self POST:endPoint parameters:parameters success:success failure:failure];
-    NSLog(@"%@",self.requestSerializer.HTTPRequestHeaders);
 }
 
 - (void)signinUserWithData:(NSDictionary *)sessionParams
                   success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                   failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"sessions"];
+    [self.requestSerializer clearAuthorizationHeader];
     NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:sessionParams, @"session",
                                                                           self.deviceID, @"device_id", nil];
     [self POST:endPoint parameters:parameters success:success failure:failure];
@@ -92,6 +93,15 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 
 #pragma mark - NOTIFICATIONS
 
+- (void)PUTPushNotificationToken:(NSString *)token
+                         Success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                         failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/pushToken",self.userID];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObjectsAndKeys:token, @"token",
+                                self.deviceID, @"device_id", nil];
+    [self PUT:endPoint parameters:parameters success:success failure:failure];
+}
+
 - (void)GETRecentNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                               failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSDictionary *paramenters = nil;
@@ -104,7 +114,12 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 
 - (void)GETOldNotificationsSuccess:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                            failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
-    
+    NSDictionary *paramenters = nil;
+    if (self.notificationLastUpdate) {
+        paramenters = [NSDictionary dictionaryWithObjectsAndKeys:[self.notificationLastUpdate description], @"notification_last_update", nil];
+    }
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/notifications/last",self.userID];
+    [self GET:endPoint parameters:paramenters success:success failure:failure];
 }
 
 #pragma mark - SECRETS

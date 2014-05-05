@@ -9,6 +9,7 @@
 #import "BeeUser.h"
 #import "KeychainWrapper.h"
 #import "CoreDataController.h"
+#import "BeeSyncEngine.h"
 
 #define PASSWORD_KEY (__bridge id)kSecValueData
 #define USER_KEY (__bridge id)kSecAttrAccount
@@ -43,7 +44,8 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
 - (void)clearData {
     if ([self isLoggedin]) {
         [self.tokenWrapper resetKeychainItem];
-        [[CoreDataController sharedInstance] deleteDB];
+        [[BeeSyncEngine sharedEngine]emptyAllDB];
+        //[[CoreDataController sharedInstance] deleteDB];
     }
 }
 
@@ -89,6 +91,14 @@ static NSString *kUserInfoFilename = @"UserInfo.plist";
         ![[self.tokenWrapper myObjectForKey:PASSWORD_KEY] isEqualToString:@""]) {
         return YES;
     }
+    return NO;
+}
+
+- (BOOL)isLoggedinFacebook {
+    return NO;
+}
+
+- (BOOL)isLoggedinTwitter {
     return NO;
 }
 

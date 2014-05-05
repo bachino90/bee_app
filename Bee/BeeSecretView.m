@@ -55,7 +55,7 @@
 }
 
 - (id)initWithNotification:(Notification *)notification {
-    self = [self initWithFrame:CGRectMake(0.0, 0.0, SCREEN_WIDTH/2.0, SECRET_WIDTH/2.0)];
+    self = [self initWithFrame:CGRectMake(0.0, 0.0, SCREEN_WIDTH, SECRET_WIDTH)];
     if (self) {
         self.backgroundColor = [notification color];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectZero];
@@ -64,8 +64,10 @@
         label.textColor = [UIColor whiteColor];
         label.numberOfLines = 20;
         label.font = [notification font];
-        label.frame = CGRectMake(LABEL_MARGIN_X/2.0, LABEL_MARGIN_TOP_Y/2.0, SCREEN_WIDTH/2.0 - LABEL_MARGIN_X, SECRET_WIDTH/2.0 - LABEL_MARGIN_TOP_Y/2.0);
+        label.frame = CGRectMake(LABEL_MARGIN_X, LABEL_MARGIN_TOP_Y, SCREEN_WIDTH - 2*LABEL_MARGIN_X, SECRET_WIDTH - LABEL_MARGIN_TOP_Y);
         [self addSubview:label];
+        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5);
+        self.frame = CGRectMake(0.0, 0.0, self.frame.size.width, self.frame.size.height);
     }
     return self;
 }

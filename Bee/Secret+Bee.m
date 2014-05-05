@@ -15,7 +15,7 @@
     if (colors) {
         return colors;
     }
-    colors = @[[UIColor turquoiseColor], [UIColor emerlandColor], [UIColor peterRiverColor], [UIColor amethystColor], [UIColor wetAsphaltColor], [UIColor carrotColor], [UIColor sunflowerColor], [UIColor alizarinColor], [UIColor concreteColor]];
+    colors = @[[UIColor turquoiseColor], [UIColor emerlandColor], [UIColor peterRiverColor], [UIColor amethystColor], [UIColor wetAsphaltColor], [UIColor carrotColor], [UIColor sunflowerColor], [UIColor alizarinColor], [UIColor concreteColor], [UIColor pomegranateColor], [UIColor pumpkinColor]];
     return colors;
 }
 

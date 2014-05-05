@@ -8,11 +8,12 @@
 
 #import "BeeCommentTableViewCell.h"
 #import "Comment+Bee.h"
+#import "Secret+Bee.h"
 
 #define FONT_SIZE 18.0f
 #define LABEL_WIDTH 220.0f
 
-@interface BeeCommentTableViewCell () <UIActionSheetDelegate>
+@interface BeeCommentTableViewCell () <UIActionSheetDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
 
@@ -53,6 +54,13 @@
     }
 }
 
+- (void)deleteComment:(UIButton *)deleteBtn {
+    if ([self.comment.author integerValue] == 1) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"Borrar Comentario" message:@"Esta seguro que desea borrar el comentario" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        [alertView show];
+    }
+}
+
 - (void)updateBackgroundColor {
     switch ([self.comment.state integerValue]) {
         case CommentDelivered:
@@ -76,6 +84,8 @@
     _comment = comment;
     NSString *content = _comment.content;
     self.commentLabel.text = content;
+    NSLog(@"%@",comment);
+    self.avatarView.backgroundColor = [Secret colors][[comment.avatar_id integerValue]];
     //self.commentLabel.backgroundColor = [UIColor yellowColor];
     /*
     if (_comment.friendIsAuthor) {
@@ -87,6 +97,12 @@
             self.howIsLabel.text = @"NF";
     }
     */
+    self.deleteButton.hidden = YES;
+    [self.deleteButton removeTarget:self action:@selector(deleteComment:) forControlEvents:UIControlEventTouchUpInside];
+    if ([_comment.author integerValue] == 1) {
+        self.deleteButton.hidden = NO;
+        [self.deleteButton addTarget:self action:@selector(deleteComment:) forControlEvents:UIControlEventTouchUpInside];
+    }
     self.dateLabel.text = comment.dateString;
     [self updateBackgroundColor];
     
@@ -113,6 +129,16 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         [self.delegate commentCell:self rePostComment:self.comment];
+    } else if (buttonIndex == 1) {
+        [self.delegate commentCell:self deleteComment:self.comment];
+    }
+}
+
+#pragma mark - UIAlertView Delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        
     } else if (buttonIndex == 1) {
         [self.delegate commentCell:self deleteComment:self.comment];
     }
