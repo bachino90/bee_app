@@ -2,7 +2,7 @@
 //  Secret.h
 //  Bee
 //
-//  Created by Emiliano Bivachi on 28/04/14.
+//  Created by Emiliano Bivachi on 05/05/14.
 //  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
 //
 
@@ -22,9 +22,10 @@
 @property (nonatomic, retain) NSNumber * i_like_it;
 @property (nonatomic, retain) NSNumber * likes_count;
 @property (nonatomic, retain) NSString * media_url;
+@property (nonatomic, retain) NSString * photo_url;
 @property (nonatomic, retain) NSString * secret_id;
 @property (nonatomic, retain) NSNumber * state;
-@property (nonatomic, retain) NSString * photo_url;
+@property (nonatomic, retain) NSNumber * all_comments_loaded;
 @property (nonatomic, retain) NSSet *comments;
 @end
 

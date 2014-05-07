@@ -28,6 +28,7 @@
     </entity>
     <entity name="Secret" representedClassName="Secret" syncable="YES">
         <attribute name="about" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="all_comments_loaded" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="colorFont" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comments_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -44,6 +45,6 @@
     <elements>
         <element name="Comment" positionX="-171" positionY="36" width="128" height="180"/>
         <element name="Notification" positionX="-9" positionY="36" width="128" height="240"/>
-        <element name="Secret" positionX="-335" positionY="36" width="128" height="240"/>
+        <element name="Secret" positionX="-335" positionY="36" width="128" height="255"/>
     </elements>
 </model>

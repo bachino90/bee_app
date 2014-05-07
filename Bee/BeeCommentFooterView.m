@@ -20,7 +20,7 @@
     if (self) {
         // Initialization code
         self.activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        self.center = CGPointMake(frame.size.width/2.0, frame.size.height/2.0);
+        self.activityView.center = CGPointMake(frame.size.width/2.0, frame.size.height/2.0);
         self.activityView.hidesWhenStopped = YES;
         [self.activityView startAnimating];
         [self addSubview:self.activityView];

@@ -203,7 +203,10 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
 - (void)saveSecretsToCoreData:(id)responseObject {
     //NSManagedObjectContext *moc = [[CoreDataController sharedInstance]backgroundManagedObjectContext];
     for (NSDictionary *secret in (NSArray *)responseObject) {
-        [self newManagedObjectWithClassName:@"Secret" forRecord:secret];
+        Secret *secretObject = (Secret *)[self newManagedObjectWithClassName:@"Secret" forRecord:secret];
+        if (!secretObject.all_comments_loaded) {
+            secretObject.all_comments_loaded = @(YES);
+        }
     }
     /*
     [moc performBlockAndWait:^{
@@ -217,14 +220,14 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
 }
 
 - (void)saveCommentsForSecret:(Secret *)secret toCoreData:(id)responseObject {
-    Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    //Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
     if (secret == nil) {
         return;
     }
     for (NSDictionary *comment in (NSArray *)responseObject) {
         Comment *commentObject = (Comment *)[self newManagedObjectWithClassName:@"Comment" forRecord:comment];
         [commentObject setValue:CommentSuccessDelivered forKey:@"state"];
-        [secretObject addCommentsObject:commentObject];
+        [secret addCommentsObject:commentObject];
     }
 
     [self executeSyncCompletedOperations];
@@ -287,7 +290,7 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
 
 - (void)downloadRecentSecrets {
     [[BeeAPIClient sharedClient] GETRecentSecretsAbout:@"" friends:NO success:^(NSURLSessionDataTask *task, id responseObject) {
-        if ([responseObject isKindOfClass:[NSArray class]]) {
+        if ([responseObject isKindOfClass:[NSArray class]] && [responseObject count] > 0) {
             NSLog(@"%@",responseObject);
             
             if ([BeeAPIClient sharedClient].secretRecentUpdate == nil) {
@@ -305,6 +308,8 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
             if ([BeeAPIClient sharedClient].secretLastUpdate == nil) {
                 [BeeAPIClient sharedClient].secretLastUpdate = [self lastSecretDate];
             }
+        } else {
+            [self executeSyncCompletedOperations];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self executeSyncFailed];
@@ -345,11 +350,26 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
     }];
 }
 
+#define COMMENTS_BATCH_SIZE 10
+
 - (void)downloadRecentCommentsForSecret:(Secret *)secret {
-    [[BeeAPIClient sharedClient]GETCommentsForSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
-        if ([responseObject isKindOfClass:[NSArray class]]) {
+#warning completar comments
+    __block Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    [[BeeAPIClient sharedClient]GETRecentCommentsForSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+        if ([responseObject isKindOfClass:[NSArray class]] && [responseObject count] > 0) {
             NSLog(@"%@",responseObject);
-            [self saveCommentsForSecret:secret toCoreData:responseObject];
+            NSDate *recentDateInDB = [secret firstCommentDate];
+            NSDate *oldDateInResponse = [self.dateFormatter dateFromString:[responseObject lastObject][@"created_at"]];
+            if ([recentDateInDB compare:oldDateInResponse] == NSOrderedAscending) {
+                [secretObject removeComments:secretObject.comments];
+                secretObject.all_comments_loaded = @(NO);
+            }
+            if ([responseObject count] < COMMENTS_BATCH_SIZE) {
+                secretObject.all_comments_loaded = @(YES);
+            }
+            [self saveCommentsForSecret:secretObject toCoreData:responseObject];
+        } else  {
+            [self executeSyncCompletedOperations];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self executeSyncFailed];
@@ -357,11 +377,16 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
 }
 
 - (void)downloadOldCommentsForSecret:(Secret *)secret {
-    [[BeeAPIClient sharedClient]GETCommentsForSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+    __block Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    NSDate *lastDate = [secretObject lastCommentDate];
+    [[BeeAPIClient sharedClient]GETPastCommentsForSecret:secret.secret_id lastCommentDate:lastDate success:^(NSURLSessionDataTask *task, id responseObject) {
         if ([responseObject isKindOfClass:[NSArray class]]) {
             NSLog(@"%@",responseObject);
-            [self saveCommentsForSecret:secret toCoreData:responseObject];
-            if ([responseObject count] == 0) {
+            if ([responseObject count] < COMMENTS_BATCH_SIZE) {
+                secretObject.all_comments_loaded = @(YES);
+            }
+            [self saveCommentsForSecret:secretObject toCoreData:responseObject];
+            if ([responseObject count] < COMMENTS_BATCH_SIZE) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kBeeSyncEngineAllCommentCompletedNotificationName object:nil];
             }
         }
@@ -380,6 +405,10 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
     [commentObject setValue:[NSDate date] forKey:@"created_at"];
     [secretObject addCommentsObject:commentObject];
     
+    if ([secretObject.all_comments_loaded boolValue] == NO) {
+        NSLog(@"cambio la cosa");
+        NSLog(@"%@",secretObject);
+    }
     [self executeSyncCompletedOperations];
     
     __block Comment *comm = commentObject;
@@ -475,6 +504,30 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
             }
         }
         [BeeAPIClient sharedClient].notificationLastUpdate = [self lastNotificationDate];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self executeSyncFailed];
+    }];
+}
+
+- (void)putLikeInSecret:(Secret *)secret {
+#warning completar like
+    __block Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    [[BeeAPIClient sharedClient]DELETELikeOnSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+        secretObject.likes_count = @([secretObject.likes_count integerValue]+1);
+        secretObject.i_like_it = @(YES);
+        [self executeSyncCompletedOperations];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self executeSyncFailed];
+    }];
+}
+
+- (void)deleteLikeInSecret:(Secret *)secret {
+#warning completar unlike
+    __block Secret *secretObject = (Secret *)[self searchManagedObjectForEntity:@"Secret" withId:secret.secret_id];
+    [[BeeAPIClient sharedClient]PUTLikeOnSecret:secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
+        secretObject.likes_count = @([secretObject.likes_count integerValue]-1);
+        secretObject.i_like_it = @(NO);
+        [self executeSyncCompletedOperations];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self executeSyncFailed];
     }];
@@ -588,6 +641,28 @@ NSString * const kBeeSyncEngineAllCommentCompletedNotificationName = @"BeeSyncEn
         [self didChangeValueForKey:@"syncInProgress"];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             [self downloadOldNotifications];
+        });
+    }
+}
+
+- (void)startLikeSecret:(Secret *)secret {
+    if (!self.syncInProgress) {
+        [self willChangeValueForKey:@"syncInProgress"];
+        _syncInProgress = YES;
+        [self didChangeValueForKey:@"syncInProgress"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self putLikeInSecret:secret];
+        });
+    }
+}
+
+- (void)startUnLikeSecret:(Secret *)secret {
+    if (!self.syncInProgress) {
+        [self willChangeValueForKey:@"syncInProgress"];
+        _syncInProgress = YES;
+        [self didChangeValueForKey:@"syncInProgress"];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self deleteLikeInSecret:secret];
         });
     }
 }

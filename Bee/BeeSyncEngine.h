@@ -30,4 +30,7 @@
 - (void)startSearchingRecentNotifications;
 - (void)startSearchingOldNotifications;
 
+- (void)startLikeSecret:(Secret *)secret;
+- (void)startUnLikeSecret:(Secret *)secret;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "Secret+Bee.h"
+#import "Comment.h"
 
 @implementation Secret (Bee)
 
@@ -44,6 +45,18 @@
     } else {
         return [Secret fonts][0];
     }
+}
+
+- (NSDate *)lastCommentDate {
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"created_at" ascending:YES];
+    NSArray *comments = [self.comments sortedArrayUsingDescriptors:@[descriptor]];
+    return ((Comment *)[comments firstObject]).created_at;
+}
+
+- (NSDate *)firstCommentDate {
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"created_at" ascending:YES];
+    NSArray *comments = [self.comments sortedArrayUsingDescriptors:@[descriptor]];
+    return ((Comment *)[comments lastObject]).created_at;
 }
 
 /*

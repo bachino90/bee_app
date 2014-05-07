@@ -38,6 +38,8 @@
 		EB0B7A3818FA099000F34F1E /* Quicksand-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3718FA099000F34F1E /* Quicksand-Regular.otf */; };
 		EB0B7A3A18FA09AD00F34F1E /* Sevillana-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3918FA09AD00F34F1E /* Sevillana-Regular.ttf */; };
 		EB0B7A3C18FA09C500F34F1E /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB0B7A3B18FA09C500F34F1E /* Walkway_SemiBold.ttf */; };
+		EB0C6CAA1917DE4600D268D9 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6CA91917DE4600D268D9 /* Secret.m */; };
+		EB0C6CAD1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0C6CAC1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.m */; };
 		EB14AC7C18EFBC880084C37B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = EB14AC7B18EFBC880084C37B /* Reachability.m */; };
 		EB15271919155A9200AD9B7D /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15271819155A9200AD9B7D /* Comment.m */; };
 		EB15966818C6557D00722F93 /* AMScrollingNavbarTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB15966718C6557D00722F93 /* AMScrollingNavbarTableViewController.m */; };
@@ -101,7 +103,6 @@
 		EB693CA618C1140700CCDF1F /* BeeSecretViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB693CA518C1140700CCDF1F /* BeeSecretViewController.m */; };
 		EB762C1D18C76E71003E9E96 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */; };
 		EB762C2018C782B0003E9E96 /* BeeLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */; };
-		EB894BAF190EBE9D009A9CA2 /* Secret.m in Sources */ = {isa = PBXBuildFile; fileRef = EB894BAE190EBE9D009A9CA2 /* Secret.m */; };
 		EBB8272918D50D6500CCD99B /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB8272818D50D6500CCD99B /* KeychainWrapper.m */; };
 		EBE178211908830B00DAAC30 /* BeeFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE178201908830B00DAAC30 /* BeeFooterView.m */; };
 		EBE17826190888B800DAAC30 /* BeeCommentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBE17825190888B800DAAC30 /* BeeCommentFooterView.m */; };
@@ -157,6 +158,10 @@
 		EB0B7A3718FA099000F34F1E /* Quicksand-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Quicksand-Regular.otf"; sourceTree = "<group>"; };
 		EB0B7A3918FA09AD00F34F1E /* Sevillana-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sevillana-Regular.ttf"; sourceTree = "<group>"; };
 		EB0B7A3B18FA09C500F34F1E /* Walkway_SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walkway_SemiBold.ttf; sourceTree = "<group>"; };
+		EB0C6CA81917DE4600D268D9 /* Secret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
+		EB0C6CA91917DE4600D268D9 /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
+		EB0C6CAB1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLastCommentsTableViewCell.h; sourceTree = "<group>"; };
+		EB0C6CAC1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLastCommentsTableViewCell.m; sourceTree = "<group>"; };
 		EB14AC7A18EFBC880084C37B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		EB14AC7B18EFBC880084C37B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		EB15271719155A9200AD9B7D /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
@@ -269,8 +274,6 @@
 		EB762C1C18C76E71003E9E96 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		EB762C1E18C782B0003E9E96 /* BeeLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeLoginViewController.h; sourceTree = "<group>"; };
 		EB762C1F18C782B0003E9E96 /* BeeLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeLoginViewController.m; sourceTree = "<group>"; };
-		EB894BAD190EBE9D009A9CA2 /* Secret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Secret.h; sourceTree = "<group>"; };
-		EB894BAE190EBE9D009A9CA2 /* Secret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Secret.m; sourceTree = "<group>"; };
 		EBB8272718D50D6500CCD99B /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
 		EBB8272818D50D6500CCD99B /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		EBE1781F1908830B00DAAC30 /* BeeFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeFooterView.h; sourceTree = "<group>"; };
@@ -430,6 +433,8 @@
 				EBF50A5C18D8667300A49C25 /* BeeNotificationTableViewCell.m */,
 				EB260CBB18C1895C00AB6CB9 /* BeeCommentTableViewCell.h */,
 				EB260CBC18C1895C00AB6CB9 /* BeeCommentTableViewCell.m */,
+				EB0C6CAB1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.h */,
+				EB0C6CAC1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.m */,
 				EB34D0F018C240E500637B90 /* BeeAvatarView.h */,
 				EB34D0F118C240E500637B90 /* BeeAvatarView.m */,
 				EB34D0F318C2679500637B90 /* BeeSecretView.h */,
@@ -466,8 +471,8 @@
 			isa = PBXGroup;
 			children = (
 				EB4FE0E61902D39E0055554C /* BeeModel.xcdatamodeld */,
-				EB894BAD190EBE9D009A9CA2 /* Secret.h */,
-				EB894BAE190EBE9D009A9CA2 /* Secret.m */,
+				EB0C6CA81917DE4600D268D9 /* Secret.h */,
+				EB0C6CA91917DE4600D268D9 /* Secret.m */,
 				EB15271719155A9200AD9B7D /* Comment.h */,
 				EB15271819155A9200AD9B7D /* Comment.m */,
 				EBF9DAE4191048E0000EF747 /* Notification.h */,
@@ -811,7 +816,7 @@
 				EB693C9218BFC57600CCDF1F /* AFURLSessionManager.m in Sources */,
 				EB00DAF518C3F262001B17CB /* BeeRefreshControl.m in Sources */,
 				EB4FE0E81902D39E0055554C /* BeeModel.xcdatamodeld in Sources */,
-				EB894BAF190EBE9D009A9CA2 /* Secret.m in Sources */,
+				EB0C6CAA1917DE4600D268D9 /* Secret.m in Sources */,
 				EB0B7A0518FA06EA00F34F1E /* UIFont+Bee.m in Sources */,
 				EB693C9018BFC57600CCDF1F /* AFURLRequestSerialization.m in Sources */,
 				EB693C2918BFA85400CCDF1F /* BeeTableViewCell.m in Sources */,
@@ -822,6 +827,7 @@
 				EB693C9718BFC57600CCDF1F /* UIImageView+AFNetworking.m in Sources */,
 				EB4FE0F51902DDAE0055554C /* CoreDataController.m in Sources */,
 				EB15271919155A9200AD9B7D /* Comment.m in Sources */,
+				EB0C6CAD1917FDFD00D268D9 /* BeeLastCommentsTableViewCell.m in Sources */,
 				EB693C6318BFBF0800CCDF1F /* BeeAPIClient.m in Sources */,
 				EB4FE0F81902DDEC0055554C /* BeeSyncEngine.m in Sources */,
 				EB693C9518BFC57600CCDF1F /* UIAlertView+AFNetworking.m in Sources */,

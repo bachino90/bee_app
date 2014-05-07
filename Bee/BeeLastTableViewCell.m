@@ -8,6 +8,7 @@
 
 #import "BeeLastTableViewCell.h"
 
+
 @implementation BeeLastTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

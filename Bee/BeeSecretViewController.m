@@ -8,6 +8,7 @@
 
 #import "BeeSecretViewController.h"
 #import "BeeCommentTableViewCell.h"
+#import "BeeLastCommentsTableViewCell.h"
 #import "BeeSecretView.h"
 #import "Comment.h"
 #import "BeeCommentView.h"
@@ -19,14 +20,13 @@
 
 #define HEADER_HEIGHT 50.0f
 
-@interface BeeSecretViewController () <UITableViewDataSource, UITableViewDelegate, BeeCommentViewDelegate, BeeCommentTableViewCellDelegate, UIActionSheetDelegate>
+@interface BeeSecretViewController () <UITableViewDataSource, UITableViewDelegate, BeeCommentViewDelegate, BeeCommentTableViewCellDelegate, BeeLastCommentsTableViewCellDelegate, UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet BeeCommentView *commentView;
 @property (nonatomic, strong) Reachability *internetReachability;
-@property (nonatomic) BOOL isSearchingComments;
-@property (nonatomic) BOOL isFirstLoad;
-@property (nonatomic) BOOL loadedAllComments;
 @property (nonatomic, strong) NSArray *comments;
+
+@property (nonatomic) BOOL isSendingComment;
 @end
 
 @implementation BeeSecretViewController {
@@ -54,26 +54,29 @@
     }
     
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"created_at" ascending:YES];
+    NSLog(@"%@",self.secret.comments);
     _comments = [self.secret.comments sortedArrayUsingDescriptors:@[descriptor]];
+    
     return _comments;
 }
 
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        rowHeightCache = [NSMutableDictionary dictionary];
         self.tableView.tableFooterView = nil;
         self.comments = nil;
+        
         [self.tableView reloadData];
-        if (!self.isFirstLoad && self.comments.count > 0) {
+        if (self.isSendingComment) {
             [self scrollToBottom];
+            self.isSendingComment = NO;
         }
-        self.isFirstLoad = NO;
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncFailed" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
     }];
     [[NSNotificationCenter defaultCenter] addObserverForName:@"BeeSyncEngineSyncAllCommentsCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        self.loadedAllComments = YES;
     }];
 }
 
@@ -92,11 +95,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.isFirstLoad = YES;
-    self.loadedAllComments = NO;
+    self.isSendingComment = NO;
     
     rowHeightCache = [NSMutableDictionary dictionary];
-    [[BeeSyncEngine sharedEngine]startSearchingRecentCommentsForSecret:self.secret];
+    
     BeeSecretView *headerView = [[BeeSecretView alloc]initWithSecret:self.secret];
     self.tableView.tableHeaderView = headerView;
     
@@ -115,6 +117,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [[BeeSyncEngine sharedEngine]startSearchingRecentCommentsForSecret:self.secret];
     [self registerForNotifications];
 }
 
@@ -146,8 +149,8 @@
 }
 
 -(void)scrollToBottom{
-    //[self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:YES];
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height)];
+    [self.tableView scrollRectToVisible:CGRectMake(0, self.tableView.contentSize.height - self.tableView.bounds.size.height, self.tableView.bounds.size.width, self.tableView.bounds.size.height) animated:YES];
+    //[self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height)];
 }
 
 #pragma mark - Reachability Notifications
@@ -178,37 +181,13 @@
 }
 
 - (void)commentView:(BeeCommentView *)commentView postComment:(NSString *)comment {
-    //[self scrollToBottom];
-    //__block Comment *comm;// = [[Comment alloc]initWithContent:comment];
-    //self.secret.comments = [self.secret.comments arrayByAddingObject:comm];
-    //[self.tableView reloadData];
-    //NSInteger index = [self.comments indexOfObject:comm];
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    //BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     [self postComment:comment];
 }
 
 - (void)postComment:(NSString *)content {
     NSDictionary *comment = [NSDictionary dictionaryWithObjectsAndKeys:content, @"content", nil];
+    self.isSendingComment = YES;
     [[BeeSyncEngine sharedEngine]startPostingComment:comment forSecret:self.secret];
-    /*
-    NSDictionary *dictComment = [NSDictionary dictionaryWithObjectsAndKeys:params, @"comment", nil];
-    comment.state = @(CommentDelivered);
-    cell.comment = comment;
-    __block Comment *comm = comment;
-    [[BeeAPIClient sharedClient]POSTComment:dictComment inSecret:self.secret.secret_id success:^(NSURLSessionDataTask *task, id responseObject) {
-        comm.state = CommentSuccessDelivered;
-        comm.created_at = [NSDate date];
-        cell.comment = comm;
-        cell.delegate = nil;
-        [self.tableView reloadData];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        comm.state = @(CommentFailDelivered);
-        cell.comment = comm;
-        cell.delegate = self;
-        [self.tableView reloadData];
-    }];
-     */
 }
 
 - (void)rePostComment:(Comment *)comment {
@@ -230,6 +209,12 @@
     [self deleteComment:cell.comment];
 }
 
+#pragma mark - BeeLastCommentsTableViewCell Delegate
+
+- (void)searchOldComments:(BeeLastCommentsTableViewCell *)cell {
+    [[BeeSyncEngine sharedEngine]startSearchingOldCommentsForSecret:self.secret];
+}
+
 #pragma mark - Table View data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -242,30 +227,36 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.comments.count;
+    if (self.secret.comments.count > 0 && [self.secret.all_comments_loaded boolValue]) {
+        return self.secret.comments.count;
+    } else if (self.secret.comments.count > 0 && ![self.secret.all_comments_loaded boolValue]) {
+        return self.comments.count + 1;
+    } else {
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    /*
-    if (self.isSearchingComments) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LoadingCommentsCell" forIndexPath:indexPath];
-        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activityView.center = cell.contentView.center;
-        [activityView startAnimating];
-        [cell.contentView addSubview:activityView];
-        [cell setNeedsLayout];
-        [cell layoutIfNeeded];
+    if (![self.secret.all_comments_loaded boolValue] && indexPath.row == 0) {
+        BeeLastCommentsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LastCommentsCell" forIndexPath:indexPath];
+        [cell restartCell];
+        cell.delegate = self;
         return cell;
     } else {
-     */
         BeeCommentTableViewCell *cell = (BeeCommentTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-        Comment *comment = self.comments[indexPath.row];
+        
+        Comment *comment;
+        if ([self.secret.all_comments_loaded boolValue]) {
+            comment = self.comments[indexPath.row];
+        } else {
+            comment = self.comments[indexPath.row - 1];
+        }
         cell.comment = comment;
         cell.delegate = self;
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
         return cell;
-    //}
+    }
 }
 
 #pragma mark - Table View delegate
@@ -281,15 +272,25 @@
         [self adjustSizingCellWidthToTableWidth];
     });
     
-    /*
-    if (self.isSearchingComments) {
+    
+    if (![self.secret.all_comments_loaded boolValue] && indexPath.row == 0) {
         return 50.0;
     }
-    */
-    NSString *index = [NSString stringWithFormat:@"%i",indexPath.row];
+    
+    NSString *index;
+    if (![self.secret.all_comments_loaded boolValue]) {
+        index = [NSString stringWithFormat:@"%i",indexPath.row - 1];
+    } else {
+        index = [NSString stringWithFormat:@"%i",indexPath.row];
+    }
+    
     
     if (rowHeightCache[index] == nil) {
-        sizingCell.comment = self.comments[indexPath.row];
+        if (![self.secret.all_comments_loaded boolValue]) {
+            sizingCell.comment = self.comments[indexPath.row - 1];
+        } else {
+            sizingCell.comment = self.comments[indexPath.row];
+        }
         CGFloat rowHeight = sizingCell.requiredCellHeight;
         [sizingCell setNeedsLayout];
         [sizingCell layoutIfNeeded];

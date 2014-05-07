@@ -95,9 +95,14 @@
 /********* COMMENTS *********/
 
 // GET COMMENT FROM SECRET
-- (void)GETCommentsForSecret:(NSString *)secretID
-                     success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
-                     failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+- (void)GETRecentCommentsForSecret:(NSString *)secretID
+                           success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                           failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
+
+- (void)GETPastCommentsForSecret:(NSString *)secretID
+                 lastCommentDate:(NSDate *)lastDate
+                         success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                         failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure;
 
 // POST COMMENT
 - (void)POSTComment:(NSDictionary *)commentParameters

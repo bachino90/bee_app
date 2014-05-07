@@ -21,7 +21,7 @@
         // Initialization code
         self.backgroundColor = [UIColor lightGrayColor];
         self.activityView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        self.center = CGPointMake(frame.size.width/2.0, frame.size.height/2.0);
+        self.activityView.center = CGPointMake(frame.size.width/2.0, frame.size.height/2.0);
         self.activityView.hidesWhenStopped = YES;
         [self addSubview:self.activityView];
     }

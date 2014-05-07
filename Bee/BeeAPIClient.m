@@ -179,11 +179,24 @@ static NSString * const kBeeAPIKey = @"API_KEY";
 
 #pragma mark - COMMENTS
 
-- (void)GETCommentsForSecret:(NSString *)secretID
+- (void)GETRecentCommentsForSecret:(NSString *)secretID
                      success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
                      failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
     NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/%@/comments", self.userID, secretID];
     [self GET:endPoint parameters:nil success:success failure:failure];
+}
+
+- (void)GETPastCommentsForSecret:(NSString *)secretID
+                 lastCommentDate:(NSDate *)lastDate
+                         success:(void ( ^ ) ( NSURLSessionDataTask *task , id responseObject ))success
+                         failure:(void ( ^ ) ( NSURLSessionDataTask *task , NSError *error ))failure {
+    NSString *endPoint = [NSString stringWithFormat:@"users/%@/secrets/%@/comments/last", self.userID, secretID];
+    NSDictionary *parameters;
+    if (lastDate) {
+        NSString *recentDateStr = [lastDate description];
+        parameters = [NSDictionary dictionaryWithObjectsAndKeys:recentDateStr, @"last_created_at", nil];
+    }
+    [self GET:endPoint parameters:parameters success:success failure:failure];
 }
 
 - (void)POSTComment:(NSDictionary *)commentParameters

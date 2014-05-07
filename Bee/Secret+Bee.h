@@ -18,6 +18,9 @@
 - (UIColor *)color;
 - (UIFont *)font;
 
+- (NSDate *)lastCommentDate;
+- (NSDate *)firstCommentDate;
+
 //-(void)addCommentsObject:(Comment *)value;
 
 @end

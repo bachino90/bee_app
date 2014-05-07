@@ -2,7 +2,7 @@
 //  Secret.m
 //  Bee
 //
-//  Created by Emiliano Bivachi on 28/04/14.
+//  Created by Emiliano Bivachi on 05/05/14.
 //  Copyright (c) 2014 Emiliano Bivachi. All rights reserved.
 //
 
@@ -21,9 +21,10 @@
 @dynamic i_like_it;
 @dynamic likes_count;
 @dynamic media_url;
+@dynamic photo_url;
 @dynamic secret_id;
 @dynamic state;
-@dynamic photo_url;
+@dynamic all_comments_loaded;
 @dynamic comments;
 
 @end
